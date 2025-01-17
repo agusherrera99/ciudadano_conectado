@@ -39,6 +39,9 @@ INSTALLED_APPS = [
 
     # Local apps
     'pages.apps.PagesConfig',
+
+    # Third-party apps
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [
