@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <span class="site-name">Ciudadanos Conectados</span>
+        </div>
+        <div class="nav-right">
+            <a class="btn btn-login" href="{% url 'account:login' %}">Iniciar Sesión</a>
+            <a class="btn btn-register" href="{% url 'account:register' %}">Registrar</a>
+        </div>
+    </nav>
+    
+    <main>
+        <div class="login-container">
+            <h1>Iniciar Sesión</h1>
+            <form action="{% url 'account:login' %}" method="POST">
+                {% csrf_token %}
+                <label for="username">Nombre de usuario</label>
+                <input type="text" id="username" name="username" required>
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            </form>
+            <a href="{% url 'account:register' %}">¿No tienes una cuenta? Regístrate</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de Las Flores</h3>
+                <p>Una comunidad que fomenta la participación ciudadana y la gobernanza transparente.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Condiciones de servicio</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>       
+</html>

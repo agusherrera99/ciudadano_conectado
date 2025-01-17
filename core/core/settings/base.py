@@ -39,6 +39,7 @@ INSTALLED_APPS = [
 
     # Local apps
     'pages.apps.PagesConfig',
+    'account.apps.AccountConfig',
 
     # Third-party apps
     'fontawesomefree'

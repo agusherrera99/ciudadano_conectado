@@ -57,12 +57,13 @@ nav {
 }
 
 .btn {
-    padding: 0.5rem 1.5rem;
+    padding: 0.2rem 1rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .btn:hover {
@@ -105,12 +106,22 @@ main {
     padding: 2rem;
     border: 1px solid var(--accent);
     transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    animation: cardEntrance 0.5s ease-out;
 }
 
 .card:hover {
     border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover .card-icon {
+    transform: rotate(15deg); /* Icono rota ligeramente cuando se hace hover */
+}
+
+.card:hover ul {
+    color: var(--primary); /* Cambiar el color del texto en hover */
 }
 
 .card h2 {
@@ -134,7 +145,7 @@ main {
 }
 
 .card-icon {
-    font-size: 3rem; 
+    font-size: 4rem; 
     color: var(--primary); 
     margin-bottom: 1rem; 
 }
@@ -168,6 +179,7 @@ footer {
     color: var(--primary);
     font-size: 1.1rem;
     font-weight: 600;
+    margin-bottom: 0.2rem;
 }
 
 .footer-section ul {
@@ -188,4 +200,15 @@ footer {
 
 .footer-section a:hover {
     color: var(--primary);
+}
+
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
