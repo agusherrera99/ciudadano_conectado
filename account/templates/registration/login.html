@@ -1,18 +1,19 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body>
     <nav>
         <div class="nav-left">
-            <span class="site-name">Ciudadanos Conectados</span>
-        </div>
-        <div class="nav-right">
-            <a class="btn btn-login" href="{% url 'account:login' %}">Iniciar Sesión</a>
-            <a class="btn btn-register" href="{% url 'account:register' %}">Registrar</a>
+            <a class="nav-logo" href="{% url 'pages:home' %}">
+                <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                <span class="site-name">Ciudadanos Conectados</span>
+            </a>
         </div>
     </nav>
     
@@ -27,7 +28,10 @@
                 <input type="password" id="password" name="password" required>
                 <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>
-            <a href="{% url 'account:register' %}">¿No tienes una cuenta? Regístrate</a>
+            <div class="login-form-footer">
+                <a href="{% url 'account:register' %}">¿No tienes una cuenta? Regístrate</a>
+                <a class="forgot-password" href="{% url 'password_reset' %}">¿Olvidaste tu contraseña?</a>
+            </div>
         </div>
     </main>
 

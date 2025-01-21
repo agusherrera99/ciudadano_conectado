@@ -39,7 +39,7 @@ nav {
     border-bottom: 1px solid var(--accent);
 }
 
-.nav-left, .nav-right {
+.nav-left {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -90,70 +90,85 @@ nav {
 
 main {
     flex: 1;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
 }
 
-.card-container {
+.register-container {
+    background-color: var(--background);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 520px;
+    width: 100%;
+}
+
+.register-container h1 {
+    font-size: 1.75rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.register-form {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
 }
 
-.card {
+label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: var(--text);
+}
+
+input {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:focus {
+    border-color: var(--primary);
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: var(--light-text);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1d4e75;
+}
+
+.register-form-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    background-color: var(--background);
-    border-radius: 8px;
-    padding: 2rem;
-    border: 1px solid var(--accent);
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    animation: cardEntrance 0.5s ease-out;
+    margin-top: 1rem;
 }
 
-.card:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.card:hover .card-icon {
-    transform: rotate(15deg); /* Icono rota ligeramente cuando se hace hover */
-}
-
-.card:hover ul {
-    color: var(--primary); /* Cambiar el color del texto en hover */
-}
-
-.card h2 {
+.register-form-footer a {
     color: var(--primary);
-    margin-top: 1rem 0;
-    font-size: 1.5rem;
-    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
 }
 
-.card ul {
-    list-style-type: disc;
-    padding-left: 1.5rem; 
-    color: #495057; 
-    font-size: 1rem; 
-    line-height: 1.6; 
-    margin: 0.5rem 0; 
-}
-
-.card li {
-    margin-bottom: 0.5rem; 
-}
-
-.card-icon {
-    font-size: 4rem; 
-    color: var(--primary); 
-    margin-bottom: 1rem; 
+.register-form-footer a:hover {
+    text-decoration: underline;
 }
 
 footer {
