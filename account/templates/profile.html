@@ -16,14 +16,7 @@
             </a>
         </div>
         <div class="nav-right">
-            <a class="user-badge" href="{% url 'account:profile' %}">
-                <span class="avatar">A</span>
-                <span class="username">Agustín Herrera</span>
-            </a>
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                <button class="btn btn-logout">Cerrar Sesión</button>
-            </form>
+            {% include 'user_badge.html' %}
         </div>
     </nav>
 

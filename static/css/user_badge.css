@@ -1,0 +1,93 @@
+.user-badge {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 3em;
+    padding-right: 1.25rem;
+    background-color: var(--background);
+    line-height: 2rem;
+    border-radius: 9999px;
+    text-decoration: none;
+}
+
+.user-badge:hover {
+    background-color: var(--accent); 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.avatar {
+    float: left;
+    height: 100%;
+    width: 4rem; 
+    line-height: 3rem; 
+    text-align: center; 
+    border-radius: 9999px;
+    background-color: var(--avatar-color);
+    font-size: 2rem; 
+    font-weight: bold;
+    color: black;
+}
+
+.username {
+    margin-left: .75rem;
+    line-height: 3rem; 
+    color: black;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 10%;
+    right: 1%;
+    background-color: var(--background);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    width: 235px;
+    z-index: 10;
+    list-style: none;
+}
+
+.dropdown-menu li {
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.dropdown-menu li a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    background-color: var(--accent);
+    border-radius: 4px;
+}
+
+.user-badge:hover .dropdown-menu {
+    display: block;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--text);
+    border: 1px solid var(--accent);
+}
+
+.btn-logout {
+    padding: 1rem 4rem;
+    background-color: var(--danger);
+    color: white;
+}
