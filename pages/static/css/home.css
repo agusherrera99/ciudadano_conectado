@@ -97,63 +97,69 @@ main {
 
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
 }
 
 .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     background-color: var(--background);
     border-radius: 8px;
     padding: 2rem;
     border: 1px solid var(--accent);
     transition: all 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    animation: cardEntrance 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .card:hover {
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
 }
 
-.card:hover .card-icon {
-    transform: rotate(15deg); /* Icono rota ligeramente cuando se hace hover */
-}
-
-.card:hover ul {
-    color: var(--primary); /* Cambiar el color del texto en hover */
+.card-icon {
+    background-color: var(--primary);
+    color: white;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
 }
 
 .card h2 {
     color: var(--primary);
-    margin-top: 1rem 0;
+    margin-bottom: 1rem;
     font-size: 1.5rem;
     font-weight: 600;
 }
 
 .card ul {
-    list-style-type: disc;
-    padding-left: 1.5rem; 
-    color: #495057; 
-    font-size: 1rem; 
-    line-height: 1.6; 
-    margin: 0.5rem 0; 
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    text-align: left;
 }
 
 .card li {
-    margin-bottom: 0.5rem; 
+    margin-bottom: 0.75rem;
+    position: relative;
+    padding-left: 1.5rem;
+    color: #495057;
 }
 
-.card-icon {
-    font-size: 4rem; 
-    color: var(--primary); 
-    margin-bottom: 1rem; 
+.card li::before {
+    content: '\2022';
+    color: var(--primary);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
 }
 
 footer {
