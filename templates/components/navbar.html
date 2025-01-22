@@ -1,0 +1,15 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+<nav>
+    <div class="nav-left">
+        <a class="nav-logo" href="{% url 'pages:home' %}">
+            <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+            <span class="site-name">Ciudadanos Conectados</span>
+        </a>
+    </div>
+    <div class="nav-right">
+        {% include 'components/user_badge.html' %}
+    </div>
+</nav>
