@@ -1,0 +1,252 @@
+:root {
+    --primary: #2E5C8A;
+    --secondary: #f8f9fa;
+    --accent: #e9ecef;
+    --background: #ffffff;
+    --dark-background: #343a40;
+    --light-text: #ffffff;
+    --text: #212529;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+nav {
+    background-color: var(--dark-background);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--accent);
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.nav-logo .logo {
+    width: auto;
+    height: 90px;
+}
+
+.nav-logo .site-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--light-text);
+}
+
+.site-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--text);
+    border: 1px solid var(--accent);
+}
+
+.btn-logout {
+    background-color: var(--danger);
+    color: white;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+}
+
+.map-placeholder {
+    height: 200px;
+    background-color: var(--accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.5rem;
+    border-radius: 4px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.notification-item i {
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.notification-item.unread {
+    border-left: 4px solid var(--primary);
+}
+
+.notification-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+#new-request-form h3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+#request-list {
+    margin-top: 1rem;
+}
+
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.request-items,
+.consultation-items,
+.notification-items {
+    list-style-type: none;
+}
+
+.request-item,
+.consultation-item,
+.notification-item {
+    background-color: var(--secondary);
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.request-type,
+.request-status,
+.request-date {
+    display: inline-block;
+    margin-right: 1rem;
+    font-weight: bold;
+}
+
+.request-status {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    color: white;
+}
+
+.pending {
+    background-color: var(--warning);
+}
+
+.in-process {
+    background-color: var(--primary);
+}
+
+.resolved {
+    background-color: var(--success);
+}
+
+.request-description {
+    margin: 0.5rem 0;
+}
+
+.consultation-item h4 {
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.consultation-item p {
+    margin: 0.5rem 0;
+}
+
+.consultation-item.completed {
+    opacity: 0.7;
+}
+
+
+@media (max-width: 768px) {
+    .filters {
+        flex-direction: column;
+    }
+    
+    .request-type,
+    .request-status,
+    .request-date {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+}
