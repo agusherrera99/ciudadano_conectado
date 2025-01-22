@@ -189,9 +189,16 @@ textarea {
 .consultation-item,
 .notification-item {
     background-color: var(--secondary);
-    border-radius: 4px;
-    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    padding: 1.25rem;
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.request-item:hover, .consultation-item:hover, .notification-item:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .request-type,
@@ -203,25 +210,72 @@ textarea {
 }
 
 .request-status {
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
+}
+
+.request-status::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
 }
 
 .pending {
-    background-color: var(--warning);
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #856404;
+}
+
+.pending::before {
+    background-color: #ffc107;
 }
 
 .in-process {
-    background-color: var(--primary);
+    background-color: rgba(46, 92, 138, 0.2);
+    color: #2E5C8A;
+}
+
+.in-process::before {
+    background-color: #2E5C8A;
 }
 
 .resolved {
-    background-color: var(--success);
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #155724;
+}
+
+.resolved::before {
+    background-color: #28a745;
+}
+
+.request-type {
+    font-weight: 600;
+    color: var(--primary);
+    margin-right: 1rem;
+}
+
+.request-date {
+    color: #6c757d;
+    font-size: 0.9rem;
 }
 
 .request-description {
-    margin: 0.5rem 0;
+    margin: 0.75rem 0;
+    color: var(--text);
+}
+
+.view-details {
+    margin-top: 0.5rem;
 }
 
 .consultation-item h4 {

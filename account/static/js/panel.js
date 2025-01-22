@@ -2,8 +2,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const newRequestBtn = document.getElementById('new-request-btn');
     const newRequestForm = document.getElementById('new-request-form');
     const requestList = document.getElementById('request-list')
+    const cancelRequestBtn = document.getElementById('cancel-request-btn');
 
     newRequestBtn.addEventListener('click', function() {
+        newRequestBtn.classList.toggle('hidden');
+        newRequestForm.classList.toggle('hidden');
+        requestList.classList.toggle('hidden')
+    });
+
+    cancelRequestBtn.addEventListener('click', function() {
+        newRequestBtn.classList.toggle('hidden');
         newRequestForm.classList.toggle('hidden');
         requestList.classList.toggle('hidden')
     });

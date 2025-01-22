@@ -16,7 +16,10 @@
             </a>
         </div>
         <div class="nav-right">
-            <button class="btn btn-logout">Cerrar Sesión</button>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-logout">Cerrar Sesión</button>
+            </form>
         </div>
     </nav>
 
@@ -68,7 +71,10 @@
                         <label for="request-images">Imágenes Adjuntas</label>
                         <input type="file" id="request-images" multiple accept="image/*">
                     </div>
-                    <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-request-btn">Cancelar</button>
+                    </div>
                 </form>
             </div>
             
