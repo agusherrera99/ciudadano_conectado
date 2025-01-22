@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Usuario</title>
+    <title>Panel</title>
     <link rel="stylesheet" href="{% static 'css/panel.css' %}">
 </head>
 <body>
@@ -16,6 +16,10 @@
             </a>
         </div>
         <div class="nav-right">
+            <a class="user-badge" href="{% url 'account:profile' %}">
+                <span class="avatar">A</span>
+                <span class="username">Agustín Herrera</span>
+            </a>
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
                 <button class="btn btn-logout">Cerrar Sesión</button>
@@ -24,8 +28,6 @@
     </nav>
 
     <main>
-        <h1>Panel de Usuario</h1>
-
         <section id="notifications">
             <h2>Notificaciones</h2>
             <ul class="notification-items">

@@ -6,6 +6,7 @@
     --dark-background: #343a40;
     --light-text: #ffffff;
     --text: #212529;
+    --avatar-color: #f8f9fa;
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
@@ -60,6 +61,35 @@ nav {
     font-size: 1.25rem;
     font-weight: 600;
     color: var(--primary);
+}
+
+.user-badge {
+    display: inline-block;
+    height: 3em;
+    padding-right: 1.25rem;
+    background-color: var(--background);
+    line-height: 2rem;
+    border-radius: 9999px;
+    text-decoration: none;
+}
+
+.avatar {
+    float: left;
+    height: 100%;
+    width: 4rem; 
+    line-height: 3rem; 
+    text-align: center; 
+    border-radius: 9999px;
+    background-color: var(--avatar-color);
+    font-size: 2rem; 
+    font-weight: bold;
+    color: black;
+}
+
+.username {
+    margin-left: .75rem;
+    line-height: 3rem; 
+    color: black;
 }
 
 .btn {
