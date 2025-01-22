@@ -5,6 +5,9 @@ from django.shortcuts import render
 def panel(request):
     return render(request, 'panel.html')
 
+def profile(request):
+    return render(request, 'profile.html')
+
 def login(request):
     return render(request, 'registration/login.html')
 

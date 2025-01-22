@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+    <nav>
+        <div class="nav-left">
+            <a class="nav-logo" href="{% url 'pages:home' %}">
+                <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                <span class="site-name">Ciudadanos Conectados</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <a class="user-badge" href="{% url 'account:profile' %}">
+                <span class="avatar">A</span>
+                <span class="username">Agustín Herrera</span>
+            </a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-logout">Cerrar Sesión</button>
+            </form>
+        </div>
+    </nav>
+
+    <main>
+        <section id="profile">
+            <h2>Mi Perfil</h2>
+            <div class="profile-details">
+                <div class="profile-info">
+                    <h3>Agustín Herrera</h3>
+                    <p><strong>Email:</strong> agustinherrera.dev@gmail.com</p>
+                    <p><strong>DNI:</strong> 41926430</p>
+                    <p><strong>Ubicación:</strong> 9 de julio (288) - Las Flores</p>
+                    <p><strong>Fecha de Registro:</strong> 10-01-2025</p>
+                </div>
+            </div>
+
+            <div class="profile-actions">
+                <button class="btn btn-primary" id="edit-profile-btn">Editar Perfil</button>
+                <button class="btn btn-secondary" id="change-password-btn">Cambiar Contraseña</button>
+            </div>
+
+            <div id="edit-profile-form" class="hidden">
+                <h3>Editar Perfil</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Nombre de Usuario</label>
+                        <input type="text" id="username" value="Agustín Herrera" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" value="agustin@correo.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ubication">Ubicación</label>
+                        <input type="text" id="ubication" value="9 de julio 228" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="save-edit-profile-btn">Guardar Cambios</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-edit-profile-btn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="change-password-form" class="hidden">
+                <h3>Cambiar Contraseña</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="current-password">Contraseña Actual</label>
+                        <input type="password" id="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">Nueva Contraseña</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirmar Nueva Contraseña</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="save-change-password-btn">Guardar Cambios</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-change-password-btn">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'js/profile.js' %}"></script>
+</body>
+</html>
