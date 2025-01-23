@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'pages.apps.PagesConfig',
     'surveys.apps.SurveysConfig',
+    'issues.apps.IssuesConfig',
 
     # Third-party apps
     'fontawesomefree'

@@ -61,37 +61,6 @@
             </div>
         </section>
     </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Acerca de Las Flores</h3>
-                <p>Una comunidad que fomenta la participación ciudadana y la gobernanza transparente.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Información de contacto</h3>
-                <p>modernizacion@lasflores.gob.ar</p>
-            </div>
-            <div class="footer-section">
-                <h3>Enlaces rápidos</h3>
-                <ul>
-                    <li><a href="#" aria-label="Preguntas frecuentes">Preguntas frecuentes</a></li>
-                    <li><a href="#" aria-label="Política de privacidad">Política de privacidad</a></li>
-                    <li><a href="#" aria-label="Condiciones de servicio">Condiciones de servicio</a></li>
-                </ul>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // JavaScript to dynamically set the width of result bars based on their percentage
-        document.addEventListener("DOMContentLoaded", function () {
-            const resultBarPercentages = document.querySelectorAll(".result-bar-percentage");
-            resultBarPercentages.forEach((bar => {
-                const percentage = bar.getAttribute("data-percentage");
-                bar.style.width = `${percentage}%`;
-            }));
-        });
-    </script>
+    <script src="{% static 'js/survey_results.js' %}"></script>
 </body>
 </html>
