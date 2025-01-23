@@ -35,7 +35,8 @@
             
             <div id="new-request-form" class="hidden">
                 <h3>Crear Nueva Solicitud</h3>
-                <form>
+                <form method="POST" id="request-form">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="request-type">Tipo de Solicitud</label>
                         <select id="request-type" required>
@@ -84,54 +85,87 @@
                 </div>
                 <ul class="request-items">
                     <li class="request-item">
-                        <span class="request-type">Mantenimiento</span>
-                        <span class="request-status pending">Pendiente</span>
-                        <span class="request-date">2023-05-15</span>
+                        <div class="request-header">
+                            <span class="request-type">Mantenimiento</span>
+                            <span class="request-status pending">Pendiente</span>
+                        </div>
                         <p class="request-description">Reparación de bache en Calle Principal</p>
-                        <button class="btn btn-secondary view-details">Ver Detalles</button>
+                        <div class="request-actions">
+                            <a class="btn btn-secondary">Ver Detalles</a>
+                            <span class="request-date">Creada el: 2023-05-15</span>
+                        </div>
                     </li>
                     <li class="request-item">
-                        <span class="request-type">Reclamo</span>
-                        <span class="request-status in-process">En Proceso</span>
-                        <span class="request-date">2023-05-10</span>
+                        <div class="request-header">
+                            <span class="request-type">Reclamo</span>
+                            <span class="request-status in-process">En Proceso</span>
+                        </div>
                         <p class="request-description">Ruidos molestos en el parque central</p>
-                        <button class="btn btn-secondary view-details">Ver Detalles</button>
+                        <div class="request-actions">
+                            <a class="btn btn-secondary">Ver Detalles</a>
+                            <span class="request-date">Creada el: 2023-05-10</span>
+                        </div>
+                        
                     </li>
                     <li class="request-item">
-                        <span class="request-type">Sugerencia</span>
-                        <span class="request-status resolved">Resuelto</span>
-                        <span class="request-date">2023-05-01</span>
+                        <div class="request-header">
+                            <span class="request-type">Sugerencia</span>
+                            <span class="request-status resolved">Resuelto</span>
+                        </div>
                         <p class="request-description">Instalación de más bancos en la plaza</p>
-                        <button class="btn btn-secondary view-details" aria-label="Ver detalles de solicitud">Ver Detalles</button>
+                        <div class="request-actions">
+                            <a class="btn btn-secondary" aria-label="Ver detalles de solicitud">Ver Detalles</a>
+                            <span class="request-date">Creada el: 2023-05-01</span>
+                        </div>
                     </li>
                 </ul>
             </div>
         </section>
         
-        <section id="consultations">
-            <h2>Consultas Públicas</h2>
-            <div id="active-consultations">
-                <h3>Consultas Activas</h3>
-                <ul class="consultation-items">
-                    <li class="consultation-item">
-                        <h4>Mejoras en el Transporte Público</h4>
-                        <p>Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
-                        <button class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</button>
+        <!-- Surveys Section -->
+        <section id="survey-section">
+            <!-- Active surveys -->
+            <div id="active-survey">
+                <h3>Encuestas y Consultas Activas</h3>
+                <ul class="survey-items">
+                    <li class="survey-item">
+                        <div class="survey-header">
+                            <h4>Mejoras en el Transporte Público</h4>
+                            <span class="survey-status active">Activa</span>
+                        </div>
+                        <p class="survey-description">Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
+                        <div class="survey-actions">
+                            <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                            <span class="survey-deadline">Fecha límite: 30-11-2023</span>
+                        </div>
                     </li>
-                    <li class="consultation-item">
-                        <h4>Proyecto de Reciclaje</h4>
-                        <p>Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
-                        <button class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</button>
+                    <li class="survey-item">
+                        <div class="survey-header">
+                            <h4>Proyecto de Reciclaje</h4>
+                            <span class="survey-status active">Activa</span>
+                        </div>
+                        <p class="survey-description">Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
+                        <div class="survey-actions">
+                            <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                            <span class="survey-deadline">Fecha límite: 15-12-2023</span>
+                        </div>
                     </li>
                 </ul>
             </div>
-            <div id="consultation-history">
-                <h3>Historial de Consultas</h3>
-                <ul class="consultation-items">
-                    <li class="consultation-item completed">
-                        <h4>Presupuesto Participativo 2023</h4>
-                        <p>Gracias por tu participación. Resultados disponibles.</p>
-                        <button class="btn btn-secondary view-results" aria-label="Ver resultados de consulta pública">Ver Resultados</button>
+
+            <!-- Surveys history -->
+            <div id="survey-history">
+                <h3>Historial de Encuestas y Consultas</h3>
+                <ul class="survey-items">
+                    <li class="survey-item completed">
+                        <div class="survey-header">
+                            <h4>Presupuesto Participativo 2023</h4>
+                            <span class="survey-status completed">Finalizada</span>
+                        </div>
+                        <p class="survey-description">Gracias por tu participación. Resultados disponibles.</p>
+                        <div class="survey-actions">
+                            <a class="btn btn-secondary view-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                        </div>
                     </li>
                 </ul>
             </div>

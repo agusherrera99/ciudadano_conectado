@@ -138,13 +138,13 @@ textarea {
 }
 
 .request-items,
-.consultation-items,
+.survey-items,
 .notification-items {
     list-style-type: none;
 }
 
 .request-item,
-.consultation-item,
+.survey-item,
 .notification-item {
     background-color: var(--secondary);
     border-radius: 8px;
@@ -154,14 +154,13 @@ textarea {
     transition: all 0.3s ease;
 }
 
-.request-item:hover, .consultation-item:hover, .notification-item:hover {
+.request-item:hover, .survey-item:hover, .notification-item:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
 
 .request-type,
-.request-status,
-.request-date {
+.request-status {
     display: inline-block;
     margin-right: 1rem;
     font-weight: bold;
@@ -222,33 +221,57 @@ textarea {
     margin-right: 1rem;
 }
 
-.request-date {
-    color: #6c757d;
-    font-size: 0.9rem;
+.survey-item.completed {
+    opacity: 0.75;
 }
 
-.request-description {
-    margin: 0.75rem 0;
-    color: var(--text);
-}
-
-.view-details {
-    margin-top: 0.5rem;
-}
-
-.consultation-item h4 {
+.survey-item h4 {
     color: var(--primary);
     margin-bottom: 0.5rem;
 }
 
-.consultation-item p {
-    margin: 0.5rem 0;
+.survey-header, .request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.consultation-item.completed {
-    opacity: 0.7;
+.survey-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+.survey-status.active {
+    background-color: rgba(46, 92, 138, 0.2);
+    color: var(--primary);
+}
+
+.survey-status.completed {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #155724;
+}
+
+.survey-description, .request-description {
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.survey-actions, .request-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.survey-deadline, .request-date {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
 
 @media (max-width: 768px) {
     .filters {
