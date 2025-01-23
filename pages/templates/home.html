@@ -5,27 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ciudadanos Conectados</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <a class="nav-logo" href="{% url 'pages:home' %}">
-                <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
-                <span class="site-name">Ciudadanos Conectados</span>
-            </a>
-        </div>
-        <div class="nav-right">
-            <a class="btn btn-login" href="{% url 'account:login' %}">Iniciar Sesión</a>
-            <a class="btn btn-register" href="{% url 'account:register' %}">Registrar</a>
-        </div>
-    </nav>
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a class="nav-logo" href="{% url 'pages:home' %}" aria-label="Inicio">
+                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                    <span class="site-name">Ciudadanos Conectados</span>
+                </a>
+            </div>
+            <div class="nav-right">
+                <a class="btn btn-login" href="{% url 'account:login' %}" aria-label="Iniciar Sesión">Iniciar Sesión</a>
+                <a class="btn btn-register" href="{% url 'account:register' %}" aria-label="Registrarse">Registrar</a>
+            </div>
+        </nav>
+    </header>
 
     <main>
-        <div class="card-container">
+        <section class="card-container">
             <div class="card">
-                <i class="card-icon fas fa-exclamation-circle"></i>
+                <i class="card-icon fas fa-exclamation-circle" aria-hidden="true"></i>
                 <h2>Informar problemas y realizar solicitudes</h2>
                 <ul>
                     <li>Enviar y realizar reclamos, solicitudes de mantenimiento o sugerencias directamente al municipio.</li>
@@ -33,7 +36,7 @@
                 </ul>
             </div>
             <div class="card">
-                <i class="card-icon fas fa-poll"></i>
+                <i class="card-icon fas fa-poll" aria-hidden="true"></i>
                 <h2>Participar en consultas y encuestas públicas</h2>
                 <ul>
                     <li>Contribuir a votaciones y encuestas sobre proyectos y políticas municipales.</li>
@@ -41,7 +44,7 @@
                     <li>Consultar los resultados de las consultas para promover la transparencia.</li>
                 </ul>
             </div>
-        </div>
+        </section>
         
     </main>
 
@@ -58,9 +61,9 @@
             <div class="footer-section">
                 <h3>Enlaces rápidos</h3>
                 <ul>
-                    <li><a href="#">Preguntas frecuentes</a></li>
-                    <li><a href="#">Política de privacidad</a></li>
-                    <li><a href="#">Condiciones de servicio</a></li>
+                    <li><a href="#" aria-label="Preguntas frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="#" aria-label="Política de privacidad">Política de privacidad</a></li>
+                    <li><a href="#" aria-label="Condiciones de servicio">Condiciones de servicio</a></li>
                 </ul>
             </div>
         </div>

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
     <link rel="stylesheet" href="{% static 'css/panel.css' %}">
 </head>
 <body>
@@ -15,12 +17,12 @@
             <h2>Notificaciones</h2>
             <ul class="notification-items">
                 <li class="notification-item unread">
-                    <i class="fas fa-circle-exclamation"></i>
+                    <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
                     <p>Tu solicitud de mantenimiento ha sido actualizada a "En Proceso".</p>
                     <span class="notification-date">Hace 2 horas</span>
                 </li>
                 <li class="notification-item">
-                    <i class="fas fa-bullhorn"></i>
+                    <i class="fas fa-bullhorn" aria-hidden="true"></i>
                     <p>Nueva consulta pública disponible: "Mejoras en el Transporte Público".</p>
                     <span class="notification-date">Hace 1 día</span>
                 </li>
@@ -29,7 +31,7 @@
         
         <section id="request-management">
             <h2>Gestión de Solicitudes</h2>
-            <button id="new-request-btn" class="btn btn-primary">Nueva Solicitud</button>
+            <button id="new-request-btn" class="btn btn-primary" aria-label="Nueva Solicitud">Nueva Solicitud</button>
             
             <div id="new-request-form" class="hidden">
                 <h3>Crear Nueva Solicitud</h3>
@@ -57,8 +59,8 @@
                         <input type="file" id="request-images" multiple accept="image/*">
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-request-btn">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
                     </div>
                 </form>
             </div>
@@ -100,7 +102,7 @@
                         <span class="request-status resolved">Resuelto</span>
                         <span class="request-date">2023-05-01</span>
                         <p class="request-description">Instalación de más bancos en la plaza</p>
-                        <button class="btn btn-secondary view-details">Ver Detalles</button>
+                        <button class="btn btn-secondary view-details" aria-label="Ver detalles de solicitud">Ver Detalles</button>
                     </li>
                 </ul>
             </div>
@@ -114,12 +116,12 @@
                     <li class="consultation-item">
                         <h4>Mejoras en el Transporte Público</h4>
                         <p>Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
-                        <button class="btn btn-primary participate">Participar</button>
+                        <button class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</button>
                     </li>
                     <li class="consultation-item">
                         <h4>Proyecto de Reciclaje</h4>
                         <p>Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
-                        <button class="btn btn-primary participate">Participar</button>
+                        <button class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</button>
                     </li>
                 </ul>
             </div>
@@ -129,7 +131,7 @@
                     <li class="consultation-item completed">
                         <h4>Presupuesto Participativo 2023</h4>
                         <p>Gracias por tu participación. Resultados disponibles.</p>
-                        <button class="btn btn-secondary view-results">Ver Resultados</button>
+                        <button class="btn btn-secondary view-results" aria-label="Ver resultados de consulta pública">Ver Resultados</button>
                     </li>
                 </ul>
             </div>

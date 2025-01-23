@@ -28,6 +28,8 @@ ENVIRONMENT = config('ENVIRONMENT', default='development')
 
 DEBUG = ENVIRONMENT == 'development'
 
+ALLOWED_HOSTS = ['*']
+
 
 # Application definition
 
