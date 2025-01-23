@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'pages.apps.PagesConfig',
     'account.apps.AccountConfig',
+    'pages.apps.PagesConfig',
+    'surveys.apps.SurveysConfig',
 
     # Third-party apps
     'fontawesomefree'

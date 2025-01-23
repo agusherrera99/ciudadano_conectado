@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participar en Encuesta</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'css/survey_detail.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <main>
+        <section id="survey-detail">
+            <h2>Participar en Encuesta</h2>
+            <div class="survey-info">
+                <h3>Título de encuesta</h3>
+                <p class="survey-description">Descripción de la encuesta</p>
+                <p class="survey-deadline">Fecha límite: 12/34/56</p>
+            </div>
+
+            <form method="POST" class="survey-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="question-1">Pregunta 1: ¿Cómo calificarías el transporte público actual?</label>
+                    <select id="question-1" name="question-1" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="excellent">Excelente</option>
+                        <option value="good">Buena</option>
+                        <option value="regular">Regular</option>
+                        <option value="poor">Mala</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="question-2">Pregunta 2: ¿Qué mejora priorizarías?</label>
+                    <textarea id="question-2" name="question-2" rows="4" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de Las Flores</h3>
+                <p>Una comunidad que fomenta la participación ciudadana y la gobernanza transparente.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Información de contacto</h3>
+                <p>modernizacion@lasflores.gob.ar</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#" aria-label="Preguntas frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="#" aria-label="Política de privacidad">Política de privacidad</a></li>
+                    <li><a href="#" aria-label="Condiciones de servicio">Condiciones de servicio</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

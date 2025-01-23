@@ -1,0 +1,168 @@
+:root {
+    --primary: #2E5C8A;
+    --secondary: #f8f9fa;
+    --accent: #e9ecef;
+    --background: #ffffff;
+    --text: #212529;
+    --dark-background: #343a40;
+    --light-text: #ffffff;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    color: var(--text);
+    border: 1px solid var(--accent);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.survey-info {
+    margin-bottom: 2rem;
+}
+
+.survey-description {
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.survey-deadline {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.survey-form {
+    background-color: var(--secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid var(--accent);
+}
+
+.survey-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.survey-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.survey-form select,
+.survey-form textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.survey-form .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: var(--secondary);
+    color: var(--text);
+    padding: 3rem 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid var(--accent);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 1rem;
+}
+
+.footer-section h3 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-section a:hover {
+    color: var(--primary);
+}

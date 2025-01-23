@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Encuesta</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'css/survey_results.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <main>
+        <section id="survey-results">
+            <div class="survey-info">
+                <div class="survey-header">
+                    <h3>Titulo de la encuesta</h3>
+                    <span class="survey-status active">Activa</span>
+                </div>
+                <p class="survey-description">descripción de la encuesta</p>
+                <p class="survey-deadline">Fecha límite: 12/34/56</p>
+            </div>
+
+            <div class="results-summary">
+                <h3>Resumen de Resultados</h3>
+                <div class="result-item">
+                    <h4>Pregunta 1: ¿Cómo calificarías el transporte público actual?</h4>
+                    <div class="result-bar-container">
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Excelente</div>
+                            <div class="result-bar-percentage" data-percentage="10" data-color="blue">10%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Muy buena</div>
+                            <div class="result-bar-percentage" data-percentage="15" data-color="green">15%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Buena</div>
+                            <div class="result-bar-percentage" data-percentage="5" data-color="light-green">5%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Promedio</div>
+                            <div class="result-bar-percentage" data-percentage="40" data-color="neutral">40%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Mala</div>
+                            <div class="result-bar-percentage" data-percentage="15" data-color="light-yellow">15%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Muy Mala</div>
+                            <div class="result-bar-percentage" data-percentage="10" data-color="yellow">10%</div>
+                        </div>
+                        <div class="result-bar" >
+                            <div class="result-bar-label">Pesima</div>
+                            <div class="result-bar-percentage" data-percentage="5" data-color="red">5%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de Las Flores</h3>
+                <p>Una comunidad que fomenta la participación ciudadana y la gobernanza transparente.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Información de contacto</h3>
+                <p>modernizacion@lasflores.gob.ar</p>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="#" aria-label="Preguntas frecuentes">Preguntas frecuentes</a></li>
+                    <li><a href="#" aria-label="Política de privacidad">Política de privacidad</a></li>
+                    <li><a href="#" aria-label="Condiciones de servicio">Condiciones de servicio</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript to dynamically set the width of result bars based on their percentage
+        document.addEventListener("DOMContentLoaded", function () {
+            const resultBarPercentages = document.querySelectorAll(".result-bar-percentage");
+            resultBarPercentages.forEach((bar => {
+                const percentage = bar.getAttribute("data-percentage");
+                bar.style.width = `${percentage}%`;
+            }));
+        });
+    </script>
+</body>
+</html>
