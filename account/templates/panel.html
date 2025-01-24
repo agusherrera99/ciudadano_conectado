@@ -7,6 +7,9 @@
     <title>Panel</title>
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
     <link rel="stylesheet" href="{% static 'css/panel.css' %}">
 </head>
 <body>
@@ -45,20 +48,65 @@
                             <option value="complaint">Reclamo</option>
                             <option value="suggestion">Sugerencia</option>
                         </select>
+                        
+                        <div id="public-objects-container" class="hidden">
+                            <select id="public-objects-category">
+                                <option value="">Seleccione una categoría</option>
+                                <option value="parks">Parques</option>
+                                <option value="streets">Calles</option>
+                                <option value="lights">Luces</option>
+                                <!-- Options will be populated dynamically based on the complaint type -->
+                            </select>
+                            
+                            <div id="public-objects" class="hidden">
+                                <h2>Seleccione el Objeto</h2>
+                        
+                                <!-- Search Bar -->
+                                <div class="search-bar">
+                                    <input type="text" id="search" placeholder="Buscar objeto...">
+                                    <button id="search-button">Buscar</button>
+                                </div>
+
+                                <!-- Object Cards -->
+                                <div id="object-cards" class="card-grid"></div>
+                                
+                                <div class="form-group">
+                                    <label for="request-description">Descripción</label>
+                                    <textarea id="request-description" required></textarea>
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="request-images">Imágenes Adjuntas</label>
+                                    <input type="file" id="request-images" multiple accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="complaint-container" class="hidden">
+                            <div class="form-group">
+                                <label for="request-description">Descripción</label>
+                                <textarea id="request-description" required></textarea>
+                            </div>
+            
+                            <div class="form-group">
+                                <label for="request-images">Imágenes Adjuntas</label>
+                                <input type="file" id="request-images" multiple accept="image/*">
+                            </div>
+                        </div>
+
+                        <div id="suggestion-container" class="hidden">
+                            <div class="form-group">
+                                <label for="request-description">Descripción</label>
+                                <textarea id="request-description" required></textarea>
+                            </div>
+            
+                            <div class="form-group">
+                                <label for="request-images">Imágenes Adjuntas</label>
+                                <input type="file" id="request-images" multiple accept="image/*">
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="request-description">Descripción</label>
-                        <textarea id="request-description" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="request-location">Ubicación</label>
-                        <input type="text" id="request-location">
-                        <div id="map" class="map-placeholder">Mapa interactivo aquí</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="request-images">Imágenes Adjuntas</label>
-                        <input type="file" id="request-images" multiple accept="image/*">
-                    </div>
+                    
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
                         <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
@@ -135,7 +183,10 @@
                         </div>
                         <p class="survey-description">Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
                         <div class="survey-actions">
-                            <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                            <div class="survey-action">
+                                <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                                <a class="btn btn-secondary view-results">Ver Resultados</a>
+                            </div>
                             <span class="survey-deadline">Fecha límite: 30-11-2023</span>
                         </div>
                     </li>
@@ -146,7 +197,10 @@
                         </div>
                         <p class="survey-description">Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
                         <div class="survey-actions">
-                            <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                            <div class="survey-action">
+                                <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                                <a class="btn btn-secondary view-results">Ver Resultados</a>
+                            </div>
                             <span class="survey-deadline">Fecha límite: 15-12-2023</span>
                         </div>
                     </li>
@@ -172,6 +226,9 @@
         </section>
     </main>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     <script src="{% static 'js/panel.js' %}"></script>
 </body>
 </html>
