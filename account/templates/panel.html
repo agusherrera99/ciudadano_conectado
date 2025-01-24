@@ -16,6 +16,7 @@
     {% include 'components/navbar.html' %}
 
     <main>
+        <!-- Notifications Section -->
         <section id="notifications">
             <h2>Notificaciones</h2>
             <ul class="notification-items">
@@ -32,44 +33,75 @@
             </ul>
         </section>
         
-        <section id="request-management">
-            <h2>Gestión de Solicitudes</h2>
-            <button id="new-request-btn" class="btn btn-primary" aria-label="Nueva Solicitud">Nueva Solicitud</button>
+        <!-- Requests Section -->
+        <section id="request-section">
+            <button class="section-toggle">
+                <span>Gestión de Solicitudes</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+
+            <div class="section-content">
+                <button id="new-request-btn" class="btn btn-primary" aria-label="Nueva Solicitud">Nueva Solicitud</button>
             
-            <div id="new-request-form" class="hidden">
-                <h3>Crear Nueva Solicitud</h3>
-                <form method="POST" id="request-form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="request-type">Tipo de Solicitud</label>
-                        <select id="request-type" required>
-                            <option value="">Seleccione un tipo</option>
-                            <option value="maintenance">Mantenimiento</option>
-                            <option value="complaint">Reclamo</option>
-                            <option value="suggestion">Sugerencia</option>
-                        </select>
-                        
-                        <div id="public-objects-container" class="hidden">
-                            <select id="public-objects-category">
-                                <option value="">Seleccione una categoría</option>
-                                <option value="parks">Parques</option>
-                                <option value="streets">Calles</option>
-                                <option value="lights">Luces</option>
-                                <!-- Options will be populated dynamically based on the complaint type -->
+                <div id="new-request-form" class="hidden">
+                    <h3>Crear Nueva Solicitud</h3>
+                    <form method="POST" id="request-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="request-type">Tipo de Solicitud</label>
+                            <select id="request-type" required>
+                                <option value="">Seleccione un tipo</option>
+                                <option value="maintenance">Mantenimiento</option>
+                                <option value="complaint">Reclamo</option>
+                                <option value="suggestion">Sugerencia</option>
                             </select>
                             
-                            <div id="public-objects" class="hidden">
-                                <h2>Seleccione el Objeto</h2>
-                        
-                                <!-- Search Bar -->
-                                <div class="search-bar">
-                                    <input type="text" id="search" placeholder="Buscar objeto...">
-                                    <button id="search-button">Buscar</button>
-                                </div>
-
-                                <!-- Object Cards -->
-                                <div id="object-cards" class="card-grid"></div>
+                            <div id="public-objects-container" class="hidden">
+                                <select id="public-objects-category">
+                                    <option value="">Seleccione una categoría</option>
+                                    <option value="parks">Parques</option>
+                                    <option value="streets">Calles</option>
+                                    <option value="lights">Luces</option>
+                                    <!-- Options will be populated dynamically based on the complaint type -->
+                                </select>
                                 
+                                <div id="public-objects" class="hidden">
+                                    <h2>Seleccione el Objeto</h2>
+                            
+                                    <!-- Search Bar -->
+                                    <div class="search-bar">
+                                        <input type="text" id="search" placeholder="Buscar objeto...">
+                                        <button id="search-button">Buscar</button>
+                                    </div>
+
+                                    <!-- Object Cards -->
+                                    <div id="object-cards" class="card-grid"></div>
+                                    
+                                    <div class="form-group">
+                                        <label for="request-description">Descripción</label>
+                                        <textarea id="request-description" required></textarea>
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <label for="request-images">Imágenes Adjuntas</label>
+                                        <input type="file" id="request-images" multiple accept="image/*">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="complaint-container" class="hidden">
+                                <div class="form-group">
+                                    <label for="request-description">Descripción</label>
+                                    <textarea id="request-description" required></textarea>
+                                </div>
+                
+                                <div class="form-group">
+                                    <label for="request-images">Imágenes Adjuntas</label>
+                                    <input type="file" id="request-images" multiple accept="image/*">
+                                </div>
+                            </div>
+
+                            <div id="suggestion-container" class="hidden">
                                 <div class="form-group">
                                     <label for="request-description">Descripción</label>
                                     <textarea id="request-description" required></textarea>
@@ -81,147 +113,129 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div id="complaint-container" class="hidden">
-                            <div class="form-group">
-                                <label for="request-description">Descripción</label>
-                                <textarea id="request-description" required></textarea>
-                            </div>
-            
-                            <div class="form-group">
-                                <label for="request-images">Imágenes Adjuntas</label>
-                                <input type="file" id="request-images" multiple accept="image/*">
-                            </div>
-                        </div>
-
-                        <div id="suggestion-container" class="hidden">
-                            <div class="form-group">
-                                <label for="request-description">Descripción</label>
-                                <textarea id="request-description" required></textarea>
-                            </div>
-            
-                            <div class="form-group">
-                                <label for="request-images">Imágenes Adjuntas</label>
-                                <input type="file" id="request-images" multiple accept="image/*">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-            
-            <div id="request-list">
-                <h3>Mis Solicitudes</h3>
-                <div class="filters">
-                    <select id="filter-type">
-                        <option value="">Todos los tipos</option>
-                        <option value="maintenance">Mantenimiento</option>
-                        <option value="complaint">Reclamo</option>
-                        <option value="suggestion">Sugerencia</option>
-                    </select>
-                    <select id="filter-status">
-                        <option value="">Todos los estados</option>
-                        <option value="pending">Pendiente</option>
-                        <option value="in-process">En Proceso</option>
-                        <option value="resolved">Resuelto</option>
-                    </select>
-                    <input type="date" id="filter-date">
-                </div>
-                <ul class="request-items">
-                    <li class="request-item">
-                        <div class="request-header">
-                            <span class="request-type">Mantenimiento</span>
-                            <span class="request-status pending">Pendiente</span>
-                        </div>
-                        <p class="request-description">Reparación de bache en Calle Principal</p>
-                        <div class="request-actions">
-                            <a class="btn btn-secondary">Ver Detalles</a>
-                            <span class="request-date">Creada el: 2023-05-15</span>
-                        </div>
-                    </li>
-                    <li class="request-item">
-                        <div class="request-header">
-                            <span class="request-type">Reclamo</span>
-                            <span class="request-status in-process">En Proceso</span>
-                        </div>
-                        <p class="request-description">Ruidos molestos en el parque central</p>
-                        <div class="request-actions">
-                            <a class="btn btn-secondary">Ver Detalles</a>
-                            <span class="request-date">Creada el: 2023-05-10</span>
-                        </div>
                         
-                    </li>
-                    <li class="request-item">
-                        <div class="request-header">
-                            <span class="request-type">Sugerencia</span>
-                            <span class="request-status resolved">Resuelto</span>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
+                            <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
                         </div>
-                        <p class="request-description">Instalación de más bancos en la plaza</p>
-                        <div class="request-actions">
-                            <a class="btn btn-secondary" aria-label="Ver detalles de solicitud">Ver Detalles</a>
-                            <span class="request-date">Creada el: 2023-05-01</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                    </form>
+                </div>
+                
+                <div id="request-list">
+                    <h3>Mis Solicitudes</h3>
+                    <div class="filters">
+                        <select id="filter-type">
+                            <option value="">Todos los tipos</option>
+                            <option value="maintenance">Mantenimiento</option>
+                            <option value="complaint">Reclamo</option>
+                            <option value="suggestion">Sugerencia</option>
+                        </select>
+                        <select id="filter-status">
+                            <option value="">Todos los estados</option>
+                            <option value="pending">Pendiente</option>
+                            <option value="in-process">En Proceso</option>
+                            <option value="resolved">Resuelto</option>
+                        </select>
+                        <input type="date" id="filter-date">
+                    </div>
+                    <ul class="request-items">
+                        <li class="request-item">
+                            <div class="request-header">
+                                <span class="request-type">Mantenimiento</span>
+                                <span class="request-status pending">Pendiente</span>
+                            </div>
+                            <p class="request-description">Reparación de bache en Calle Principal</p>
+                            <div class="request-actions">
+                                <a class="btn btn-secondary">Ver Detalles</a>
+                                <span class="request-date">Creada el: 2023-05-15</span>
+                            </div>
+                        </li>
+                        <li class="request-item">
+                            <div class="request-header">
+                                <span class="request-type">Reclamo</span>
+                                <span class="request-status in-process">En Proceso</span>
+                            </div>
+                            <p class="request-description">Ruidos molestos en el parque central</p>
+                            <div class="request-actions">
+                                <a class="btn btn-secondary">Ver Detalles</a>
+                                <span class="request-date">Creada el: 2023-05-10</span>
+                            </div>
+                            
+                        </li>
+                        <li class="request-item">
+                            <div class="request-header">
+                                <span class="request-type">Sugerencia</span>
+                                <span class="request-status resolved">Resuelto</span>
+                            </div>
+                            <p class="request-description">Instalación de más bancos en la plaza</p>
+                            <div class="request-actions">
+                                <a class="btn btn-secondary" aria-label="Ver detalles de solicitud">Ver Detalles</a>
+                                <span class="request-date">Creada el: 2023-05-01</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>    
         </section>
         
         <!-- Surveys Section -->
         <section id="survey-section">
             <!-- Active surveys -->
             <div id="active-survey">
-                <h3>Encuestas y Consultas Activas</h3>
-                <ul class="survey-items">
-                    <li class="survey-item">
-                        <div class="survey-header">
-                            <h4>Mejoras en el Transporte Público</h4>
-                            <span class="survey-status active">Activa</span>
-                        </div>
-                        <p class="survey-description">Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
-                        <div class="survey-actions">
-                            <div class="survey-action">
-                                <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
-                                <a class="btn btn-secondary view-results">Ver Resultados</a>
-                            </div>
-                            <span class="survey-deadline">Fecha límite: 30-11-2023</span>
-                        </div>
-                    </li>
-                    <li class="survey-item">
-                        <div class="survey-header">
-                            <h4>Proyecto de Reciclaje</h4>
-                            <span class="survey-status active">Activa</span>
-                        </div>
-                        <p class="survey-description">Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
-                        <div class="survey-actions">
-                            <div class="survey-action">
-                                <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
-                                <a class="btn btn-secondary view-results">Ver Resultados</a>
-                            </div>
-                            <span class="survey-deadline">Fecha límite: 15-12-2023</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+                <button class="section-toggle">
+                    <span>Encuestas y Consultas</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
 
-            <!-- Surveys history -->
-            <div id="survey-history">
-                <h3>Historial de Encuestas y Consultas</h3>
-                <ul class="survey-items">
-                    <li class="survey-item completed">
-                        <div class="survey-header">
-                            <h4>Presupuesto Participativo 2023</h4>
-                            <span class="survey-status completed">Finalizada</span>
-                        </div>
-                        <p class="survey-description">Gracias por tu participación. Resultados disponibles.</p>
-                        <div class="survey-actions">
-                            <a class="btn btn-secondary view-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
-                        </div>
-                    </li>
-                </ul>
+                <div class="section-content">
+                    <ul class="survey-items">
+                        <li class="survey-item">
+                            <div class="survey-header">
+                                <h4>Mejoras en el Transporte Público</h4>
+                                <span class="survey-status active">Activa</span>
+                            </div>
+                            <p class="survey-description">Ayúdenos a mejorar el sistema de transporte público de nuestra ciudad.</p>
+                            <div class="survey-actions">
+                                <div class="survey-action">
+                                    <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                                    <a class="btn btn-secondary view-results">Ver Resultados</a>
+                                </div>
+                                <span class="survey-deadline">Fecha límite: 30-11-2023</span>
+                            </div>
+                        </li>
+                        <li class="survey-item">
+                            <div class="survey-header">
+                                <h4>Proyecto de Reciclaje</h4>
+                                <span class="survey-status active">Activa</span>
+                            </div>
+                            <p class="survey-description">Danos tu opinión sobre el nuevo proyecto de reciclaje municipal.</p>
+                            <div class="survey-actions">
+                                <div class="survey-action">
+                                    <a class="btn btn-primary participate" aria-label="Participar en consulta pública">Participar</a>
+                                    <a class="btn btn-secondary view-results">Ver Resultados</a>
+                                </div>
+                                <span class="survey-deadline">Fecha límite: 15-12-2023</span>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <!-- Surveys history -->
+                    <div id="survey-history">
+                        <h3>Historial de Encuestas y Consultas</h3>
+                        <ul class="survey-items">
+                            <li class="survey-item completed">
+                                <div class="survey-header">
+                                    <h4>Presupuesto Participativo 2023</h4>
+                                    <span class="survey-status completed">Finalizada</span>
+                                </div>
+                                <p class="survey-description">Gracias por tu participación. Resultados disponibles.</p>
+                                <div class="survey-actions">
+                                    <a class="btn btn-secondary view-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>   
             </div>
         </section>
     </main>

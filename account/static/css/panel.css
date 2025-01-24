@@ -61,6 +61,10 @@ h1, h2, h3 {
     margin-bottom: 1rem;
 }
 
+.hidden {
+    display: none;
+}
+
 section {
     margin-bottom: 2rem;
     background-color: white;
@@ -69,8 +73,46 @@ section {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.hidden {
-    display: none;
+.section-toggle {
+    width: 100%;
+    padding: 15px;
+    background-color: #2E5C8A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.section-toggle:hover {
+    background-color: #1c3a5c;
+}
+
+.section-toggle i {
+    font-size: 14px;
+    transition: transform 0.3s ease;
+}
+
+.section-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+    padding: 0 15px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.section-content.open {
+    max-height: 1000px; /* Adjust based on content height */
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {

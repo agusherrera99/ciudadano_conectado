@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Toggle section visibility
+    const sectionToggles = document.querySelectorAll(".section-toggle");
+    sectionToggles.forEach((toggle) => {
+        toggle.addEventListener("click", function () {
+            const sectionContent = this.nextElementSibling;
+            const arrow = this.querySelector(".arrow");
+
+            // Toggle the "open" class
+            sectionContent.classList.toggle("open");
+
+            // Rotate the arrow
+            if (sectionContent.classList.contains("open")) {
+                arrow.textContent = "▲";
+            } else {
+                arrow.textContent = "▼";
+            }
+        });
+    });
+
     const newRequestBtn = document.getElementById('new-request-btn');
     const newRequestForm = document.getElementById('new-request-form');
     const requestTypeSelect = document.getElementById('request-type');
