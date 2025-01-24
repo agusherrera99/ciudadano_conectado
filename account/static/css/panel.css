@@ -184,11 +184,12 @@ textarea {
 
 h2 {
     color: #2E5C8A;
-    margin-bottom: 20px;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
 }
 
 .search-bar {
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
 }
 
 .search-bar input {

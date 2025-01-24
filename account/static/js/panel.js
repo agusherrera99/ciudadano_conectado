@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Toggle new request form visibility
     const newRequestBtn = document.getElementById('new-request-btn');
     const newRequestForm = document.getElementById('new-request-form');
     const requestTypeSelect = document.getElementById('request-type');
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         requestList.classList.toggle('hidden')
     });
 
+    // Toggle request type form visibility
     requestTypeSelect.addEventListener('change', function() {
         const selectedType = requestTypeSelect.value;
         
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }   
     });
 
+    // Objects data and rendering
     const objectCards = document.getElementById("object-cards");
     const searchInput = document.getElementById("search");
     const searchButton = document.getElementById("search-button");
@@ -107,28 +110,30 @@ document.addEventListener('DOMContentLoaded', function() {
         renderObjects(searchInput.value);
     });
 
-
-    const viewDetailsButtons = document.querySelectorAll('.view-details');
+    // Request details
+    const viewDetailsButtons = document.querySelectorAll('.request-details');
     viewDetailsButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Here you would typically fetch the details and display them
-            alert('Request details would be shown here.');
+            alert('Redireccionar a página de detalles de solicitud');
         });
     });
 
+    // Consultation participation
     const participateButtons = document.querySelectorAll('.participate');
     participateButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Here you would typically open a participation form or modal
-            alert('Participation form would be shown here.');
+            alert('Redireccionar a página de participación en consulta');
         });
     });
 
-    const viewResultsButtons = document.querySelectorAll('.view-results');
+    // Consultation results
+    const viewResultsButtons = document.querySelectorAll('.view-survey-results');
     viewResultsButtons.forEach(button => {
         button.addEventListener('click', function() {
             // Here you would typically fetch and display the results
-            alert('Consultation results would be shown here.');
+            alert('Redireccionar a página de resultados de consulta');
         });
     });
 });
