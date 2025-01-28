@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Local apps
-    'account.apps.AccountConfig',
     'pages.apps.PagesConfig',
+    'account.apps.AccountConfig',
+    'notifications.apps.NotificationsConfig',
     'surveys.apps.SurveysConfig',
     'issues.apps.IssuesConfig',
 

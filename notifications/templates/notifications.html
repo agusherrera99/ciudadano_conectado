@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Notificaciones</title>
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+    </head>
+
+    <body>
+        {% include 'components/navbar.html' %}
+        <main>
+            <!-- Notifications Section -->
+            <section id="notifications">
+                <h2>Notificaciones</h2>
+                <ul class="notification-items">
+                    <li class="notification-item unread">
+                        <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+                        <p>Tu solicitud de mantenimiento ha sido actualizada a "En Proceso".</p>
+                        <span class="notification-date">Hace 2 horas</span>
+                    </li>
+                    <li class="notification-item">
+                        <i class="fas fa-bullhorn" aria-hidden="true"></i>
+                        <p>Nueva consulta pública disponible: "Mejoras en el Transporte Público".</p>
+                        <span class="notification-date">Hace 1 día</span>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </body>
+
+    <script src="{% static 'js/notification.js' %}"></script>
+</html>
