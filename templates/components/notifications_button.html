@@ -1,0 +1,8 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/notifications_button.css' %}">
+
+<a href="{% url 'notifications:notifications' %}" class="notification-btn">
+    <i class="fas fa-bell"></i>
+    <span class="notification-badge">3</span> <!-- Example badge for unread notifications -->
+</a>

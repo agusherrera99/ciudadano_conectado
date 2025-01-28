@@ -1,0 +1,39 @@
+/* Notification Button */
+.notification-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--background);
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 1.2rem;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-right: 15px;
+}
+
+.notification-btn:hover {
+    background: var(--accent);
+    transform: scale(1.1);
+}
+
+/* Notification Badge */
+.notification-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: var(--danger);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

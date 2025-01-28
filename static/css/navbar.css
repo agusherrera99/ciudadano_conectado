@@ -13,6 +13,10 @@ nav {
     gap: 1rem;
 }
 
+.nav-right {
+    gap: 0;
+}
+
 .nav-logo {
     display: flex;
     align-items: center;
