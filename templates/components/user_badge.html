@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/user_badge.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/user_badge.css' %}">
 
 <a class="user-badge" href="{% url 'account:profile' %}">
     <span class="avatar">{{request.user.first_name|capfirst|slice:":1"}}</span>

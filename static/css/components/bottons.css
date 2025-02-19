@@ -24,3 +24,10 @@
     color: var(--text);
     border: 1px solid var(--accent);
 }
+
+.btn-logout {
+    padding: 1rem 4rem;
+    background-color: var(--danger);
+    color: white;
+    font-size: 1rem;
+}

@@ -1,3 +1,5 @@
+@import url('../colors.css');
+
 nav {
     background-color: var(--dark-background);
     padding: 1rem 2rem;
