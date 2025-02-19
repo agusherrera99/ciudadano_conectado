@@ -17,12 +17,23 @@
             <h2>Mi Perfil</h2>
             <div class="profile-details">
                 <div class="profile-info">
-                    <h3>Agustín Herrera</h3>
-                    <p><strong>Email:</strong> agustinherrera.dev@gmail.com</p>
-                    <p><strong>Teléfono:</strong> 2244-471811</p>
-                    <p><strong>DNI:</strong> 41.926.430</p>
-                    <p><strong>Ubicación:</strong> 9 de julio (288) - Las Flores</p>
-                    <p><strong>Fecha de Registro:</strong> 10-01-2025</p>
+                    <h3>{{request.user.first_name|capfirst}}  {{request.user.last_name|capfirst}}</h3>
+                    <p><strong>Email:</strong> {{request.user.email}}</p>
+                    
+                    {% if request.user.phone_number|length == 10 %}
+                        <p><strong>Teléfono:</strong> {{request.user.phone_number|slice:":4"}}-{{request.user.phone_number|slice:"4:"}}</p>
+                    {% else %}
+                        <p><strong>Teléfono:</strong> {{request.user.phone_number}}</p>
+                    {% endif %}
+
+                    {% if request.user.dni|length == 8 %}
+                        <p><strong>DNI:</strong> {{request.user.dni|slice:":2"}}.{{request.user.dni|slice:"2:5"}}.{{request.user.dni|slice:"5:"}}</p>
+                    {% else %}
+                        <p><strong>DNI:</strong> {{request.user.dni}}</p>
+                    {% endif %}
+                        
+                    <p><strong>Ubicación:</strong> {{request.user.address|capfirst}}</p>
+                    <p><strong>Fecha de Registro:</strong> {{request.user.created_at|date:"d F Y" }}</p>
                 </div>
             </div>
 
