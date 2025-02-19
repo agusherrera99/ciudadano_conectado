@@ -32,7 +32,6 @@ section {
 
 .request-info {
     border-radius: 12px;
-    padding: 2rem;
     margin-bottom: 2rem;
 }
 
@@ -224,10 +223,6 @@ section {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .request-info {
-        padding: 1.5rem;
-    }
-
     .request-info h2 {
         font-size: 1.5rem;
     }
