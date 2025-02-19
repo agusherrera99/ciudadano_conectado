@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from account.models import CustomUser
@@ -8,9 +9,11 @@ from .forms import UserLoginForm, UserRegisterForm
 
 # Create your views here.
 
+@login_required
 def panel(request):
     return render(request, 'panel.html')
 
+@login_required
 def profile(request):
     return render(request, 'profile.html')
 
@@ -46,7 +49,6 @@ def login_view(request):
         form = UserLoginForm()
 
     return render(request, 'registration/login.html', {'form': form})
-
 
 
 def register(request):
