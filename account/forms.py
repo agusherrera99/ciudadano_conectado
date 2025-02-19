@@ -34,3 +34,17 @@ class UserRegisterForm(forms.ModelForm):
             raise ValidationError('Las contraseñas no coinciden')
         
         return cleaned_data
+    
+class UserLoginForm(forms.Form):
+    class Meta:
+        model = get_user_model()
+        fields = ['email', 'password']
+
+    email = forms.EmailField(
+        label='Correo electrónico',
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    password = forms.CharField(
+        label='Contraseña',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )

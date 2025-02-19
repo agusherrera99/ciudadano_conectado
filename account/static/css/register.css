@@ -101,7 +101,7 @@ main {
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 520px;
+    max-width: 550px;
     width: 100%;
 }
 
@@ -116,6 +116,11 @@ main {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1rem;
+}
+
+.register-form .form-group {
+    display: flex;
+    flex-direction: column;
 }
 
 label {
@@ -175,6 +180,9 @@ button:hover {
 
 .register-form-footer a:hover {
     text-decoration: underline;
+}
+.hidden {
+    display: none;
 }
 
 @keyframes cardEntrance {
