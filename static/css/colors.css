@@ -1,0 +1,13 @@
+:root {
+    --primary: #2E5C8A;
+    --secondary: #f8f9fa;
+    --accent: #e9ecef;
+    --background: #ffffff;
+    --dark-background: #343a40;
+    --light-text: #ffffff;
+    --text: #212529;
+    --avatar-color: #f8f9fa;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
