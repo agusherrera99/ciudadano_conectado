@@ -7,6 +7,7 @@ from django.utils import timezone
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
+    dni = models.CharField(max_length=20, blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(default=timezone.now)
     groups = models.ManyToManyField(
@@ -32,4 +33,4 @@ class CustomUser(AbstractUser):
         if self.updated_at is None:
             self.updated_at = timezone.now()
 
-        return super(self).save(*args, **kwargs)
+        return super(CustomUser, self).save(*args, **kwargs)

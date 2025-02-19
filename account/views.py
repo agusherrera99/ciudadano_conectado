@@ -25,6 +25,8 @@ def register(request):
                 user = form.save(commit=False)
                 user.set_password(form.cleaned_data['password1'])
                 user.save()
+                print(user)
+                print('User created successfully')
                 messages.success(request, 'Account created successfully')
 
                 login(request, user)
@@ -32,8 +34,10 @@ def register(request):
                 return redirect('account:panel')
             except Exception as e:
                 messages.error(request, f'Error creating account: {e}')
+                print(f'Error creating account: {e}')
         else:
             messages.error(request, 'Error creating account')
+            print('Error creating account')
     else:
         form = UserRegisterForm()
 

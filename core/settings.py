@@ -148,5 +148,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
 # Custom settings
+LOGIN_REDIRECT_URL = 'account:panel'
 LOGOUT_REDIRECT_URL = 'pages:home'
+AUTH_USER_MODEL = 'account.CustomUser'
