@@ -5,10 +5,17 @@
 <header>
     <nav>
         <div class="nav-left">
-            <a class="nav-logo" href="{% url 'pages:home' %}">
-                <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
-                <span class="site-name">Ciudadanos Conectados</span>
-            </a>
+            {% if request.user.is_authenticated %}
+                <a class="nav-logo" href="{% url 'account:panel' %}">
+                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                    <span class="site-name">Ciudadanos Conectados</span>
+                </a>
+            {% else %}
+                <a class="nav-logo" href="{% url 'pages:home' %}">
+                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                    <span class="site-name">Ciudadanos Conectados</span>
+                </a>
+            {% endif %}
         </div>
         <div class="nav-right">
             {% include 'components/notifications_button.html' %}
