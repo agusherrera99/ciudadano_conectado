@@ -20,7 +20,6 @@ def create_issue(request):
     if request.method == 'POST':
         try:
             issue = Issue.objects.create(
-                title=request.POST['title'],
                 category=request.POST['category'],
                 description=request.POST['description'],
                 user=request.user
