@@ -21,7 +21,6 @@ def register(request):
         form = UserRegisterForm(request.POST)
 
         if form.is_valid():
-            print('form is valid')
             try:
                 user = form.save(commit=False)
                 user.set_password(form.cleaned_data['password1'])
@@ -34,7 +33,6 @@ def register(request):
             except Exception as e:
                 messages.error(request, f'Error creating account: {e}')
         else:
-            print(form.errors)
             messages.error(request, 'Error creating account')
     else:
         form = UserRegisterForm()

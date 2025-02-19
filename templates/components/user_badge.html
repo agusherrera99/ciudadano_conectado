@@ -2,8 +2,8 @@
 <link rel="stylesheet" href="{% static 'css/user_badge.css' %}">
 
 <a class="user-badge" href="{% url 'account:profile' %}">
-    <span class="avatar">A</span>
-    <span class="username">Agustín Herrera</span>
+    <span class="avatar">{{request.user.first_name|capfirst|slice:":1"}}</span>
+    <span class="username">{{request.user.first_name|capfirst}} {{ request.user.last_name|capfirst}}</span>
 </a>
 <ul class="dropdown-menu">
     <li><a class="btn btn-secondary" href="{% url 'account:panel' %}">Panel</a></li>
