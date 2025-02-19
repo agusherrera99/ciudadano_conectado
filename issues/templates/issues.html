@@ -26,63 +26,26 @@
                         <form method="POST" id="request-form">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="request-type">Tipo de Solicitud</label>
-                                <select id="request-type" required>
-                                    <option value="">Seleccione un tipo</option>
-                                    <option value="maintenance">Mantenimiento</option>
-                                    <option value="complaint">Reclamo</option>
-                                    <option value="suggestion">Sugerencia</option>
-                                </select>
-                                
-                                <div id="public-objects-container" class="hidden">
-                                    <select id="public-objects-category">
-                                        <option value="">Seleccione una categoría</option>
-                                        <option value="parks">Parques</option>
-                                        <option value="streets">Calles</option>
-                                        <option value="lights">Luces</option>
-                                        <!-- Options will be populated dynamically based on the complaint type -->
-                                    </select>
-                                    
-                                    <div id="public-objects" class="hidden">
-                                        <h2>Seleccione el Objeto</h2>
-                                        
-                                        <div class="form-group">
-                                            <label for="request-description">Descripción</label>
-                                            <textarea id="request-description" required></textarea>
-                                        </div>
-                        
-                                        <div class="form-group">
-                                            <label for="request-images">Imágenes Adjuntas</label>
-                                            <input type="file" id="request-images" multiple accept="image/*">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div id="complaint-container" class="hidden">
-                                    <div class="form-group">
-                                        <label for="request-description">Descripción</label>
-                                        <textarea id="request-description" required></textarea>
-                                    </div>
-                    
-                                    <div class="form-group">
-                                        <label for="request-images">Imágenes Adjuntas</label>
-                                        <input type="file" id="request-images" multiple accept="image/*">
-                                    </div>
-                                </div>
-
-                                <div id="suggestion-container" class="hidden">
-                                    <div class="form-group">
-                                        <label for="request-description">Descripción</label>
-                                        <textarea id="request-description" required></textarea>
-                                    </div>
-                    
-                                    <div class="form-group">
-                                        <label for="request-images">Imágenes Adjuntas</label>
-                                        <input type="file" id="request-images" multiple accept="image/*">
-                                    </div>
-                                </div>
+                                <label for="title">Título</label>
+                                <input type="text" id="title" name="title" required>
                             </div>
-                            
+
+                            <div class="form-group">
+                                <label for="category">Tipo de Solicitud</label>
+                                <select id="category" name="category" required>
+                                    <option value="">Seleccione un tipo</option>
+                                    <option value="reclamo">Reclamo</option>
+                                    <option value="sugerencia">Sugerencia</option>
+                                    <option value="consulta">Consulta</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Descripción</label>
+                                <textarea id="description" name="description" required></textarea>
+                            </div>
+                                
                             <div class="form-actions">
                                 <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
                                 <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
@@ -95,53 +58,46 @@
                         <div class="filters">
                             <select id="filter-type">
                                 <option value="">Todos los tipos</option>
-                                <option value="maintenance">Mantenimiento</option>
-                                <option value="complaint">Reclamo</option>
-                                <option value="suggestion">Sugerencia</option>
+                                <option value="Reclamo">Reclamo</option>
+                                <option value="Sugerencia">Sugerencia</option>
+                                <option value="Consulta">Consulta</option>
+                                <option value="Otro">Otro</option>
                             </select>
                             <select id="filter-status">
                                 <option value="">Todos los estados</option>
-                                <option value="pending">Pendiente</option>
-                                <option value="in-process">En Proceso</option>
-                                <option value="resolved">Resuelto</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Recibido">Recibido</option>
+                                <option value="En proceso">En proceso</option>
+                                <option value="Resuelto">Resuelto</option>
                             </select>
                             <input type="date" id="filter-date">
                         </div>
                         <ul class="request-items">
-                            <li class="request-item">
-                                <div class="request-header">
-                                    <span class="request-type">Mantenimiento</span>
-                                    <span class="request-status pending">Pendiente</span>
-                                </div>
-                                <p class="request-description">Reparación de bache en Calle Principal</p>
-                                <div class="request-actions">
-                                    <a class="btn btn-secondary request-details">Ver Detalles</a>
-                                    <span class="request-date">Creada el: 2023-05-15</span>
-                                </div>
-                            </li>
-                            <li class="request-item">
-                                <div class="request-header">
-                                    <span class="request-type">Reclamo</span>
-                                    <span class="request-status in-process">En Proceso</span>
-                                </div>
-                                <p class="request-description">Ruidos molestos en el parque central</p>
-                                <div class="request-actions">
-                                    <a class="btn btn-secondary request-details">Ver Detalles</a>
-                                    <span class="request-date">Creada el: 2023-05-10</span>
-                                </div>
-                                
-                            </li>
-                            <li class="request-item">
-                                <div class="request-header">
-                                    <span class="request-type">Sugerencia</span>
-                                    <span class="request-status resolved">Resuelto</span>
-                                </div>
-                                <p class="request-description">Instalación de más bancos en la plaza</p>
-                                <div class="request-actions">
-                                    <a class="btn btn-secondary request-details">Ver Detalles</a>
-                                    <span class="request-date">Creada el: 2023-05-01</span>
-                                </div>
-                            </li>
+                            {% if issues %}
+                                {% for issue in issues %}
+                                <li class="request-item">
+                                    <div class="request-header">
+                                        <span class="request-type">{{ issue.category|capfirst }}</span>
+                                        
+                                        {% if issue.category == 'en proceso' %}
+                                            <span class="request-status en-proceso">En Proceso</span>
+                                        {% else %}
+                                            <span class="request-status {{ issue.status }}">{{ issue.status|capfirst }}</span>
+                                        {% endif %}
+                                        
+                                    </div>
+                                    <p class="request-description">{{ issue.description|capfirst }}</p>
+                                    <div class="request-actions">
+                                        <a class="btn btn-secondary request-details">Ver Detalles</a>
+                                        <span class="request-date">Creada el: {{ issue.created_at }}</span>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            {% else %}
+                                <li class="request-item">
+                                    <p>No hay solicitudes registradas</p>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>    

@@ -211,30 +211,39 @@ textarea {
     margin-right: 0.5rem;
 }
 
-.pending {
+.recibido {
+    background-color: rgba(108, 117, 125, 0.2);
+    color: #495057;
+}
+
+.recibido::before {
+    background-color: #6c757d;
+}
+
+.pendiente {
     background-color: rgba(255, 193, 7, 0.2);
     color: #856404;
 }
 
-.pending::before {
+.pendiente::before {
     background-color: #ffc107;
 }
 
-.in-process {
+.en-proceso {
     background-color: rgba(46, 92, 138, 0.2);
     color: #2E5C8A;
 }
 
-.in-process::before {
+.en-proceso::before {
     background-color: #2E5C8A;
 }
 
-.resolved {
+.resuelto {
     background-color: rgba(40, 167, 69, 0.2);
     color: #155724;
 }
 
-.resolved::before {
+.resuelto::before {
     background-color: #28a745;
 }
 
