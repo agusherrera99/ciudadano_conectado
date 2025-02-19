@@ -23,4 +23,10 @@ class Issue(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
     user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
+
+class IssueUpdate(models.Model):
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=Issue.STATUS_CHOICES, default='pendiente')
     

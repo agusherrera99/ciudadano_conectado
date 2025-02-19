@@ -31,13 +31,17 @@ section {
 }
 
 .request-info {
+    border-radius: 12px;
+    padding: 2rem;
     margin-bottom: 2rem;
 }
 
-.request-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.request-info h2 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
 }
 
 .request-status {
@@ -66,18 +70,74 @@ section {
     color: #856404;
 }
 
-.request-description {
-    margin-bottom: 1rem;
+.request-id {
     color: var(--text);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.request-id strong {
+    color: var(--primary);
+    background-color: rgba(46, 92, 138, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 1.1rem;
+}
+
+.request-category {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.request-category strong {
+    color: var(--primary);
+    background-color: rgba(46, 92, 138, 0.1);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.request-description {
+    background-color: var(--secondary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--accent);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.request-description h4 {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+}
+
+.request-description p {
+    color: var(--text);
+    line-height: 1.6;
+    white-space: pre-line;
 }
 
 .request-meta {
-    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--accent);
 }
 
 .request-meta p {
-    margin-bottom: 0.5rem;
-    color: #6c757d;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.request-meta strong {
+    color: var(--primary);
 }
 
 .request-images {
@@ -137,17 +197,22 @@ section {
     letter-spacing: 0.5px;
 }
 
-.update-status.in-process {
+.update-status.recibido {
+    background-color: rgba(108, 117, 125, 0.2);
+    color: #495057;
+}
+
+.update-status.en-proceso {
     background-color: rgba(46, 92, 138, 0.2);
     color: var(--primary);
 }
 
-.update-status.pending {
+.update-status.pendiente {
     background-color: rgba(255, 193, 7, 0.2);
     color: #856404;
 
 }
-.update-status.resolved {
+.update-status.resuelto {
     background-color: rgba(40, 167, 69, 0.2);
     color: #155724;
 }
@@ -155,4 +220,24 @@ section {
 .update-description {
     margin: 0;
     color: var(--text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .request-info {
+        padding: 1.5rem;
+    }
+
+    .request-info h2 {
+        font-size: 1.5rem;
+    }
+
+    .request-id,
+    .request-category {
+        font-size: 1rem;
+    }
+
+    .request-description {
+        padding: 1rem;
+    }
 }

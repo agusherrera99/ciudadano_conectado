@@ -277,6 +277,10 @@ textarea {
     align-items: center;
 }
 
+.request-actions a {
+    text-decoration: none;
+}
+
 .request-date {
     color: #6c757d;
     font-size: 0.9rem;

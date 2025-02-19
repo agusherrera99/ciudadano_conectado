@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from .models import Issue
+from .models import Issue, IssueUpdate
 
 # Create your views here.
 
@@ -13,7 +13,12 @@ def issues(request):
 
 @login_required
 def issue_detail(request, issue_id):
-    return render(request, 'issue_detail.html', {'issue_id': issue_id})
+    issue = Issue.objects.filter(user=request.user, id=issue_id).first()
+
+    issue_updates = IssueUpdate.objects.filter(issue=issue
+    ).order_by('created_at')
+
+    return render(request, 'issue_detail.html', {'issue': issue, 'issue_updates': issue_updates})
 
 @login_required
 def create_issue(request):

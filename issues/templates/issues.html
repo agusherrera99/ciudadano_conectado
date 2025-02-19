@@ -86,7 +86,7 @@
                                     </div>
                                     <p class="request-description">{{ issue.description|capfirst }}</p>
                                     <div class="request-actions">
-                                        <a class="btn btn-secondary request-details">Ver Detalles</a>
+                                        <a class="btn btn-secondary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
                                         <span class="request-date">Creada el: {{ issue.created_at }}</span>
                                     </div>
                                 </li>
