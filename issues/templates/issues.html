@@ -58,19 +58,22 @@
                         <div class="filters">
                             <select id="filter-type">
                                 <option value="">Todos los tipos</option>
-                                <option value="Reclamo">Reclamo</option>
-                                <option value="Sugerencia">Sugerencia</option>
-                                <option value="Consulta">Consulta</option>
-                                <option value="Otro">Otro</option>
+                                <option value="reclamo">Reclamo</option>
+                                <option value="sugerencia">Sugerencia</option>
+                                <option value="consulta">Consulta</option>
+                                <option value="otro">Otro</option>
                             </select>
                             <select id="filter-status">
                                 <option value="">Todos los estados</option>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Recibido">Recibido</option>
-                                <option value="En proceso">En proceso</option>
-                                <option value="Resuelto">Resuelto</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="recibido">Recibido</option>
+                                <option value="en proceso">En proceso</option>
+                                <option value="resuelto">Resuelto</option>
                             </select>
                             <input type="date" id="filter-date">
+                            <button class="btn btn-secondary" id="clearFilterBtn">
+                                <i class="fas fa-eraser" title="Limpiar Filtros"></i>
+                            </button>
                         </div>
                         <ul class="request-items">
                             {% if issues %}
