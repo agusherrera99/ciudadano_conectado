@@ -4,5 +4,9 @@
 
 <a href="{% url 'notifications:notifications' %}" class="notification-btn">
     <i class="fas fa-bell"></i>
-    <span class="notification-badge">3</span> <!-- Example badge for unread notifications -->
+    {% if notification_count == 0 %}
+        <span class="notification-badge hidden">{{notification_count}}</span>
+    {% else %}
+        <span class="notification-badge">{{notification_count}}</span>
+    {% endif %}
 </a>

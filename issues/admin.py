@@ -4,6 +4,7 @@ from django.forms import ModelForm
 from django.db.models import Q
 
 from .models import Issue, IssueUpdate
+from notifications.models import Notification
 
 class IssueManagerForm(ModelForm):
     class Meta:
@@ -97,3 +98,21 @@ class IssueUpdateAdmin(admin.ModelAdmin):
             Q(issue__manager=request.user) | 
             Q(issue__assigned_to=request.user)
         )
+
+    def save_model(self, request, obj, form, change):
+        is_new = obj.pk is None  # Verificar si es una nueva actualización
+        super().save_model(request, obj, form, change)
+        
+        if is_new and obj.issue.assigned_to == request.user: 
+            # Crear notificación para el usuario que creó el issue
+            Notification.objects.create(
+                user=obj.issue.user,
+                issue=obj.issue,
+                message=f'Su solicitud #{obj.issue.id} ha sido actualizada.'
+            )
+
+        # Actualizar el status del issue
+        if 'status' in form.changed_data:
+            issue = obj.issue
+            issue.status = obj.status
+            issue.save()

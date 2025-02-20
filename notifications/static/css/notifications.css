@@ -34,12 +34,6 @@ section {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.notification-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-}
-
 .notification-item i {
     color: var(--primary);
     font-size: 1.2rem;
@@ -59,6 +53,9 @@ section {
 }
 
 .notification-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     background-color: var(--secondary);
     border-radius: 8px;
     border: 1px solid var(--accent);
@@ -67,7 +64,27 @@ section {
     transition: all 0.3s ease;
 }
 
-.notification-item:hover {
+.mark-read-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mark-read-btn i {
+    color: white;
+}
+
+.mark-read-btn:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+}
+
+.notification-date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-left: auto;
 }

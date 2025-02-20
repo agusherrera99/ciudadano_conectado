@@ -17,16 +17,24 @@
             <section id="notifications">
                 <h2>Notificaciones</h2>
                 <ul class="notification-items">
-                    <li class="notification-item unread">
-                        <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
-                        <p>Tu solicitud de mantenimiento ha sido actualizada a "En Proceso".</p>
-                        <span class="notification-date">Hace 2 horas</span>
-                    </li>
-                    <li class="notification-item">
-                        <i class="fas fa-bullhorn" aria-hidden="true"></i>
-                        <p>Nueva consulta pública disponible: "Mejoras en el Transporte Público".</p>
-                        <span class="notification-date">Hace 1 día</span>
-                    </li>
+                    {% if notifications %}
+                        {% for notification in notifications %}
+                            <li class="notification-item" data-id="{{ notification.id }}">
+                                <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+                                <p>{{notification.message}}</p>
+                                <span class="notification-date">{{notification.created_at}}</span>
+                                {% if not notification.is_read %}
+                                    <button class="mark-read-btn" aria-label="Marcar como leída">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="notification-item">
+                            <p>No tienes notificaciones</p>
+                        </li>
+                    {% endif %}
                 </ul>
             </section>
         </main>

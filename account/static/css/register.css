@@ -181,6 +181,7 @@ button:hover {
 .register-form-footer a:hover {
     text-decoration: underline;
 }
+
 .hidden {
     display: none;
 }
