@@ -42,10 +42,3 @@ class NotificationAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             kwargs['form'] = NotificationManagerForm
         return super().get_form(request, obj, **kwargs)
-
-    # def has_change_permission(self, request, obj=None):
-    #     if request.user.is_superuser:
-    #         return True
-    #     if obj is None:
-    #         return True
-    #     return obj.user == request.user
