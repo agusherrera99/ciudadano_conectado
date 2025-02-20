@@ -77,14 +77,17 @@
                                     <div class="request-header">
                                         <span class="request-type">{{ issue.category|capfirst }}</span>
                                         
-                                        {% if issue.category == 'en proceso' %}
+                                        {% if issue.status == 'en proceso' %}
                                             <span class="request-status en-proceso">En Proceso</span>
                                         {% else %}
                                             <span class="request-status {{ issue.status }}">{{ issue.status|capfirst }}</span>
                                         {% endif %}
                                         
                                     </div>
-                                    <p class="request-description">{{ issue.description|capfirst }}</p>
+                                    <div class="request-body">
+                                        <h5 class="request-id">ID de la solicitud: #{{issue.id}}</h5>
+                                        <p class="request-description">{{ issue.description|capfirst }}</p>
+                                    </div>
                                     <div class="request-actions">
                                         <a class="btn btn-tertiary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
                                         <span class="request-date">Creada el: {{ issue.created_at|date:"d-m-Y" }}</span>

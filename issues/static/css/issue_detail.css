@@ -80,9 +80,6 @@ section {
 
 .request-id strong {
     color: var(--primary);
-    background-color: rgba(46, 92, 138, 0.1);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
     font-size: 1.1rem;
 }
 

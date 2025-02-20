@@ -261,6 +261,15 @@ textarea {
     margin-right: 1rem;
 }
 
+.request-body {
+    margin: 1rem 0px;
+}
+
+.request-id {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
 .request-description {
     margin-bottom: 1rem;
     color: var(--text);
