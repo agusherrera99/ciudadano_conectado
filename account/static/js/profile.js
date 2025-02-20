@@ -2,38 +2,48 @@ document.addEventListener('DOMContentLoaded', function() {
     const editProfileBtn = document.getElementById('edit-profile-btn');
     const editProfileForm = document.getElementById('edit-profile-form');
     const cancelEditProfileBtn = document.getElementById('cancel-edit-profile-btn');
-    const saveEditProfileBtn = document.getElementById('save-edit-profile-btn');
+    const profileDetails = document.querySelector('.profile-details');
 
+    // Toggle edit profile form
     editProfileBtn.addEventListener('click', function() {
-        editProfileBtn.classList.toggle('hidden');
-        editProfileForm.classList.toggle('hidden');
+        editProfileForm.classList.remove('hidden');
+        profileDetails.classList.add('hidden');
     });
 
-    cancelEditProfileBtn.addEventListener('click', function() {
-        editProfileBtn.classList.toggle('hidden');
-        editProfileForm.classList.toggle('hidden');
+    cancelEditProfileBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        editProfileForm.classList.add('hidden');
+        profileDetails.classList.remove('hidden');
     });
 
-    saveEditProfileBtn.addEventListener('click', function() {
-        alert('Request details would be shown here.');
-    });
-
-    const changePasswordBtn = document.getElementById('change-password-btn');
-    const changePasswordForm = document.getElementById('change-password-form');
-    const cancelChangePasswordBtn = document.getElementById('cancel-change-password-btn');
-    const saveChangePasswordBtn = document.getElementById('save-change-password-btn');
-
-    changePasswordBtn.addEventListener('click', function() {
-        changePasswordBtn.classList.toggle('hidden');
-        changePasswordForm.classList.toggle('hidden');
-    });
-
-    cancelChangePasswordBtn.addEventListener('click', function() {
-        changePasswordBtn.classList.toggle('hidden');
-        changePasswordForm.classList.toggle('hidden');
-    });
-
-    saveChangePasswordBtn.addEventListener('click', function() {
-        alert('Request details would be shown here.');
+    // Handle form submission
+    const form = editProfileForm.querySelector('form');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        
+        fetch(window.location.pathname, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                window.location.reload();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
 });

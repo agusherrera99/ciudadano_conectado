@@ -2,10 +2,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+from django.http import JsonResponse
 
 from account.models import CustomUser
 
-from .forms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 # Create your views here.
 
@@ -15,7 +16,25 @@ def panel(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil actualizado correctamente')
+            return JsonResponse({
+                'success': True,
+                'message': 'Perfil actualizado correctamente'
+            })
+        else:
+            messages.error(request, 'Error al actualizar el perfil')
+            return JsonResponse({
+                'success': False,
+                'errors': form.errors
+            })
+    else:
+        form = UserProfileForm(instance=request.user)
+    
+    return render(request, 'profile.html', {'form': form})
 
 def login_view(request):
     if request.method == 'POST':
@@ -31,20 +50,20 @@ def login_view(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    messages.success(request, 'Login successful')
+                    messages.success(request, 'Inicio de sesión correcto')
                     return redirect('account:panel')
             else:
                 try:
                     user = CustomUser.objects.get(email=email)
 
                     if not user.is_active:
-                        messages.error(request, 'Inactive user')
+                        messages.error(request, 'Usuario inactivo')
                     else:
-                        messages.error(request, 'Invalid email or password')
+                        messages.error(request, 'Correo electrónico o contraseña incorrectos')
                 except CustomUser.DoesNotExist:
-                    messages.error(request, 'This email is not registered')
+                    messages.error(request, 'Este correo electrónico no está registrado')
         else:
-            messages.error(request, 'Form is not valid')
+            messages.error(request, 'Formulario inválido')
     else:
         form = UserLoginForm()
 
@@ -60,15 +79,15 @@ def register(request):
                 user = form.save(commit=False)
                 user.set_password(form.cleaned_data['password1'])
                 user.save()
-                messages.success(request, 'Account created successfully')
+                messages.success(request, 'Cuenta creada correctamente')
 
                 login(request, user)
 
                 return redirect('account:panel')
-            except Exception as e:
-                messages.error(request, f'Error creating account: {e}')
+            except Exception:
+                messages.error(request, 'Error al intentar crear la cuenta')
         else:
-            messages.error(request, 'Error creating account')
+            messages.error(request, 'Error al intentar crear la cuenta')
     else:
         form = UserRegisterForm()
 

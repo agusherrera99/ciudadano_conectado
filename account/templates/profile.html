@@ -39,7 +39,6 @@
 
             <div class="profile-actions">
                 <button class="btn btn-primary" id="edit-profile-btn" aria-label="Editar Perfil">Editar Perfil</button>
-                <button class="btn btn-secondary" id="change-password-btn" aria-label="Cambiar Contraseña">Cambiar Contraseña</button>
             </div>
 
             <div id="edit-profile-form" class="hidden">
@@ -47,43 +46,32 @@
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="username">Nombre de Usuario</label>
-                        <input type="text" id="username" value="Agustín Herrera" required>
+                        <label for="{{ form.first_name.id_for_label }}">Nombre</label>
+                        {{ form.first_name }}
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" value="agustin@correo.com" required>
+                        <label for="{{ form.last_name.id_for_label }}">Apellido</label>
+                        {{ form.last_name }}
                     </div>
                     <div class="form-group">
-                        <label for="ubication">Ubicación</label>
-                        <input type="text" id="ubication" value="9 de julio 228" required>
+                        <label for="{{ form.email.id_for_label }}">Email</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.phone_number.id_for_label }}">Teléfono</label>
+                        {{ form.phone_number }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}">Dirección</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.dni.id_for_label }}">DNI</label>
+                        {{ form.dni }}
                     </div>
                     <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="save-edit-profile-btn" aria-label="Guardar cambios de perfil">Guardar Cambios</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-edit-profile-btn" aria-label="Cancelar cambios de perfil">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-
-            <div id="change-password-form" class="hidden">
-                <h3>Cambiar Contraseña</h3>
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="current-password">Contraseña Actual</label>
-                        <input type="password" id="current-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="new-password">Nueva Contraseña</label>
-                        <input type="password" id="new-password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirm-password">Confirmar Nueva Contraseña</label>
-                        <input type="password" id="confirm-password" required>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary" id="save-change-password-btn" aria-label="Actualizar contraseña">Actualizar contraseña</button>
-                        <button type="button" class="btn btn-secondary" id="cancel-change-password-btn" aria-label="Cancelar cambio de contraseña">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="save-edit-profile-btn">Guardar Cambios</button>
+                        <button type="button" class="btn btn-secondary" id="cancel-edit-profile-btn">Cancelar</button>
                     </div>
                 </form>
             </div>
