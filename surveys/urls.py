@@ -1,11 +1,11 @@
-from django.urls import path
+# from django.urls import path
 
-from . import views
+# from . import views
 
-app_name = 'surveys'
+# app_name = 'surveys'
 
-urlpatterns = [
-    path('', views.surveys, name='surveys'),
-    path('<int:survey_id>/', views.survey_detail, name='survey_detail'),
-    path('<int:survey_id>/results/', views.survey_results, name='survey_results'),
-]
+# urlpatterns = [
+#     path('', views.surveys, name='surveys'),
+#     path('<int:survey_id>/', views.survey_detail, name='survey_detail'),
+#     path('<int:survey_id>/results/', views.survey_results, name='survey_results'),
+# ]

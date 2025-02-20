@@ -1,12 +1,4 @@
-:root {
-    --primary: #2E5C8A;
-    --secondary: #f8f9fa;
-    --accent: #e9ecef;
-    --background: #ffffff;
-    --text: #212529;
-    --dark-background: #343a40;
-    --light-text: #ffffff; 
-}
+@import url('../../../static/css/components/bottons.css');
 
 * {
     padding: 0;
@@ -60,21 +52,6 @@ nav {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--light-text);
-}
-
-.btn {
-    padding: 0.2rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    text-decoration: none;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 main {
