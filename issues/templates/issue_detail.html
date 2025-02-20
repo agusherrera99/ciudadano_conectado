@@ -36,7 +36,7 @@
                     {% for update in issue_updates %}
                     <li class="update-item">
                         <div class="update-header">
-                            <span class="update-date">{{update.created_at}}</span>
+                            <span class="update-date">{{update.updated_at}}</span>
 
                             {% if update.status == 'en proceso' %}
                                 <span class="update-status en-proceso">{{update.status}}</span>

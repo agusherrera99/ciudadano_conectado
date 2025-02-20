@@ -25,7 +25,8 @@ class CustomUser(AbstractUser):
         return self.username
     
     def save(self, *args, **kwargs):
-        self.address = self.address.lower()
+        if self.address is not None:
+            self.address = self.address.lower()
 
         if self.created_at is None:
             self.created_at = timezone.now()

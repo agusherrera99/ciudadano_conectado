@@ -16,7 +16,7 @@ def issue_detail(request, issue_id):
     issue = Issue.objects.filter(user=request.user, id=issue_id).first()
 
     issue_updates = IssueUpdate.objects.filter(issue=issue
-    ).order_by('created_at')
+    ).order_by('updated_at')
 
     return render(request, 'issue_detail.html', {'issue': issue, 'issue_updates': issue_updates})
 
