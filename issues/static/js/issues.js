@@ -56,16 +56,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function filterRequests() {
         const selectedType = filterType.value.toLowerCase();
         const selectedStatus = filterStatus.value.toLowerCase();
-        const selectedDate = filterDate.value;
+        const selectedDate = filterDate.value; // Formato: YYYY-MM-DD
 
         requestItems.forEach(item => {
             const type = item.querySelector('.request-type').textContent.toLowerCase();
             const status = item.querySelector('.request-status').textContent.toLowerCase();
-            const date = item.querySelector('.request-date').textContent.split(': ')[1].split('T')[0];
+            
+            // Convertir la fecha del item (DD-MM-YYYY) a YYYY-MM-DD para comparar
+            const dateStr = item.querySelector('.request-date').textContent.split(': ')[1];
+            const [day, month, year] = dateStr.split('-');
+            const formattedDate = `${year}-${month}-${day}`;
 
             const matchesType = !selectedType || type === selectedType;
             const matchesStatus = !selectedStatus || status === selectedStatus;
-            const matchesDate = !selectedDate || date === selectedDate;
+            const matchesDate = !selectedDate || formattedDate === selectedDate;
 
             if (matchesType && matchesStatus && matchesDate) {
                 item.style.display = '';

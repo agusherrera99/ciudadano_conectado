@@ -33,7 +33,7 @@
                     {% endif %}
                         
                     <p><strong>Ubicación:</strong> {{request.user.address|capfirst}}</p>
-                    <p><strong>Fecha de Registro:</strong> {{request.user.created_at|date:"d F Y" }}</p>
+                    <p><strong>Fecha de Registro:</strong> {{request.user.created_at|date:"d-m-Y" }}</p>
                 </div>
             </div>
 
