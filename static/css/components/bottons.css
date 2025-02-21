@@ -37,3 +37,14 @@
     color: white;
     font-size: 1rem;
 }
+
+.btn-login {
+    background-color: var(--secondary);
+    color: var(--text);
+    border: 1px solid #dee2e6;
+}
+
+.btn-register {
+    background-color: var(--primary);
+    color: var(--light-text);
+}

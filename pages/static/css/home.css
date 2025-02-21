@@ -1,12 +1,4 @@
-:root {
-    --primary: #2E5C8A;
-    --secondary: #f8f9fa;
-    --accent: #e9ecef;
-    --background: #ffffff;
-    --text: #212529;
-    --dark-background: #343a40;
-    --light-text: #ffffff; 
-}
+@import url('../../../static/css/components/bottons.css');
 
 * {
     padding: 0;
@@ -75,17 +67,6 @@ nav {
 .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.btn-login {
-    background-color: var(--secondary);
-    color: var(--text);
-    border: 1px solid #dee2e6;
-}
-
-.btn-register {
-    background-color: var(--primary);
-    color: var(--light-text);
 }
 
 main {
@@ -222,5 +203,12 @@ footer {
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+/* Media for PC */
+@media (min-width: 768px) {
+    .card {
+        max-width: 350px;
     }
 }

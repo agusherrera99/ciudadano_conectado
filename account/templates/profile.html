@@ -17,7 +17,6 @@
             <h2>Mi Perfil</h2>
             <div class="profile-details">
                 <div class="profile-info">
-                    <h3>{{request.user.first_name|capfirst}}  {{request.user.last_name|capfirst}}</h3>
                     <p><strong>Email:</strong> {{request.user.email}}</p>
                     
                     {% if request.user.phone_number|length == 10 %}
