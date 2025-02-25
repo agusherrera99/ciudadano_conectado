@@ -1,7 +1,12 @@
+from uuid import uuid4
+
 from django.db import models
 from django.db.models import F
 
 # Create your models here.
+
+def generate_uuid():
+    return uuid4().hex[:8]
 
 class Issue(models.Model):
     CATEGORY_CHOICES = (
@@ -24,6 +29,7 @@ class Issue(models.Model):
         ('alta', 'Alta'),
     )
 
+    uuid = models.CharField(max_length=8, unique=True, default=generate_uuid())
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='otro')
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -35,7 +41,6 @@ class Issue(models.Model):
     manager = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='manager', blank=True, null=True)
     assigned_to = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='assigned_to', blank=True, null=True)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='baja')
-
 
     def add_vote(self, user):
         if user not in self.votes.all():
@@ -49,9 +54,17 @@ class Issue(models.Model):
             self.votes_count = F('votes_count') - 1 
             self.save(update_fields=['votes_count'])
 
-    
     def __str__(self):
-        return f"Issue: #{self.id}"
+        return f"Issue: #{self.uuid}"
+    
+    def save(self, *args, **kwargs):
+        self.description.lower().strip()
+        
+        if not self.uuid:
+            self.uuid = generate_uuid()
+
+        super(Issue, self).save(*args, **kwargs)
+
 
 class IssueUpdate(models.Model):
     issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
