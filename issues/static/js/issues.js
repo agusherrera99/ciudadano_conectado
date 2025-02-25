@@ -71,12 +71,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.success) {
                 location.reload();  // Recargar para ver la nueva solicitud
             } else {
-                alert('Error al crear la solicitud');
+                console.error('Error al enviar solicitud:', data.error);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Error al crear la solicitud');
         });
     });
 

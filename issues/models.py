@@ -29,7 +29,7 @@ class Issue(models.Model):
         ('alta', 'Alta'),
     )
 
-    uuid = models.CharField(max_length=8, unique=True, default=generate_uuid())
+    uuid = models.CharField(max_length=8, unique=True, default=generate_uuid)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='otro')
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
