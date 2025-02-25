@@ -8,8 +8,9 @@ from .models import Issue, IssueUpdate
 
 @login_required
 def issues(request):
-    issues = Issue.objects.filter(user=request.user)
-    return render(request, 'issues.html', {'issues': issues})
+    user_issues = Issue.objects.filter(user=request.user)
+    issues = Issue.objects.all().order_by('-votes_count').exclude(user=request.user)[:5]
+    return render(request, 'issues.html', {'user_issues': user_issues, 'issues': issues})
 
 @login_required
 def issue_detail(request, issue_id):
@@ -27,10 +28,48 @@ def create_issue(request):
             issue = Issue.objects.create(
                 category=request.POST['category'],
                 description=request.POST['description'],
-                user=request.user
+                user=request.user,
+                votes_count=1,
             )
+            issue.votes.set([request.user])
             issue.save()
             return JsonResponse({'success': True})
         except Exception as e:
             return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Invalid method'})
+    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+
+@login_required
+def vote_issue(request, issue_id):
+    if request.method == 'POST':
+        try:
+            issue = Issue.objects.get(id=issue_id)
+            action = request.POST.get('action')
+
+            if action == 'up':
+                issue.add_vote(request.user)
+            elif action == 'down':
+                issue.remove_vote(request.user)
+
+            issue.refresh_from_db()
+            votes_count = issue.votes_count
+
+            return JsonResponse({
+                'success': True,
+                'votes': votes_count
+            })
+        except Issue.DoesNotExist:
+            return JsonResponse({
+                'success': False,
+                'error': 'Solicitud no encontrada'
+            })
+        except Exception as e:
+            return JsonResponse({
+                'success': False,
+                'error': str(e)
+            })
+        
+    return JsonResponse({
+        'success': False,
+        'error': 'Método no permitido'
+    })
+
