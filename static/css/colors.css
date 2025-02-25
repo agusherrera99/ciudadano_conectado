@@ -1,4 +1,5 @@
 :root {
+    /* Existing colors */
     --primary: #2E5C8A;
     --secondary: #f8f9fa;
     --tertiary: #f1f3f5;
@@ -14,4 +15,24 @@
     --danger: #dc3545;
     --vote-up: #28a745;
     --vote-down: #dc3545;
+
+    /* Status colors */
+    --status-pending-bg: rgba(255, 193, 7, 0.2);
+    --status-pending-text: #856404;
+    --status-pending-dot: #ffc107;
+    
+    --status-received-bg: rgba(108, 117, 125, 0.2);
+    --status-received-text: #495057;
+    --status-received-dot: #6c757d;
+    
+    --status-process-bg: rgba(46, 92, 138, 0.2);
+    --status-process-text: #2E5C8A;
+    --status-process-dot: #2E5C8A;
+    
+    --status-resolved-bg: rgba(40, 167, 69, 0.2);
+    --status-resolved-text: #155724;
+    --status-resolved-dot: #28a745;
+
+    /* Shadow color */
+    --shadow-color: rgba(0, 0, 0, 0.1);
 }

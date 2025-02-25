@@ -37,7 +37,7 @@ section {
     background-color: white;
     border-radius: 8px;
     padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 /* Forms */
@@ -86,7 +86,7 @@ textarea {
 .filters select,
 .filters input {
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--accent);
     border-radius: 4px;
 }
 
@@ -266,39 +266,39 @@ textarea {
 
 /* Status Variants */
 .recibido {
-    background-color: rgba(108, 117, 125, 0.2);
-    color: #495057;
+    background-color: var(--status-received-bg);
+    color: var(--status-received-text);
 }
 
 .recibido::before {
-    background-color: #6c757d;
+    background-color: var(--status-received-dot);
 }
 
 .pendiente {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #856404;
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
 }
 
 .pendiente::before {
-    background-color: #ffc107;
+    background-color: var(--status-pending-dot);
 }
 
 .en-proceso {
-    background-color: rgba(46, 92, 138, 0.2);
-    color: #2E5C8A;
+    background-color: var(--status-process-bg);
+    color: var(--status-process-text);
 }
 
 .en-proceso::before {
-    background-color: #2E5C8A;
+    background-color: var(--status-process-dot);
 }
 
 .resuelto {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #155724;
+    background-color: var(--status-resolved-bg);
+    color: var(--status-resolved-text);
 }
 
 .resuelto::before {
-    background-color: #28a745;
+    background-color: var(--status-resolved-dot);
 }
 
 /* Voting System */
