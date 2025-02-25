@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.success) {
                     document.querySelector('.votes-count').textContent = data.votes;
+                    location.reload();
                 } else {
                     console.error('Error al votar:', data.error);
                 }
