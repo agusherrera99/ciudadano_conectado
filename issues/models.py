@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import F
 
 # Create your models here.
 
@@ -27,12 +28,28 @@ class Issue(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    votes = models.ManyToManyField('account.CustomUser', related_name='votes', blank=True)
+    votes_count = models.IntegerField(default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente')
     user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
     manager = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='manager', blank=True, null=True)
     assigned_to = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='assigned_to', blank=True, null=True)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='baja')
 
+
+    def add_vote(self, user):
+        if user not in self.votes.all():
+            self.votes.add(user)
+            self.votes_count = F('votes_count') + 1 
+            self.save(update_fields=['votes_count'])
+
+    def remove_vote(self, user):
+        if user in self.votes.all():
+            self.votes.remove(user)
+            self.votes_count = F('votes_count') - 1 
+            self.save(update_fields=['votes_count'])
+
+    
     def __str__(self):
         return f"Issue: #{self.id}"
 
@@ -44,4 +61,3 @@ class IssueUpdate(models.Model):
 
     def __str__(self):
         return f"Issue Update: #{self.id} - Issue: #{self.issue.id}"
-    
