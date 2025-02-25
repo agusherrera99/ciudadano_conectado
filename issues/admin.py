@@ -24,14 +24,14 @@ class IssueManagerForm(ModelForm):
 
 @admin.register(Issue)
 class IssueAdmin(admin.ModelAdmin):
-    list_display = ('id', 'priority', 'status', 'category', 'description', 'user', 'created_at', 'manager', 'assigned_to')
+    list_display = ('uuid', 'votes_count', 'priority', 'status', 'category', 'description', 'user', 'created_at', 'manager', 'assigned_to')
     list_filter = ('priority', 'status', 'category', 'manager', 'assigned_to')
     search_fields = ('user__username', 'manager__username', 'assigned_to__username')
     date_hierarchy = 'updated_at'
-    ordering = ('-priority',)
+    ordering = ('-votes_count', '-priority')
 
     list_per_page = 25
-    list_display_links = ('id',)
+    list_display_links = ('uuid',)
 
     show_facets = admin.ShowFacets.ALWAYS
 
