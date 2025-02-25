@@ -14,95 +14,172 @@
         {% include 'components/navbar.html' %}
 
         <main>
-            <!-- Requests Section -->
-            <section id="request-section">
-                <h1>Gestión de Solicitudes</h1>
-
-                <div class="section-content">
-                    <button id="new-request-btn" class="btn btn-primary" aria-label="Nueva Solicitud">Nueva Solicitud</button>
-                
-                    <div id="new-request-form" class="hidden">
-                        <h3>Crear Nueva Solicitud</h3>
-                        <form method="POST" id="request-form">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="category">Tipo de Solicitud</label>
-                                <select id="category" name="category" required>
-                                    <option value="">Seleccione un tipo</option>
+            <div class="container">
+                <!-- User Requests Section -->
+                <section>
+                    <h1>Gestión de Solicitudes</h1>
+    
+                    <div class="section-content">
+                        <button id="new-request-btn" class="btn btn-primary" aria-label="Nueva Solicitud">Nueva Solicitud</button>
+                    
+                        <div id="new-request-form" class="hidden">
+                            <h3>Crear Nueva Solicitud</h3>
+                            <form method="POST" id="request-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="category">Tipo de Solicitud</label>
+                                    <select id="category" name="category" required>
+                                        <option value="">Seleccione un tipo</option>
+                                        <option value="reclamo">Reclamo</option>
+                                        <option value="sugerencia">Sugerencia</option>
+                                        <option value="consulta">Consulta</option>
+                                        <option value="otro">Otro</option>
+                                    </select>
+                                </div>
+    
+                                <div class="form-group">
+                                    <label for="description">Descripción</label>
+                                    <textarea id="description" name="description" required></textarea>
+                                </div>
+                                    
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
+                                    <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="user-requests" id="user-requests">
+                            <h3>Mis Solicitudes</h3>
+                            <div class="filters">
+                                <select id="filter-type">
+                                    <option value="">Todos los tipos</option>
                                     <option value="reclamo">Reclamo</option>
                                     <option value="sugerencia">Sugerencia</option>
                                     <option value="consulta">Consulta</option>
                                     <option value="otro">Otro</option>
                                 </select>
+                                <select id="filter-status">
+                                    <option value="">Todos los estados</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="recibido">Recibido</option>
+                                    <option value="en proceso">En proceso</option>
+                                    <option value="resuelto">Resuelto</option>
+                                </select>
+                                <input type="date" id="filter-date">
+                                <button class="btn btn-secondary" id="clearFilterBtn">
+                                    <i class="fas fa-eraser" title="Limpiar Filtros"></i>
+                                </button>
                             </div>
-
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea id="description" name="description" required></textarea>
-                            </div>
-                                
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary" aria-label="Enviar Solicitud">Enviar Solicitud</button>
-                                <button type="button" class="btn btn-secondary" id="cancel-request-btn" aria-label="Cancelar Solicitud">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <div id="request-list">
-                        <h3>Mis Solicitudes</h3>
-                        <div class="filters">
-                            <select id="filter-type">
-                                <option value="">Todos los tipos</option>
-                                <option value="reclamo">Reclamo</option>
-                                <option value="sugerencia">Sugerencia</option>
-                                <option value="consulta">Consulta</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                            <select id="filter-status">
-                                <option value="">Todos los estados</option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="recibido">Recibido</option>
-                                <option value="en proceso">En proceso</option>
-                                <option value="resuelto">Resuelto</option>
-                            </select>
-                            <input type="date" id="filter-date">
-                            <button class="btn btn-secondary" id="clearFilterBtn">
-                                <i class="fas fa-eraser" title="Limpiar Filtros"></i>
-                            </button>
+                            <ul class="request-items">
+                                {% if user_issues %}
+                                    {% for issue in user_issues %}
+                                    <li class="request-item">
+                                        <div class="request-header">
+                                            <div class="request-title">
+                                                <h5 class="request-id">#{{issue.id}}</h5>
+                                                <span class="request-type">{{ issue.category|capfirst }}</span>
+                                            </div>
+                                            
+                                            {% if issue.status == 'en proceso' %}
+                                                <span class="request-status en-proceso">En Proceso</span>
+                                            {% else %}
+                                                <span class="request-status {{ issue.status }}">{{ issue.status|capfirst }}</span>
+                                            {% endif %}
+                                            
+                                        </div>
+                                        <div class="request-body">
+                                            <p class="request-description">{{ issue.description|capfirst }}</p>
+                                        </div>
+                                        <div class="request-footer">
+                                            <div class="request-info">
+                                                <span class="votes-count">
+                                                    <i class="fas fa-thumbs-up"></i> {{ issue.votes_count }}
+                                                </span>
+                                                <span class="request-date">
+                                                    <i class="fas fa-calendar"></i> {{ issue.created_at|date:"d-m-Y" }}
+                                                </span>
+                                            </div>
+                                            <div class="request-actions">
+                                                <a class="btn btn-tertiary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                {% else %}
+                                    <li class="request-item">
+                                        <p>No hay solicitudes registradas</p>
+                                    </li>
+                                {% endif %}
+                            </ul>
                         </div>
-                        <ul class="request-items">
-                            {% if issues %}
-                                {% for issue in issues %}
-                                <li class="request-item">
+                    </div>    
+                </section>
+
+                <!-- Public Requests Section -->
+                <section class="public-requests">
+                    <div class="public-section-header">
+                        <h3>Solicitudes Públicas</h3>
+                        <p>
+                            Acá podés ver las solicitudes de otros usuarios. 
+                            Vota por las que consideres importantes, así la administración podrá priorizarlas.
+                        </p>
+                    </div>
+                    <div class="public-requests-list">
+                        {% if issues %}
+                            {% for issue in issues %}
+                                <div class="request-item">
                                     <div class="request-header">
-                                        <span class="request-type">{{ issue.category|capfirst }}</span>
-                                        
-                                        {% if issue.status == 'en proceso' %}
-                                            <span class="request-status en-proceso">En Proceso</span>
-                                        {% else %}
-                                            <span class="request-status {{ issue.status }}">{{ issue.status|capfirst }}</span>
-                                        {% endif %}
-                                        
+                                        <div class="request-title">
+                                            <h5 class="request-id">#{{issue.id}}</h5>
+                                            <span class="request-type">{{ issue.category|capfirst }}</span>
+                                        </div>
+                                        <span class="request-status {{ issue.status }}">{{ issue.status|capfirst }}</span>
                                     </div>
                                     <div class="request-body">
-                                        <h5 class="request-id">ID de la solicitud: #{{issue.id}}</h5>
                                         <p class="request-description">{{ issue.description|capfirst }}</p>
                                     </div>
-                                    <div class="request-actions">
-                                        <a class="btn btn-tertiary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
-                                        <span class="request-date">Creada el: {{ issue.created_at|date:"d-m-Y" }}</span>
+                                    <div class="request-footer">
+                                        <div class="request-info">
+                                            <span class="request-user">
+                                                <i class="fas fa-user"></i> {{ issue.user.username }}
+                                            </span>
+                                            <span class="request-date">
+                                                <i class="fas fa-calendar"></i> {{ issue.created_at|date:"d-m-Y" }}
+                                            </span>
+                                        </div>
+                                        <div class="request-actions">
+                                            <div class="votes-actions">
+                                                {% if issue.user != request.user %}
+                                                    <form method="POST" class="vote-form">
+                                                        {% csrf_token %}
+                                                        <button class="vote-btn vote-up {% if request.user in issue.votes.all %}active{% endif %}" 
+                                                                data-id="{{ issue.id }}" 
+                                                                data-vote="up">
+                                                            <i class="fas fa-arrow-up"></i>
+                                                        </button>
+                                                        <span class="votes-count">{{ issue.votes_count }}</span>
+                                                        <button class="vote-btn vote-down {% if request.user not in issue.votes.all %}active{% endif %}" 
+                                                                data-id="{{ issue.id }}" 
+                                                                data-vote="down">
+                                                            <i class="fas fa-arrow-down"></i>
+                                                        </button>
+                                                    </form>
+                                                {% else %}
+                                                    <span class="votes-count">{{ issue.votes_count }} votos</span>
+                                                {% endif %}
+                                            </div>
+                                            <a class="btn btn-tertiary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
+                                        </div>
                                     </div>
-                                </li>
-                                {% endfor %}
-                            {% else %}
-                                <li class="request-item">
-                                    <p>No hay solicitudes registradas</p>
-                                </li>
-                            {% endif %}
-                        </ul>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="no-issues">No hay solicitudes públicas</p>
+                        {% endif %}
                     </div>
-                </div>    
-            </section>
+                </section>
+            </div>
         </main>
 
         <script src="{% static 'js/issues.js' %}"></script>

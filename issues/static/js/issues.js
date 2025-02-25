@@ -1,21 +1,56 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Manejo de votos
+    document.querySelectorAll('.vote-btn').forEach(button => {
+        button.addEventListener('click', function(event) {
+            // Prevent form submission
+            event.preventDefault();
+            
+            const issueId = this.dataset.id;
+            const action = this.dataset.vote;
+    
+            const formData = new FormData();
+            formData.append('action', action);
+    
+            fetch(`/issues/${issueId}/vote/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log(data);
+                    document.querySelector('.votes-count').textContent = data.votes;
+                } else {
+                    console.error('Error al votar:', data.error);
+                }
+            })
+            .catch(error => {
+                console.error('There was an error:', error);
+            });
+        });
+    });
+    
+
     // Toggle new request form visibility
     const newRequestBtn = document.getElementById('new-request-btn');
     const newRequestForm = document.getElementById('new-request-form');
     const categorySelect = document.getElementById('category');
-    const requestList = document.getElementById('request-list');
+    const userRequests = document.getElementById('user-requests');
     const cancelRequestBtn = document.getElementById('cancel-request-btn');
 
     newRequestBtn.addEventListener('click', function() {
         newRequestBtn.classList.toggle('hidden');
         newRequestForm.classList.toggle('hidden');
-        requestList.classList.toggle('hidden');
+        userRequests.classList.toggle('hidden');
     });
 
     cancelRequestBtn.addEventListener('click', function() {
         newRequestBtn.classList.toggle('hidden');
         newRequestForm.classList.toggle('hidden');
-        requestList.classList.toggle('hidden');
+        userRequests.classList.toggle('hidden');
         // Reset form
         document.getElementById('request-form').reset();
     });
