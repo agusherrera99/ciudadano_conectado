@@ -80,6 +80,7 @@ input[type="password"] {
 #profile {
     background-color: var(--background);
     padding: 2rem;
+    border: 1px solid var(--accent);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -108,9 +109,9 @@ input[type="password"] {
 }
 
 #edit-profile-form {
-    margin-top: 2rem;
-    background-color: var(--background);
     padding: 2rem;
+    background-color: var(--background);
+    border: 1px solid var(--accent);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

@@ -35,6 +35,7 @@ h1, h2, h3 {
 section {
     margin-bottom: 2rem;
     background-color: white;
+    border: 1px solid var(--accent);
     border-radius: 8px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px var(--shadow-color);
@@ -246,6 +247,11 @@ textarea {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.public-requests .request-footer {
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .public-requests .request-actions {

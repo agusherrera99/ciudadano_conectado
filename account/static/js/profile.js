@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
     editProfileBtn.addEventListener('click', function() {
         editProfileForm.classList.remove('hidden');
         profileDetails.classList.add('hidden');
+        editProfileBtn.classList.add('hidden');
     });
 
     cancelEditProfileBtn.addEventListener('click', function(e) {
         e.preventDefault();
         editProfileForm.classList.add('hidden');
         profileDetails.classList.remove('hidden');
+        editProfileBtn.classList.remove('hidden');
     });
 
     // Handle form submission

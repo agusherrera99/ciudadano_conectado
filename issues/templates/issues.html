@@ -140,14 +140,6 @@
                                         <p class="request-description">{{ issue.description|capfirst }}</p>
                                     </div>
                                     <div class="request-footer">
-                                        <div class="request-info">
-                                            <span class="request-user">
-                                                <i class="fas fa-user"></i> {{ issue.user.username }}
-                                            </span>
-                                            <span class="request-date">
-                                                <i class="fas fa-calendar"></i> {{ issue.created_at|date:"d-m-Y" }}
-                                            </span>
-                                        </div>
                                         <div class="request-actions">
                                             <div class="votes-actions">
                                                 {% if issue.user != request.user %}
@@ -169,7 +161,14 @@
                                                     <span class="votes-count">{{ issue.votes_count }} votos</span>
                                                 {% endif %}
                                             </div>
-                                            <a class="btn btn-tertiary request-details" href="{% url 'issues:issue_detail' issue.id %}">Ver Detalles</a>
+                                        </div>
+                                        <div class="request-info">
+                                            <span class="request-user">
+                                                <i class="fas fa-user"></i> {{ issue.user.username }}
+                                            </span>
+                                            <span class="request-date">
+                                                <i class="fas fa-calendar"></i> {{ issue.created_at|date:"d-m-Y" }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

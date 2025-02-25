@@ -42,6 +42,7 @@ section {
 /* Issue Card Component */
 .issue-card {
     background: white;
+    border: 1px solid var(--accent);
     border-radius: 12px;
     box-shadow: 0 2px 4px var(--shadow-color);
     margin-bottom: 2rem;
@@ -183,6 +184,7 @@ section {
 /* Timeline Component */
 .updates-timeline {
     background: white;
+    border: 1px solid var(--accent);
     border-radius: 12px;
     padding: 1.5rem;
     box-shadow: 0 2px 4px var(--shadow-color);
