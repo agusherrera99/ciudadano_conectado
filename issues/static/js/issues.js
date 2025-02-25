@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Manejo de votos
     document.querySelectorAll('.vote-btn').forEach(button => {
         button.addEventListener('click', function(event) {
-            // Prevent form submission
             event.preventDefault();
             
             const issueId = this.dataset.id;
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    console.log(data);
                     document.querySelector('.votes-count').textContent = data.votes;
                 } else {
                     console.error('Error al votar:', data.error);
@@ -34,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 
-    // Toggle new request form visibility
+    // Botón y formulario de nueva solicitud
     const newRequestBtn = document.getElementById('new-request-btn');
     const newRequestForm = document.getElementById('new-request-form');
     const categorySelect = document.getElementById('category');
@@ -51,11 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         newRequestBtn.classList.toggle('hidden');
         newRequestForm.classList.toggle('hidden');
         userRequests.classList.toggle('hidden');
-        // Reset form
+
         document.getElementById('request-form').reset();
     });
 
-    // Form submission
+    // Enviar solicitud
     const requestForm = document.getElementById('request-form');
     requestForm.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -98,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const status = item.querySelector('.request-status').textContent.toLowerCase();
             
             // Convertir la fecha del item (DD-MM-YYYY) a YYYY-MM-DD para comparar
-            const dateStr = item.querySelector('.request-date').textContent.split(': ')[1];
+            const dateStr = item.querySelector('.user-request-date').textContent.trim();
             const [day, month, year] = dateStr.split('-');
             const formattedDate = `${year}-${month}-${day}`;
 
