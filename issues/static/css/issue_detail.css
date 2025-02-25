@@ -1,3 +1,4 @@
+/* Base Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,15 +12,23 @@ body {
     background-color: var(--background);
 }
 
+/* Typography */
+h1, h2, h3, h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+/* Layout */
 main {
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
 }
 
-h1, h2, h3, h4 {
-    color: var(--primary);
-    margin-bottom: 1rem;
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
 }
 
 section {
@@ -30,159 +39,71 @@ section {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.request-info {
+/* Issue Card Component */
+.issue-card {
+    background: white;
     border-radius: 12px;
+    box-shadow: 0 2px 4px var(--shadow-color);
     margin-bottom: 2rem;
+    overflow: hidden;
 }
 
-.request-info h2 {
-    font-size: 2rem;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid var(--accent);
-    padding-bottom: 0.5rem;
-}
-
-.request-status {
-    display: inline-flex;
+/* Header */
+.issue-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--accent);
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+}
+
+.issue-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.issue-badge {
+    background: var(--secondary);
+    color: var(--primary);
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
-    font-size: 0.85rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-size: 0.9rem;
 }
 
-.request-status.in-process {
-    background-color: rgba(46, 92, 138, 0.2);
-    color: var(--primary);
-}
-
-.request-status.resolved {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #155724;
-}
-
-.request-status.pending {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #856404;
-}
-
-.request-id {
-    color: var(--text);
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.request-id strong {
-    color: var(--primary);
-    font-size: 1.1rem;
-}
-
-.request-category {
-    font-size: 1.1rem;
-    color: var(--text);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.request-category strong {
-    color: var(--primary);
-    background-color: rgba(46, 92, 138, 0.1);
+.issue-type {
+    background: var(--primary);
+    color: white;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-weight: 500;
+    font-size: 0.9rem;
 }
 
-.request-description {
-    background-color: var(--secondary);
-    border-radius: 8px;
+/* Content */
+.issue-content {
     padding: 1.5rem;
-    margin: 1.5rem 0;
-    border: 1px solid var(--accent);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.request-description h4 {
-    color: var(--primary);
+.issue-description {
+    margin-bottom: 2rem;
+}
+
+.issue-description h3 {
+    color: var(--text);
     font-size: 1.1rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
 }
 
-.request-description p {
+.issue-description p {
     color: var(--text);
     line-height: 1.6;
     white-space: pre-line;
 }
 
-.request-meta {
-    margin-top: 1.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--accent);
-}
-
-.request-meta p {
-    color: var(--text);
-    font-size: 0.95rem;
-}
-
-.request-meta strong {
-    color: var(--primary);
-}
-
-.request-images {
-    margin-bottom: 2rem;
-}
-
-.image-gallery {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.image-gallery img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    border: 1px solid var(--accent);
-}
-
-.request-updates {
-    margin-bottom: 2rem;
-}
-
-.update-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-.update-item {
-    background-color: var(--secondary);
-    border-radius: 8px;
-    border: 1px solid var(--accent);
-    padding: 1.25rem;
-    margin-bottom: 1rem;
-}
-
-.update-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-}
-
-.update-date {
-    color: #6c757d;
-    font-size: 0.9rem;
-}
-
-.update-status {
+/* Status Component */
+.issue-status {
     display: inline-flex;
     align-items: center;
     padding: 0.25rem 0.75rem;
@@ -191,34 +112,132 @@ section {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-right: 1rem;
+    transition: all 0.3s ease;
 }
 
-.update-status.recibido {
-    background-color: rgba(108, 117, 125, 0.2);
-    color: #495057;
+.issue-status::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
 }
 
-.update-status.en-proceso {
-    background-color: rgba(46, 92, 138, 0.2);
-    color: var(--primary);
+/* Status Variants */
+.recibido {
+    background-color: var(--status-received-bg);
+    color: var(--status-received-text);
 }
 
-.update-status.pendiente {
-    background-color: rgba(255, 193, 7, 0.2);
-    color: #856404;
-
-}
-.update-status.resuelto {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #155724;
+.recibido::before {
+    background-color: var(--status-received-dot);
 }
 
-.update-description {
-    margin: 0;
-    color: var(--text);
+.pendiente {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
 }
 
-/* Responsive adjustments */
+.pendiente::before {
+    background-color: var(--status-pending-dot);
+}
+
+.en-proceso {
+    background-color: var(--status-process-bg);
+    color: var(--status-process-text);
+}
+
+.en-proceso::before {
+    background-color: var(--status-process-dot);
+}
+
+.resuelto {
+    background-color: var(--status-resolved-bg);
+    color: var(--status-resolved-text);
+}
+
+.resuelto::before {
+    background-color: var(--status-resolved-dot);
+}
+
+/* Metadata Component */
+.issue-metadata {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: var(--secondary);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.metadata-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Timeline Component */
+.updates-timeline {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.timeline {
+    position: relative;
+    margin-top: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--accent);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: 2px solid white;
+}
+
+.timeline-content {
+    background: var(--secondary);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.no-updates {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    background: var(--secondary);
+    border-radius: 8px;
+    color: var(--text-muted);
+    text-align: center;
+    justify-content: center;
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
     .request-info h2 {
         font-size: 1.5rem;
@@ -231,5 +250,15 @@ section {
 
     .request-description {
         padding: 1rem;
+    }
+
+    .issue-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .issue-metadata {
+        grid-template-columns: 1fr;
     }
 }

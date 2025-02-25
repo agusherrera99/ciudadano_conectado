@@ -13,44 +13,82 @@
     {% include 'components/navbar.html' %}
 
     <main>
-        <div class="request-info">
-            <h2>Detalles de la solicitud</h2>
-            
-            <h3 class="request-id">ID de solicitud: <strong>#{{issue.id}}</strong></h3>
-            <h4 class="request-category">Tipo de solicitud: <strong>{{issue.category|capfirst}}</strong></h4>
-            
-            <div class="request-description">
-                <h4>Descripción:</h4>
-                <p>{{issue.description}}</p>
-            </div>
-            
-            <div class="request-meta">
-                <p><strong>Fecha de Creación: {{issue.created_at}}</strong></p>
-            </div>
-        </div>
-        
-        <div class="request-updates">
-            <h4>Actualizaciones</h4>
-            <ul class="update-list">
-                {% if issue_updates %}
-                    {% for update in issue_updates %}
-                    <li class="update-item">
-                        <div class="update-header">
-                            <span class="update-date">{{update.updated_at}}</span>
+        <div class="container">
+            <!-- Issue Details Card -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-title">
+                        <span class="issue-badge">#{{issue.uuid}}</span>
+                        <span class="issue-type">{{issue.category|capfirst}}</span>
+                    </div>
+                    <span class="issue-status {{issue.status}}">{{issue.status|capfirst}}</span>
+                </div>
 
-                            {% if update.status == 'en proceso' %}
-                                <span class="update-status en-proceso">{{update.status}}</span>
-                            {% else %}
-                                <span class="update-status {{update.status}}">{{update.status}}</span>
-                            {% endif %}
+                <div class="issue-content">
+                    <div class="issue-description">
+                        <h3>Descripción</h3>
+                        <p>{{issue.description}}</p>
+                    </div>
+
+                    <div class="issue-metadata">
+                        <div class="metadata-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Creado el {{issue.created_at|date:"d/m/Y H:i"}}</span>
                         </div>
-                        <p class="update-description">{{update.description}}</p>
-                    </li>
-                    {% endfor %}
+                        <div class="metadata-item">
+                            <i class="fas fa-user"></i>
+                            <span>Por {{issue.user.username}}</span>
+                        </div>
+                        <div class="metadata-item">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span>{{issue.votes_count}} votos</span>
+                        </div>
+                        {% if issue.manager %}
+                        <div class="metadata-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>Manager: {{issue.manager.username}}</span>
+                        </div>
+                        {% endif %}
+                        {% if issue.assigned_to %}
+                        <div class="metadata-item">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Asignado a: {{issue.assigned_to.username}}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updates Timeline -->
+            <div class="updates-timeline">
+                <h3>Historial de Actualizaciones</h3>
+                {% if issue_updates %}
+                    <div class="timeline">
+                        {% for update in issue_updates %}
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <div class="update-header">
+                                        <span class="update-date">
+                                            <i class="fas fa-clock"></i>
+                                            {{update.updated_at|date:"d/m/Y H:i"}}
+                                        </span>
+                                        <span class="update-status {{update.status}}">
+                                            {{update.status|capfirst}}
+                                        </span>
+                                    </div>
+                                    <p class="update-description">{{update.description}}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 {% else %}
-                    <p class="update-item">No hay actualizaciones para esta solicitud</p>
+                    <div class="no-updates">
+                        <i class="fas fa-info-circle"></i>
+                        <p>No hay actualizaciones para esta solicitud</p>
+                    </div>
                 {% endif %}
-            </ul>
+            </div>
         </div>
     </main>
 </body>
