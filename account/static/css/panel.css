@@ -28,30 +28,31 @@ section {
     padding: 1.5rem;
 }
 
-/* General Dashboard Styling */
 .dashboard {
-    max-width: 900px;
-    margin: 50px auto;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 1rem;
     text-align: center;
 }
 
 .dashboard-title {
-    font-size: 2rem;
-    color: var(--primary);
-    margin-bottom: 30px;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
-/* Module Flex */
 .module-flex {
     display: flex;
-    gap: 20px;
-    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
 }
 
-/* Modern Module Cards */
 .module-card {
+    width: 100%;
+    max-width: 400px;
     background: var(--background);
-    padding: 30px;
+    padding: 20px;
+    margin: 0 auto;
     border: 1px solid var(--accent);
     border-radius: 12px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
@@ -69,22 +70,98 @@ section {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Icons */
 .module-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--primary);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+}
+
+.module-title {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
 }
 
 .module-desc {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--text);
     opacity: 0.8;
+    line-height: 1.4;
 }
 
+/* Mobile */
 @media (min-width: 768px) {
     .module-card {
         max-width: 350px;
     }
     
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .dashboard {
+        margin: 30px auto;
+    }
+
+    .dashboard-title {
+        font-size: 1.75rem;
+    }
+
+    .module-flex {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .module-card {
+        width: calc(50% - 20px);
+        min-width: 300px;
+    }
+
+    .module-icon {
+        font-size: 2.75rem;
+    }
+
+    .module-title {
+        font-size: 1.4rem;
+    }
+
+    .module-desc {
+        font-size: 0.95rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .dashboard {
+        max-width: 900px;
+        margin: 50px auto;
+    }
+
+    .dashboard-title {
+        font-size: 2rem;
+    }
+
+    .module-flex {
+        flex-direction: row;
+        gap: 30px;
+    }
+
+    .module-card {
+        width: 350px;
+        padding: 30px;
+    }
+
+    .module-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+
+    .module-title {
+        font-size: 1.5rem;
+    }
+
+    .module-desc {
+        font-size: 1rem;
+    }
 }
