@@ -23,15 +23,23 @@ body {
 }
 
 nav {
-    background-color: var(--dark-background);
-    padding: 1rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 1rem 2rem;
+    background-color: var(--dark-background);
     border-bottom: 1px solid var(--accent);
+    width: 100%;
 }
 
-.nav-left {
+.nav-content {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-left, .nav-right {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -52,6 +60,28 @@ nav {
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--light-text);
+}
+
+.nav-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--light-text);
+}
+
+.btn {
+    padding: 0.2rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 main {
@@ -107,7 +137,7 @@ input:focus {
     outline: none;
 }
 
-button {
+.login-btn {
     padding: 0.75rem;
     background-color: var(--primary);
     color: var(--light-text);
@@ -118,7 +148,7 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.login-btn:hover {
     background-color: #1d4e75;
 }
 
@@ -153,16 +183,67 @@ button:hover {
 
 /* Mobile */
 @media (max-width: 768px) {
+    .nav-toggle {
+        display: block;
+        position: static; /* Cambiamos de fixed a static */
+        margin-right: 1rem;
+        z-index: 1000;
+    }
+
+    .nav-content {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        height: 100vh;
+        width: 250px;
+        background-color: var(--dark-background);
+        padding: 4rem 1rem;
+        transition: left 0.3s ease;
+        z-index: 999;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .nav-content.active {
+        left: 0;
+    }
+
     nav {
-        padding: 1rem;
+        padding: 0.5rem 1rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-left, .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .nav-right {
+        gap: 0;
+    }
+
+    .nav-logo {
+        flex-direction: row;
+        margin: 0;
+        gap: 0.5rem;
     }
 
     .nav-logo .logo {
-        height: 60px;
+        height: 40px;
     }
 
     .nav-logo .site-name {
-        font-size: 1.2rem;
+        font-size: 1rem;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin: 0.5rem 0;
     }
 
     main {
@@ -213,7 +294,7 @@ button:hover {
 /* Tablet */
 @media (min-width: 769px) and (max-width: 1024px) {
     nav {
-        padding: 1rem 1.5rem;
+        padding: 1rem;
     }
 
     .nav-logo .logo {
@@ -222,6 +303,15 @@ button:hover {
 
     .nav-logo .site-name {
         font-size: 1.3rem;
+    }
+
+    .nav-right {
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.2rem 0.8rem;
+        font-size: 0.9rem;
     }
 
     .login-container {

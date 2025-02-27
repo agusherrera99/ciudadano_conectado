@@ -5,17 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
-    <nav>
-        <div class="nav-left">
-            <a class="nav-logo" href="{% url 'pages:home' %}">
+    <header>
+        <nav>
+            <a class="nav-logo" href="{% url 'pages:home' %}" aria-label="Inicio">
                 <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
                 <span class="site-name">Ciudadanos Conectados</span>
             </a>
-        </div>
-    </nav>
+            <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-content" id="navContent">
+                <div class="nav-right">
+                    <a class="btn btn-login" href="{% url 'account:login' %}" aria-label="Iniciar Sesión">Iniciar Sesión</a>
+                    <a class="btn btn-register" href="{% url 'account:register' %}" aria-label="Registrarse">Registrar</a>
+                </div>
+            </div>
+        </nav>
+    </header>
     
     <main>
         <div class="register-container">
