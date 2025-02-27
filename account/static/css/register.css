@@ -196,3 +196,118 @@ button:hover {
         transform: translateY(0);
     }
 }
+
+/* Mobile */
+@media (max-width: 768px) {
+    nav {
+        padding: 1rem;
+    }
+
+    .nav-logo .logo {
+        height: 60px;
+    }
+
+    .nav-logo .site-name {
+        font-size: 1.2rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    .register-container {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+
+    .register-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .register-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .form-group {
+        margin-bottom: 0.5rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+    }
+
+    button {
+        padding: 0.8rem;
+        font-size: 1rem;
+        margin-top: 1rem;
+    }
+
+    .register-form-footer {
+        margin-top: 1.5rem;
+    }
+
+    .register-form-footer a {
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+    }
+
+    .error {
+        font-size: 0.8rem;
+    }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    nav {
+        padding: 1rem 1.5rem;
+    }
+
+    .nav-logo .logo {
+        height: 70px;
+    }
+
+    .nav-logo .site-name {
+        font-size: 1.3rem;
+    }
+
+    .register-container {
+        max-width: 600px;
+        padding: 2rem;
+    }
+
+    .register-container h1 {
+        font-size: 1.6rem;
+    }
+
+    .register-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+    }
+
+    input {
+        padding: 0.7rem;
+    }
+
+    button {
+        grid-column: span 2;
+        padding: 0.8rem;
+    }
+
+    .register-form-footer {
+        margin-top: 1.75rem;
+    }
+
+    .register-form-footer a {
+        font-size: 0.9rem;
+    }
+}
