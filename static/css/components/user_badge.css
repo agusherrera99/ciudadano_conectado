@@ -1,5 +1,10 @@
 @import url('bottons.css');
 
+.user-badge-container {
+    position: relative;
+    display: inline-block;
+}
+
 .user-badge {
     position: relative;
     display: inline-flex;
@@ -40,17 +45,16 @@
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 10%;
-    right: 1%;
+    top: 100%;          /* Alinea con el borde inferior del badge */
+    right: 0;
+    margin-top: 10px;   /* Espacio fijo de 10px */
     background-color: var(--background);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 0.5rem 0;
-    width: 100%;
-    max-width: 250px;
-    height: 100%;
+    width: 250px;
     max-height: 200px;
-    z-index: 10;
+    z-index: 1000;
     list-style: none;
 }
 
@@ -75,9 +79,75 @@
     display: block;
 }
 
-@media screen and (max-width : 1800px) {
+/* Mobile */
+@media (max-width: 768px) {
+    .user-badge-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .user-badge {
+        height: 2.5em;
+        padding-right: 0.75rem;
+        position: relative;
+    }
+
+    .avatar {
+        width: 3.5rem;
+        line-height: 2.5rem;
+        font-size: 1.5rem;
+    }
+
+    .username {
+        margin-left: 0.5rem;
+        line-height: 1rem;
+        font-size: 0.9rem;
+    }
+
     .dropdown-menu {
-        top: 14%;
-        right: 1%;
+        width: 200px;
+        max-height: 190px;
+        top: 100%;
+        margin-top: 10px;
+        right: 0;
+    }
+
+    .dropdown-menu li {
+        padding: 0.3rem;
+    }
+
+    .dropdown-menu li a {
+        font-size: 0.9rem;
+    }
+
+    .btn-logout {
+        font-size: 0.9rem;
+        padding: 0.5rem 4rem;
+    }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .user-badge {
+        height: 2.75em;
+        padding-right: 1rem;
+        position: relative;
+    }
+
+    .avatar {
+        width: 3rem;
+        line-height: 2.75rem;
+        font-size: 1.75rem;
+    }
+
+    .username {
+        font-size: 1rem;
+    }
+
+    .dropdown-menu {
+        width: 220px;
+        top: 100%;
+        margin-top: 10px;
+        right: 0;
     }
 }

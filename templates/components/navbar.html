@@ -7,12 +7,12 @@
         <div class="nav-left">
             {% if request.user.is_authenticated %}
                 <a class="nav-logo" href="{% url 'account:panel' %}">
-                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo mobile-hide">
                     <span class="site-name">Ciudadanos Conectados</span>
                 </a>
             {% else %}
                 <a class="nav-logo" href="{% url 'pages:home' %}">
-                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo">
+                    <img src="{% static 'images/favicon.svg' %}" alt="Citizens Connected Logo" class="logo mobile-hide">
                     <span class="site-name">Ciudadanos Conectados</span>
                 </a>
             {% endif %}
