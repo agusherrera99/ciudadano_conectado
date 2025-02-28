@@ -9,11 +9,6 @@ from account.models import CustomUser
 from .forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 # Create your views here.
-
-@login_required
-def panel(request):
-    return render(request, 'panel.html')
-
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -51,7 +46,7 @@ def login_view(request):
                 if user.is_active:
                     login(request, user)
                     messages.success(request, 'Inicio de sesión correcto')
-                    return redirect('account:panel')
+                    return redirect('pages:panel')
             else:
                 try:
                     user = CustomUser.objects.get(email=email)
@@ -83,7 +78,7 @@ def register(request):
 
                 login(request, user)
 
-                return redirect('account:panel')
+                return redirect('pages:panel')
             except Exception:
                 messages.error(request, 'Error al intentar crear la cuenta')
         else:

@@ -7,7 +7,7 @@
         <span class="username">{{request.user.first_name|capfirst}} {{ request.user.last_name|capfirst}}</span>
     </a>
     <ul class="dropdown-menu">
-        <li><a class="btn btn-secondary" href="{% url 'account:panel' %}">Panel</a></li>
+        <li><a class="btn btn-secondary" href="{% url 'pages:panel' %}">Panel</a></li>
         <li><a class="btn btn-secondary"  href="{% url 'account:profile' %}">Perfil</a></li>
         <li>
             <form action="{% url 'logout' %}" method="post">
