@@ -17,22 +17,43 @@
             <h2>Mi Perfil</h2>
             <div class="profile-details">
                 <div class="profile-info">
-                    <p><strong>Email:</strong> {{request.user.email}}</p>
+                    <div class="profile-group">
+                        <p>Email</p>
+                        <p>{{request.user.email}}</p>
+                    </div>
                     
                     {% if request.user.phone_number|length == 10 %}
-                        <p><strong>Teléfono:</strong> {{request.user.phone_number|slice:":4"}}-{{request.user.phone_number|slice:"4:"}}</p>
+                        <div class="profile-group">
+                            <p>Teléfono</p>
+                            <p>{{request.user.phone_number|slice:":4"}}-{{request.user.phone_number|slice:"4:"}}</p>
+                        </div>
                     {% else %}
-                        <p><strong>Teléfono:</strong> {{request.user.phone_number}}</p>
+                        <div class="profile-group">
+                            <p>Teléfono</p>
+                            <p>{{request.user.phone_number}}</p>
+                        </div>
                     {% endif %}
 
                     {% if request.user.dni|length == 8 %}
-                        <p><strong>DNI:</strong> {{request.user.dni|slice:":2"}}.{{request.user.dni|slice:"2:5"}}.{{request.user.dni|slice:"5:"}}</p>
+                        <div class="profile-group">
+                            <p>DNI:</p>
+                            <p>{{request.user.dni|slice:":2"}}.{{request.user.dni|slice:"2:5"}}.{{request.user.dni|slice:"5:"}}</p>
+                        </div>
                     {% else %}
-                        <p><strong>DNI:</strong> {{request.user.dni}}</p>
+                        <div class="profile-group">
+                            <p>DNI:</p>
+                            <p>{{request.user.dni}}</p>
+                        </div>
                     {% endif %}
-                        
-                    <p><strong>Ubicación:</strong> {{request.user.address|capfirst}}</p>
-                    <p><strong>Fecha de Registro:</strong> {{request.user.created_at|date:"d-m-Y" }}</p>
+                    
+                    <div class="profile-group">
+                        <p>Ubicación:</p>
+                        <p>{{request.user.address|capfirst}}</p>
+                    </div>
+                    <div class="profile-group borderless">
+                        <p>Fecha de Registro:</p>
+                        <p>{{request.user.created_at|date:"d-m-Y" }}</p>
+                    </div>
                 </div>
             </div>
 
