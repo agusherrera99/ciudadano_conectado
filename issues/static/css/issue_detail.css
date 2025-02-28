@@ -20,15 +20,22 @@ h1, h2, h3, h4 {
 
 /* Layout */
 main {
-    max-width: 1200px;
-    margin: 2rem auto;
+    width: 100%;
+    margin: 1rem 0;
     padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
 }
 
 .container {
-    max-width: 800px;
+    width: 100%;
+    padding: 1rem;
+    max-width: 800px; /* Ancho máximo para mantener legibilidad */
     margin: 0 auto;
-    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 section {
@@ -45,32 +52,24 @@ section {
     border: 1px solid var(--accent);
     border-radius: 12px;
     box-shadow: 0 2px 4px var(--shadow-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 2rem;
 }
 
 /* Header */
 .issue-header {
-    padding: 1.5rem;
     border-bottom: 1px solid var(--accent);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 1rem;
 }
 
 .issue-title {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.issue-badge {
-    background: var(--secondary);
-    color: var(--primary);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .issue-type {
@@ -79,16 +78,16 @@ section {
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 /* Content */
 .issue-content {
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 .issue-description {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .issue-description h3 {
@@ -113,7 +112,6 @@ section {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-right: 1rem;
     transition: all 0.3s ease;
 }
 
@@ -170,11 +168,11 @@ section {
 
 /* Metadata Component */
 .issue-metadata {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem;
     background: var(--secondary);
-    padding: 1.5rem;
     border-radius: 8px;
 }
 
@@ -191,13 +189,15 @@ section {
     background: white;
     border: 1px solid var(--accent);
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 2px 4px var(--shadow-color);
+    width: 100%;
+    max-width: 100%;
 }
 
 .timeline {
     position: relative;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .timeline::before {
@@ -212,8 +212,8 @@ section {
 
 .timeline-item {
     position: relative;
-    padding-left: 2rem;
-    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .timeline-marker {
@@ -244,28 +244,120 @@ section {
     justify-content: center;
 }
 
-/* Media Queries */
+/* Mobile */
 @media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
     .request-info h2 {
         font-size: 1.5rem;
     }
-
+    
     .request-id,
     .request-category {
         font-size: 1rem;
     }
-
+    
     .request-description {
         padding: 1rem;
     }
 
-    .issue-header {
-        flex-direction: column;
+    .issue-card,
+    .updates-timeline {
+        margin: 1rem 0;
+    }
+
+    .issue-title {
         gap: 1rem;
-        align-items: flex-start;
+    }
+
+    .issue-type,
+    .issue-status {
+        width: 100%;
+        text-align: center;
     }
 
     .issue-metadata {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        gap: 0.5rem;
     }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    main {
+        margin: 1.5rem auto;
+        padding: 0 2rem;
+    }
+
+    .container {
+        margin: 0 auto;
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    .issue-content {
+        padding: 1.5rem;
+    }
+
+    .issue-metadata {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .updates-timeline {
+        padding: 1.5rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    main {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0;
+    }
+
+    .container {
+        padding: 2rem;
+        max-width: 800px;
+    }
+
+    .issue-card {
+        margin-bottom: 2rem;
+    }
+
+    .issue-content {
+        padding: 2rem;
+    }
+
+    .issue-metadata {
+        padding: 1.5rem 2rem;
+        gap: 1.5rem;
+    }
+
+    .issue-description {
+        margin-bottom: 2rem;
+    }
+
+    .updates-timeline {
+        padding: 2rem;
+    }
+
+    .timeline {
+        margin-top: 2rem;
+    }
+
+    .timeline-item {
+        padding-left: 2rem;
+        margin-bottom: 2rem;
+    }
+}
+
+/* Status badges adjustments for all screens */
+.issue-type,
+.issue-status {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.75rem;
 }
