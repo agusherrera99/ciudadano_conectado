@@ -12,8 +12,8 @@ body {
 }
 
 main {
-    max-width: 1200px;
-    margin: 2rem auto;
+    width: 100%;
+    margin: 1rem 0;
     padding: 0 1rem;
 }
 
@@ -27,17 +27,17 @@ h1, h2, h3 {
 }
 
 section {
-    margin-bottom: 2rem;
+    margin: 1rem;
+    padding: 1rem;
     background-color: white;
     border: 1px solid var(--accent);
     border-radius: 8px;
-    padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .notification-item i {
     color: var(--primary);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .notification-item.unread {
@@ -45,8 +45,9 @@ section {
 }
 
 .notification-date {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #6c757d;
+    margin-left: 0;
 }
 
 .notification-items {
@@ -55,18 +56,27 @@ section {
 
 .notification-item {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
     background-color: var(--secondary);
     border-radius: 8px;
     border: 1px solid var(--accent);
-    padding: 1.25rem;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    position: relative;
     transition: all 0.3s ease;
 }
 
+.notification-item p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
 .mark-read-btn {
-    padding: 0.5rem 1rem;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.4rem 0.8rem;
     border: none;
     border-radius: 1rem;
     background: var(--primary);
@@ -84,8 +94,83 @@ section {
     transform: translateY(-2px);
 }
 
-.notification-date {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    margin-left: auto;
+/* Mobile and Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+    main {
+        margin: 2rem auto;
+        max-width: 90%;
+    }
+
+    section {
+        margin: 0;
+        padding: 1.5rem;
+    }
+
+    .notification-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+    }
+
+    .notification-item p {
+        flex: 1;
+        font-size: 1rem;
+    }
+
+    .notification-date {
+        font-size: 0.9rem;
+        margin-left: auto;
+        margin-right: 3rem;
+    }
+
+    .mark-read-btn {
+        position: static;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    main {
+        max-width: 800px;
+        margin: 2rem auto;
+    }
+
+    section {
+        padding: 2rem;
+    }
+
+    .notification-item {
+        flex-direction: row;
+        align-items: center;
+        padding: 1.5rem;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .notification-item i {
+        font-size: 1.2rem;
+    }
+
+    .notification-item p {
+        flex: 1;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .notification-date {
+        font-size: 0.9rem;
+        margin-right: 4rem;
+    }
+
+    .mark-read-btn {
+        position: static;
+        padding: 0.5rem 1rem;
+    }
+
+    .mark-read-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 }
