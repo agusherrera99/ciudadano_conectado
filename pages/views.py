@@ -9,3 +9,15 @@ class HomePageView(TemplateView):
 @login_required
 def panel(request):
     return render(request, 'panel.html')
+
+@login_required
+def participation(request):
+    return render(request, 'participation.html')
+
+@login_required
+def transparency(request):
+    return render(request, 'transparency.html')
+
+@login_required
+def comunication(request):
+    return render(request, 'comunication.html')

@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información y Contacto</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'css/transparency.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <main class="dashboard">
+        <section class="module-grid">
+            <!-- Calendario de eventos y reuniones públicas -->
+            <a href="" class="module-card">
+                <h2 class="module-title">Calendario de eventos y reuniones públicas</h2>
+                <p class="module-desc">
+                    Consulte el calendario de eventos y reuniones públicas de su comunidad.
+                    Vea las fechas y horarios de las reuniones y eventos públicos.
+                </p>
+            </a>
+        </section>
+    </main>
+</body>
+</html>

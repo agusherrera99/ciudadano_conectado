@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participación Ciudadana</title>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link rel="stylesheet" href="{% static 'css/participation.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <main class="dashboard">
+        <div class="back-button-container">
+            <a href="{% url 'pages:panel' %}" class="back-button" title="Volver al Panel">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al Panel</span>
+            </a>
+        </div>
+        
+        <section class="module-grid">
+            <!-- Solicitudes -->
+            <a href="{% url 'issues:issues' %}" class="module-card">
+                <h2 class="module-title">Solicitudes</h2>
+                <p class="module-desc">
+                    Realice y haga seguimiento de sus reclamos, sugerencias y consultas.
+                    Vote por las propuestas de otros ciudadanos y ayude a mejorar su comunidad.
+                </p>
+            </a>
+
+            <!-- Encuestas -->
+            <a href="" class="module-card inactive">
+                <h2 class="module-title">Encuestas</h2>
+                <span class="development-badge">En desarrollo</span>
+                <p class="module-desc">
+                    Participe en encuestas y ayude a tomar decisiones en su comunidad.
+                    Vea los resultados de encuestas anteriores.
+                </p>
+            </a>
+
+            <!-- Peticiones -->
+            <a href="" class="module-card inactive">
+                <h2 class="module-title">Peticiones</h2>
+                <span class="development-badge">En desarrollo</span>
+                <p class="module-desc">
+                    Firme peticiones y apoye causas que le importan.
+                    Vea las peticiones más populares y recientes.
+                </p>
+            </a>
+
+            <!-- Voluntariados -->
+            <a href="" class="module-card inactive">
+                <h2 class="module-title">Voluntariados</h2>
+                <span class="development-badge">En desarrollo</span>
+                <p class="module-desc">
+                    Encuentre oportunidades de voluntariado en su comunidad.
+                    Regístrese para ser voluntario y ayude a su comunidad.
+                </p>
+            </a>
+
+            <!-- NODO -->
+            <a href="" class="module-card inactive">
+                <h2 class="module-title">NODO</h2>
+                <span class="development-badge">En desarrollo</span>
+                <p class="module-desc">
+                    Conozca más sobre el Nodo de Participación Ciudadana.
+                    Pida espacio para organizar eventos y reuniones.
+                </p>
+            </a>
+
+            <!-- Presupuesto Participativo -->
+            <a href="" class="module-card inactive">
+                <h2 class="module-title">Presupuesto Participativo</h2>
+                <span class="development-badge">En desarrollo</span>
+                <p class="module-desc">
+                    Participe en la toma de decisiones sobre el presupuesto de su comunidad.
+                    Vea los proyectos propuestos y vote por sus favoritos.
+                </p>
+            </a>
+        </section>
+    </main>
+</body>
+</html>

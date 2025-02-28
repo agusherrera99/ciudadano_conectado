@@ -178,14 +178,6 @@ input[type="password"] {
     font-weight: 500;
 }
 
-form {
-    padding: 1.5rem;
-}
-
-.form-group:last-child {
-    margin-bottom: 0;
-}
-
 /* Utilities */
 .borderless {
     border: unset;
@@ -211,10 +203,6 @@ form {
         flex-direction: column;
         gap: 0.75rem;
     }
-
-    .btn {
-        width: 100%;
-    }
 }
 
 /* Tablet & Desktop Styles */
@@ -226,11 +214,6 @@ form {
     .form-actions {
         display: flex;
         gap: 1rem;
-    }
-
-    .btn {
-        width: auto;
-        min-width: 120px;
     }
 }
 
@@ -252,11 +235,6 @@ form {
     .profile-actions {
         justify-content: flex-start;
     }
-
-    .btn {
-        min-width: 180px;
-    }
-
 
     .form-group {
         margin-bottom: 1.5rem;
