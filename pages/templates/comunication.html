@@ -13,9 +13,17 @@
     {% include 'components/navbar.html' %}
 
     <main class="dashboard">
+        <div class="back-button-container">
+            <a href="{% url 'pages:panel' %}" class="back-button" title="Volver al Panel">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al Panel</span>
+            </a>
+        </div>
+
         <section class="module-grid">
             <!-- Calendario de eventos y reuniones públicas -->
-            <a href="" class="module-card">
+            <a class="module-card inactive">
+                <span class="development-badge">En desarrollo</span>
                 <h2 class="module-title">Calendario de eventos y reuniones públicas</h2>
                 <p class="module-desc">
                     Consulte el calendario de eventos y reuniones públicas de su comunidad.

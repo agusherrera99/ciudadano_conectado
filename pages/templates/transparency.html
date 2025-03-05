@@ -13,9 +13,17 @@
     {% include 'components/navbar.html' %}
 
     <main class="dashboard">
+        <div class="back-button-container">
+            <a href="{% url 'pages:panel' %}" class="back-button" title="Volver al Panel">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al Panel</span>
+            </a>
+        </div>
+
         <section class="module-grid">
             <!-- Obras Públicas -->
-            <a href="" class="module-card">
+            <a class="module-card inactive">
+                <span class="development-badge">En desarrollo</span>
                 <h2 class="module-title">Obras Públicas</h2>
                 <p class="module-desc">
                     Consulte información sobre obras públicas en su comunidad.
@@ -24,7 +32,8 @@
             </a>
 
             <!-- Datos abiertos -->
-            <a href="" class="module-card">
+            <a class="module-card inactive">
+                <span class="development-badge">En desarrollo</span>
                 <h2 class="module-title">Datos Abiertos</h2>
                 <p class="module-desc">
                     Acceda a datos abiertos de su comunidad y de su gobierno.
@@ -33,7 +42,8 @@
             </a>
 
             <!-- Informes de impacto y resultados -->
-            <a href="" class="module-card">
+            <a class="module-card inactive">
+                <span class="development-badge">En desarrollo</span>
                 <h2 class="module-title">Informes de Impacto y Resultados</h2>
                 <p class="module-desc">
                     Consulte informes de impacto y resultados de programas y proyectos.
@@ -41,14 +51,14 @@
                 </p>
             </a>
 
-            <!-- Promesas y compromisos -->
-            <a href="" class="module-card">
+            <!-- Promesas y compromisos
+            <a class="module-card">
                 <h2 class="module-title">Promesas y Compromisos</h2>
                 <p class="module-desc">
                     Vea las promesas y compromisos de su gobierno.
                     Haga seguimiento de su cumplimiento y de los avances.
                 </p>
-            </a>
+            </a> -->
         </section>
     </main>
 </body>
