@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.urls import reverse
 
 from .models import Issue, IssueUpdate
 
@@ -10,7 +11,13 @@ from .models import Issue, IssueUpdate
 def issues(request):
     user_issues = Issue.objects.filter(user=request.user)
     issues = Issue.objects.all().order_by('-votes_count').exclude(user=request.user)[:5]
-    return render(request, 'issues.html', {'user_issues': user_issues, 'issues': issues})
+
+    context = {
+        'user_issues': user_issues,
+        'issues': issues,
+        'url_link': reverse('pages:participation')
+    }
+    return render(request, 'issues.html', context=context)
 
 @login_required
 def issue_detail(request, issue_id):
@@ -19,7 +26,13 @@ def issue_detail(request, issue_id):
     issue_updates = IssueUpdate.objects.filter(issue=issue
     ).order_by('updated_at')
 
-    return render(request, 'issue_detail.html', {'issue': issue, 'issue_updates': issue_updates})
+
+    context = {
+        'issue': issue,
+        'issue_updates': issue_updates,
+        'url_link': reverse('issues:issues')
+    }
+    return render(request, 'issue_detail.html', context=context)
 
 @login_required
 def create_issue(request):

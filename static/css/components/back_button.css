@@ -2,7 +2,6 @@
     display: flex;
     width: 100%;
     margin-bottom: 1.5rem;
-    padding-left: 0.5rem;
 }
 
 .back-button {
@@ -35,18 +34,8 @@
     }
 }
 
-/* Tablet */
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-    .back-button-container {
-        padding-left: 1rem;
-    }
-}
-
 /* Desktop */
 @media screen and (min-width: 1024px) {
-    .back-button-container {
-        padding-left: 1.5rem;
-    }
     
     .back-button {
         font-size: 1.05rem;
