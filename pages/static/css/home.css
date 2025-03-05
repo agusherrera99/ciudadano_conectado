@@ -91,71 +91,165 @@ main {
     padding: 0 1rem;
 }
 
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+/* Hero Section */
+.hero-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 2rem 2rem;
+    background-color: var(--background);
 }
 
-.card {
-    background-color: var(--background);
-    border-radius: 8px;
+.hero-content {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+.hero-content h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.hero-text {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Features Section */
+.features-section {
+    padding: 0rem 2rem;
+    background-color: var(--background-alt);
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: var(--primary);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.feature-card {
+    background-color: white;
+    border-radius: 10px;
     padding: 2rem;
-    border: 1px solid var(--accent);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
     display: flex;
     flex-direction: column;
+    height: 100%;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+
+.feature-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.feature-card p {
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.feature-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.feature-status.available {
+    background-color: #e6f7ed;
+    color: #0fa958;
+}
+
+.feature-status.coming-soon {
+    background-color: #e6f0f7;
+    color: #2d7cc1;
+}
+
+.coming-soon {
+    position: relative;
+    opacity: 0.8;
+}
+
+/* How it works section */
+.how-it-works {
+    padding: 4rem 2rem;
+    background-color: white;
+}
+
+.steps {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.step {
+    flex: 1;
+    min-width: 200px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-icon {
+.step-number {
+    width: 60px;
+    height: 60px;
     background-color: var(--primary);
     color: white;
-    width: 80px;
-    height: 80px;
     border-radius: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
-}
-
-.card h2 {
-    color: var(--primary);
-    margin-bottom: 1rem;
+    justify-content: center;
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 700;
+    margin: 0 auto 1.5rem;
 }
 
-.card ul {
-    list-style-type: none;
-    padding: 0;
-    margin-bottom: 1.5rem;
-    text-align: left;
-}
-
-.card li {
+.step h3 {
+    font-size: 1.3rem;
     margin-bottom: 0.75rem;
-    position: relative;
-    padding-left: 1.5rem;
-    color: #495057;
+    color: var(--primary);
 }
 
-.card li::before {
-    content: '\2022';
-    color: var(--primary);
-    font-weight: bold;
-    position: absolute;
-    left: 0;
+.step p {
+    font-size: 1rem;
+    color: var(--text);
 }
 
 /* Footer simplificado con flexbox */
@@ -163,8 +257,8 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 3rem 2rem;
-    margin-top: 4rem;
+    padding: 2rem 2rem;
+    margin-top: 2rem;
     gap: 4rem;
     background-color: var(--secondary);
     color: var(--text);
@@ -286,6 +380,32 @@ footer {
         margin: 0.5rem 0;
     }
 
+    .hero-section {
+        flex-direction: column;
+        padding: 2rem 1rem;
+    }
+    
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .steps {
+        flex-direction: column;
+    }
+
     footer {
         flex-direction: column;
         align-items: center;
@@ -350,25 +470,12 @@ footer {
         font-size: 0.9rem;
     }
 
-    .card-container {
-        grid-template-columns: repeat(1, 1fr);
-        gap: 1.5rem;
-        padding: 0 1rem;
+    .hero-section {
+        padding: 3rem 1.5rem;
     }
-
-    .card {
-        padding: 1.5rem;
-        max-width: 450px;
-    }
-
-    .card-icon {
-        width: 70px;
-        height: 70px;
-        font-size: 1.8rem;
-    }
-
-    .card h2 {
-        font-size: 1.3rem;
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     footer {
