@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import TemplateView
 
 
@@ -12,12 +13,21 @@ def panel(request):
 
 @login_required
 def participation(request):
-    return render(request, 'participation.html')
+    context = {
+        'url_link': reverse('pages:panel')
+    }
+    return render(request, 'participation.html', context=context)
 
 @login_required
 def transparency(request):
-    return render(request, 'transparency.html')
+    context = {
+        'url_link': reverse('pages:panel')
+    }
+    return render(request, 'transparency.html', context=context)
 
 @login_required
 def comunication(request):
-    return render(request, 'comunication.html')
+    context = {
+        'url_link': reverse('pages:panel')
+    }
+    return render(request, 'comunication.html', context=context)

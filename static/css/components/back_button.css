@@ -1,0 +1,54 @@
+.back-button-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+}
+
+.back-button {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--primary);
+    font-weight: 500;
+    transition: transform 0.2s ease;
+    padding: 0.5rem 0;
+}
+
+.back-button i {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+}
+
+.back-button:hover {
+    transform: translateX(-3px);
+}
+
+/* Mobile */
+@media screen and (max-width: 768px) {
+    .back-button span {
+        font-size: 0.9rem;
+    }
+    
+    .back-button i {
+        font-size: 0.9rem;
+    }
+}
+
+/* Tablet */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .back-button-container {
+        padding-left: 1rem;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+    .back-button-container {
+        padding-left: 1.5rem;
+    }
+    
+    .back-button {
+        font-size: 1.05rem;
+    }
+}

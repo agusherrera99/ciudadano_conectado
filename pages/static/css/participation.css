@@ -1,3 +1,5 @@
+@import url('../../../static/css/components/back_button.css');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -122,33 +124,6 @@ section {
     line-height: 1.4;
 }
 
-/* Back Button Styles */
-.back-button-container {
-    display: flex;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    padding-left: 0.5rem;
-}
-
-.back-button {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: var(--primary);
-    font-weight: 500;
-    transition: transform 0.2s ease;
-    padding: 0.5rem 0;
-}
-
-.back-button i {
-    margin-right: 0.5rem;
-    font-size: 1rem;
-}
-
-.back-button:hover {
-    transform: translateX(-3px);
-}
-
 /* Mobile */
 @media (max-width: 767px) {
     .module-grid {
@@ -166,14 +141,6 @@ section {
         font-size: 0.7rem;
         padding: 3px 30px;
         right: -30px;
-    }
-
-    .back-button span {
-        font-size: 0.9rem;
-    }
-    
-    .back-button i {
-        font-size: 0.9rem;
     }
 }
 
@@ -208,10 +175,6 @@ section {
 
     .module-desc {
         font-size: 0.95rem;
-    }
-
-    .back-button-container {
-        padding-left: 1rem;
     }
 }
 
@@ -249,13 +212,5 @@ section {
 
     .module-desc {
         font-size: 1rem;
-    }
-
-    .back-button-container {
-        padding-left: 1.5rem;
-    }
-    
-    .back-button {
-        font-size: 1.05rem;
     }
 }

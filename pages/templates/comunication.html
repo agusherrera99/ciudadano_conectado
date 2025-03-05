@@ -13,12 +13,7 @@
     {% include 'components/navbar.html' %}
 
     <main class="dashboard">
-        <div class="back-button-container">
-            <a href="{% url 'pages:panel' %}" class="back-button" title="Volver al Panel">
-                <i class="fas fa-arrow-left"></i>
-                <span>Volver al Panel</span>
-            </a>
-        </div>
+        {% include 'components/back_button.html' with url_link=url_link %}
 
         <section class="module-grid">
             <!-- Calendario de eventos y reuniones públicas -->
