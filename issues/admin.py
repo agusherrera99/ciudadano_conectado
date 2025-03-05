@@ -90,6 +90,20 @@ class IssueUpdateAdmin(admin.ModelAdmin):
         (None, {'fields': ('issue', 'description', 'status',)}),
     )
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        # Personalizar el queryset del campo 'issue' según el usuario
+        if db_field.name == 'issue':
+            if request.user.is_superuser:
+                # Superusuarios pueden ver todos los issues
+                pass
+            else:
+                # Managers ven sus issues, trackers ven los que tienen asignados
+                kwargs['queryset'] = Issue.objects.filter(
+                    Q(manager=request.user) | 
+                    Q(assigned_to=request.user)
+                )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:

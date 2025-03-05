@@ -1,13 +1,7 @@
-from uuid import uuid4
-
 from django.db import models
 from django.db.models import F
 
 # Create your models here.
-
-def generate_uuid():
-    return uuid4().hex[:8]
-
 class Issue(models.Model):
     CATEGORY_CHOICES = (
         ('reclamo', 'Reclamo'),
@@ -29,7 +23,7 @@ class Issue(models.Model):
         ('alta', 'Alta'),
     )
 
-    uuid = models.CharField(max_length=8, unique=True, default=generate_uuid)
+    uuid = models.CharField(max_length=8, unique=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='otro')
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -61,7 +55,14 @@ class Issue(models.Model):
         self.description.lower().strip()
         
         if not self.uuid:
-            self.uuid = generate_uuid()
+            if self.category == 'reclamo':
+                self.uuid = f"R-{Issue.objects.filter(category='reclamo').count() + 1}"
+            elif self.category == 'sugerencia':
+                self.uuid = f"S-{Issue.objects.filter(category='sugerencia').count() + 1}"
+            elif self.category == 'consulta':
+                self.uuid = f"C-{Issue.objects.filter(category='consulta').count() + 1}"
+            else:
+                self.uuid = f"O-{Issue.objects.filter(category='otro').count() + 1}"
 
         super(Issue, self).save(*args, **kwargs)
 
