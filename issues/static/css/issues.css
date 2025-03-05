@@ -31,6 +31,10 @@ section {
     margin-bottom: 1rem;
 }
 
+.issue-title {
+    margin-bottom: 1rem;
+}
+
 /* Forms */
 #new-request-form {
     border-top: 1px solid var(--accent);
@@ -369,6 +373,10 @@ textarea {
 @media (max-width: 767px) {
     .mobile-hide {
         display: none;
+    }
+
+    .public-requests {
+        border-top: 1px solid var(--accent);
     }
 }
 
