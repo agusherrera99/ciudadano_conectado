@@ -52,7 +52,7 @@ class Issue(models.Model):
         return f"Issue: #{self.uuid}"
     
     def save(self, *args, **kwargs):
-        self.description.lower().strip()
+        self.description = self.description.lower().strip()
         
         if not self.uuid:
             if self.category == 'reclamo':
@@ -74,4 +74,8 @@ class IssueUpdate(models.Model):
     status = models.CharField(max_length=20, choices=Issue.STATUS_CHOICES, default='pendiente')
 
     def __str__(self):
-        return f"Issue Update: #{self.id} - Issue: #{self.issue.id}"
+        return f"Issue Update: #{self.id} - Issue: {self.issue.uuid}"
+    
+    def save(self, *args, **kwargs):
+        self.description = self.description.lower().strip()
+        super(IssueUpdate, self).save(*args, **kwargs)
