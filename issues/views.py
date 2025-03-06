@@ -46,10 +46,10 @@ def create_issue(request):
             )
             issue.votes.set([request.user])
             issue.save()
-            return JsonResponse({'success': True})
+            return JsonResponse({'status': True})
         except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)})
-    return JsonResponse({'success': False, 'error': 'Método no permitido'})
+            return JsonResponse({'status': False, 'error': str(e)})
+    return JsonResponse({'status': False, 'error': 'Método no permitido'})
 
 @login_required
 def vote_issue(request, issue_id):
@@ -67,22 +67,22 @@ def vote_issue(request, issue_id):
             votes_count = issue.votes_count
 
             return JsonResponse({
-                'success': True,
+                'status': True,
                 'votes': votes_count
             })
         except Issue.DoesNotExist:
             return JsonResponse({
-                'success': False,
+                'status': False,
                 'error': 'Solicitud no encontrada'
             })
         except Exception as e:
             return JsonResponse({
-                'success': False,
+                'status': False,
                 'error': str(e)
             })
         
     return JsonResponse({
-        'success': False,
+        'status': False,
         'error': 'Método no permitido'
     })
 

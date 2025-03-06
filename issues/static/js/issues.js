@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.status) {
                     document.querySelector('.votes-count').textContent = data.votes;
                     location.reload();
                 } else {
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.status) {
                 location.reload();  // Recargar para ver la nueva solicitud
             } else {
                 console.error('Error al enviar solicitud:', data.error);

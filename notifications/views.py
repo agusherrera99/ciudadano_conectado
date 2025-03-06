@@ -17,6 +17,6 @@ def mark_as_read(request, notification_id):
         notification = Notification.objects.get(id=notification_id, user=request.user)
         notification.is_read = True
         notification.save()
-        return JsonResponse({'success': True})
+        return JsonResponse({'status': True})
     except Notification.DoesNotExist:
-        return JsonResponse({'success': False, 'error': 'Notification not found'})
+        return JsonResponse({'status': False, 'error': 'Notification not found'})
