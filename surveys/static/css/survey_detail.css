@@ -79,9 +79,22 @@ section {
 }
 
 .already_answered {
-    background-color: var(--secondary);
-    font-size: 0.9rem;
+    background-color: var(--status-resolved-bg);
+    color: var(--status-resolved-text);
+    border: 1px solid var(--status-resolved-dot);
+    padding: 0.75rem;
+    border-radius: 4px;
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 1rem;
+}
+
+.survey-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.survey-action {
+    display: flex;
+    gap: 0.5rem;
 }

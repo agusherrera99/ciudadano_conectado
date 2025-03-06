@@ -26,6 +26,9 @@
                 <div class="already_answered">
                     <p>Ya has respondido a esta encuesta. Gracias por tu participación.</p>
                 </div>
+                <div class="survey-actions">
+                    <a class="btn btn-primary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                </div>
             {% else %}
                 <form id="survey-form" method="POST" class="survey-form" data-survey-id="{{ survey.id }}">
                     {% csrf_token %}
