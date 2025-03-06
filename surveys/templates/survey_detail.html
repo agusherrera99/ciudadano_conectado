@@ -13,38 +13,52 @@
     {% include 'components/navbar.html' %}
 
     <main>
+        {% include 'components/back_button.html' with url_link=url_link back_name='a Encuestas' %}
         <section id="survey-detail">
             <h2>Participar en Encuesta</h2>
             <div class="survey-info">
-                <h3>Título de encuesta</h3>
-                <p class="survey-description">Descripción de la encuesta</p>
-                <p class="survey-deadline">Fecha límite: 12/34/56</p>
+                <h3>{{survey.name|capfirst}}</h3>
+                <p class="survey-description">{{survey.description|capfirst}}</p>
+                <p class="survey-deadline">Fecha límite: {{survey.end_date|date:"d-m-Y"}}</p>
             </div>
 
-            <form method="POST" class="survey-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="question-1">Pregunta 1: ¿Cómo calificarías el transporte público actual?</label>
-                    <select id="question-1" name="question-1" required>
-                        <option value="">Seleccione una opción</option>
-                        <option value="excellent">Excelente</option>
-                        <option value="good">Buena</option>
-                        <option value="regular">Regular</option>
-                        <option value="poor">Mala</option>
-                    </select>
+            {% if already_answered %}
+                <div class="already_answered">
+                    <p>Ya has respondido a esta encuesta. Gracias por tu participación.</p>
                 </div>
+            {% else %}
+                <form id="survey-form" method="POST" class="survey-form" data-survey-id="{{ survey.id }}">
+                    {% csrf_token %}
+                    
+                    {% if questions %}
+                        {% for question in questions %}
+                            <div class="form-group">
+                                <label for="question-{{ question.id }}">Pregunta {{ forloop.counter }}: ¿{{ question.question_text|capfirst }}?</label>
+                                
+                                {% if question.question_type == 'predefinida' %}
+                                    <select id="question-{{ question.id }}" name="question-{{ question.id }}" required>
+                                        <option value="">Seleccione una opción</option>
+                                        {% for option in question.options.all %}
+                                            <option value="{{ option.id }}">{{ option.option_text|capfirst }}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% else %}
+                                    <textarea id="question-{{ question.id }}" name="question-{{ question.id }}" rows="4" required></textarea>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>Esta encuesta no tiene preguntas disponibles.</p>
+                    {% endif %}
 
-                <div class="form-group">
-                    <label for="question-2">Pregunta 2: ¿Qué mejora priorizarías?</label>
-                    <textarea id="question-2" name="question-2" rows="4" required></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
-                    <button type="button" class="btn btn-secondary">Cancelar</button>
-                </div>
-            </form>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
+                    </div>
+                </form>
+            {% endif %}
         </section>
     </main>
+
+    <script src="{% static 'js/survey_detail.js' %}"></script>
 </body>
 </html>

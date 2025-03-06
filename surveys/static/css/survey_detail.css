@@ -1,3 +1,5 @@
+@import url('../../../static/css/components/back_button.css');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -74,4 +76,12 @@ section {
     display: flex;
     gap: 1rem;
     margin-top: 1.5rem;
+}
+
+.already_answered {
+    background-color: var(--secondary);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
 }

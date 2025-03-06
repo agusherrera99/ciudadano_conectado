@@ -6,7 +6,7 @@ class OptionInlineFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
         # Verificar si la pregunta es de tipo "predefinida" y asegurarse de que tenga opciones
-        if any(form.cleaned_data and form.cleaned_data.get('DELETE') == False for form in self.forms):
+        if any(form.cleaned_data and form.cleaned_data.get('DELETE') is False for form in self.forms):
             return
         
         parent_question = self.instance

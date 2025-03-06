@@ -54,3 +54,16 @@ class Option(models.Model):
     def save(self, *args, **kwargs):
         self.option_text = self.option_text.lower().strip()
         super().save(*args, **kwargs)
+
+class Answer(models.Model):
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer_text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.answer_text
+    
+    def save(self, *args, **kwargs):
+        self.answer_text = self.answer_text.lower().strip()
+        super().save(*args, **kwargs)
