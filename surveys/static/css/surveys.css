@@ -1,3 +1,5 @@
+@import url('../../../static/css/components/back_button.css');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -56,11 +58,6 @@ label {
     transition: all 0.3s ease;
 }
 
-.survey-item:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
 .survey-item.completed {
     opacity: 0.75;
 }
@@ -98,7 +95,7 @@ label {
 }
 
 .survey-description {
-    margin-bottom: 1rem;
+    margin: 1rem 0px;
     color: var(--text);
 }
 
