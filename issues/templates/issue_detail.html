@@ -29,6 +29,9 @@
                     <div class="issue-description">
                         <h3>Descripción</h3>
                         <p>{{issue.description}}</p>
+                        {% if issue.address %}
+                            <p>Dirección de reclamo: {{issue_address}}</p>
+                        {% endif %}
                     </div>
 
                     <div class="issue-metadata">

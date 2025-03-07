@@ -22,6 +22,8 @@ def issues(request):
 @login_required
 def issue_detail(request, issue_id):
     issue = Issue.objects.filter(user=request.user, id=issue_id).first()
+    issue_address = issue.address.split(',')[:2]
+    issue_address = ' '.join(issue_address)
 
     issue_updates = IssueUpdate.objects.filter(issue=issue
     ).order_by('updated_at')
@@ -29,6 +31,7 @@ def issue_detail(request, issue_id):
 
     context = {
         'issue': issue,
+        'issue_address': issue_address,
         'issue_updates': issue_updates,
         'url_link': reverse('issues:issues')
     }
