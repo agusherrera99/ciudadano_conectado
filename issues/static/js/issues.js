@@ -54,10 +54,97 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('request-form').reset();
     });
 
+    // Mapa para ubicación de reclamos
+    let map = null;
+    let marker = null;
+    const locationContainer = document.getElementById('location-container');
+    
+    // Mostrar u ocultar el mapa según la categoría seleccionada
+    categorySelect.addEventListener('change', function() {
+        if (this.value === 'reclamo') {
+            locationContainer.classList.remove('hidden');
+            setTimeout(initMap, 100); // Pequeño retraso para asegurar que el contenedor es visible
+        } else {
+            locationContainer.classList.add('hidden');
+        }
+    });
+
+    // Inicializar mapa
+    function initMap() {
+        if (map !== null) return; // Evitar inicializar múltiples veces
+        
+        const defaultLat = -36.01398;
+        const defaultLng = -59.09992;
+
+        map = L.map('location-map').setView([defaultLat, defaultLng], 13);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Intentar obtener la ubicación actual del usuario
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    map.setView([lat, lng], 15);
+                },
+                function(error) {
+                    console.log('Error obteniendo ubicación:', error);
+                }
+            );
+        }
+
+        // Manejar clics en el mapa
+        map.on('click', function(e) {
+            const lat = e.latlng.lat;
+            const lng = e.latlng.lng;
+            
+            // Actualizar campos ocultos
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            
+            // Actualizar marcador
+            if (marker) {
+                marker.setLatLng([lat, lng]);
+            } else {
+                marker = L.marker([lat, lng]).addTo(map);
+            }
+            
+            // Obtener dirección mediante geocodificación inversa
+            fetchAddress(lat, lng);
+        });
+    }
+
+    // Geocodificación inversa usando Nominatim
+    function fetchAddress(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+            .then(response => response.json())
+            .then(data => {
+                const address = data.display_name || 'Dirección desconocida';
+                document.getElementById('address').value = address;
+            })
+            .catch(error => {
+                console.error('Error al obtener dirección:', error);
+                document.getElementById('address').value = 'No se pudo determinar la dirección';
+            });
+    }
+
     // Enviar solicitud
     const requestForm = document.getElementById('request-form');
     requestForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Validar que se haya seleccionado ubicación para reclamos
+        const category = categorySelect.value;
+        const latitude = document.getElementById('latitude').value;
+        const longitude = document.getElementById('longitude').value;
+        
+        if (category === 'reclamo' && (!latitude || !longitude)) {
+            alert('Por favor, indica la ubicación del reclamo en el mapa.');
+            return;
+        }
         
         const formData = new FormData(this);
         fetch('/issues/create/', {
@@ -73,10 +160,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 location.reload();  // Recargar para ver la nueva solicitud
             } else {
                 console.error('Error al enviar solicitud:', data.error);
+                alert('Error al enviar la solicitud: ' + data.error);
             }
         })
         .catch(error => {
             console.error('Error:', error);
+            alert('Error de conexión al enviar la solicitud');
         });
     });
 

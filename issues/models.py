@@ -36,6 +36,11 @@ class Issue(models.Model):
     assigned_to = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='assigned_to', blank=True, null=True)
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='baja')
 
+    # Agregar campos para coordenadas geográficas
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+
     def add_vote(self, user):
         if user not in self.votes.all():
             self.votes.add(user)

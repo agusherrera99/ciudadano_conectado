@@ -272,6 +272,35 @@ textarea {
     gap: 0.5rem;
 }
 
+/* Map Styles */
+#location-map {
+    height: 300px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    margin-bottom: 0.5rem;
+}
+
+.map-helper {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.location-details {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+#address {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    font-size: 0.9rem;
+}
 
 /* Status Variants */
 .recibido {

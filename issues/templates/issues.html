@@ -7,6 +7,10 @@
         <title>Reclamos</title>
         <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
         <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+              crossorigin=""/>
         <link rel="stylesheet" href="{% static 'css/issues.css' %}">
     </head>
 
@@ -41,6 +45,18 @@
                                 <div class="form-group">
                                     <label for="description">Descripción</label>
                                     <textarea id="description" name="description" required></textarea>
+                                </div>
+                                    
+                                <!-- Agregar el mapa que se mostrará solo para categoría "reclamo" -->
+                                <div id="location-container" class="form-group hidden">
+                                    <label for="location-map">Ubicación del reclamo</label>
+                                    <div id="location-map"></div>
+                                    <p class="map-helper">Haz clic en el mapa para indicar la ubicación exacta del reclamo.</p>
+                                    <div class="location-details">
+                                        <input type="hidden" id="latitude" name="latitude">
+                                        <input type="hidden" id="longitude" name="longitude">
+                                        <input type="text" id="address" name="address" readonly placeholder="Dirección...">
+                                    </div>
                                 </div>
                                     
                                 <div class="form-actions">
@@ -180,6 +196,10 @@
             </div>
         </main>
 
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+                crossorigin=""></script>
         <script src="{% static 'js/issues.js' %}"></script>
     </body>
 </html>

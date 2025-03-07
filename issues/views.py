@@ -44,6 +44,13 @@ def create_issue(request):
                 user=request.user,
                 votes_count=1,
             )
+            
+            # Guardar ubicación si es un reclamo
+            if issue.category == 'reclamo' and 'latitude' in request.POST and 'longitude' in request.POST:
+                issue.latitude = request.POST.get('latitude')
+                issue.longitude = request.POST.get('longitude')
+                issue.address = request.POST.get('address', '')
+                
             issue.votes.set([request.user])
             issue.save()
             return JsonResponse({'status': True})
