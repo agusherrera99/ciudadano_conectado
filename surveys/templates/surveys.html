@@ -35,7 +35,7 @@
                                             <div class="survey-actions">
                                                 <div class="survey-action">
                                                     <a href="{% url 'surveys:survey_detail' survey.id %}" class="btn btn-primary" aria-label="Participar en consulta pública">Participar</a>
-                                                    <a class="btn btn-secondary view-survey-results">Ver Resultados</a>
+                                                    <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-secondary view-survey-results">Ver Resultados</a>
                                                 </div>
                                                 <span class="survey-deadline">Fecha límite: {{survey.end_date|date:"d-m-Y"}}</span>
                                             </div>
@@ -60,7 +60,7 @@
                                             </div>
                                             <p class="survey-description">{{survey.description|capfirst}}</p>
                                             <div class="survey-actions">
-                                                <a class="btn btn-secondary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                                                <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-secondary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
                                             </div>
                                         </li>
                                     {% endif %}

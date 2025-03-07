@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
 from .models import Answer, Survey, Question
-# Create your views here.
 
+# Create your views here.
 @login_required
 def surveys(request):
     surveys = Survey.objects.all()
@@ -31,7 +31,82 @@ def survey_detail(request, survey_id):
 
 @login_required
 def survey_results(request, survey_id):
-    return render(request, 'survey_results.html')
+    survey = get_object_or_404(Survey, pk=survey_id)
+    questions = Question.objects.filter(survey=survey).prefetch_related('options')
+    
+    # Preparamos los datos en formato adecuado para JSON
+    chart_data = {}
+    results = []
+    
+    for question in questions:
+        question_data = {
+            'question': {
+                'id': question.id,
+                'text': question.question_text,
+                'type': question.question_type
+            },
+            'total_answers': Answer.objects.filter(question=question).count()
+        }
+        
+        # Preparamos los datos para las gráficas
+        chart_item = {
+            'type': question.question_type,
+        }
+        
+        if question.question_type == 'predefinida':
+            # Para preguntas predefinidas, procesamos las opciones
+            options_data = []
+            chart_options = []
+            
+            for option in question.options.all():
+                option_count = Answer.objects.filter(
+                    question=question,
+                    answer_text=str(option.id)
+                ).count()
+                
+                if question_data['total_answers'] > 0:
+                    percentage = (option_count / question_data['total_answers']) * 100
+                else:
+                    percentage = 0
+                
+                option_item = {
+                    'option': {
+                        'id': option.id,
+                        'option_text': option.option_text
+                    },
+                    'count': option_count,
+                    'percentage': round(percentage, 1)
+                }
+                
+                options_data.append(option_item)
+                
+                # Datos para el gráfico
+                chart_options.append({
+                    'name': option.option_text,
+                    'value': option_count,
+                    'percentage': round(percentage, 1)
+                })
+            
+            question_data['options'] = options_data
+            chart_item['options'] = chart_options
+            
+        else:
+            # Para preguntas libres, obtenemos las respuestas textuales
+            answers = list(Answer.objects.filter(question=question).values_list('answer_text', flat=True))
+            question_data['answers'] = answers
+            chart_item['answers'] = answers
+        
+        results.append(question_data)
+        chart_data[f"question-{question.id}"] = chart_item
+    
+    context = {
+        'survey': survey,
+        'results': results,
+        'chart_data': chart_data,
+        'url_link': reverse('surveys:surveys')
+    }
+    
+    return render(request, 'survey_results.html', context=context)
 
 @login_required
 def submit_survey(request, survey_id):

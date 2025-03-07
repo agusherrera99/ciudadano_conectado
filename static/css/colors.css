@@ -10,11 +10,23 @@
     --text: #212529;
     --text-muted: #6c757d;
     --avatar-color: #f8f9fa;
+    
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
+    
     --vote-up: #28a745;
     --vote-down: #dc3545;
+
+    /* Colores para gráficos */
+    --chart-color-1: #4285F4;
+    --chart-color-2: #34A853;
+    --chart-color-3: #FBBC05;
+    --chart-color-4: #EA4335;
+    --chart-color-5: #8AB4F8;
+    --chart-color-6: #1967D2;
+    --chart-color-7: #5BB974;
+    --chart-color-8: #F6C934;
 
     /* Status colors */
     --status-pending-bg: rgba(255, 193, 7, 0.2);

@@ -1,3 +1,5 @@
+@import url('../../../static/css/components/back_button.css');
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,55 +7,70 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
     line-height: 1.6;
     color: var(--text);
     background-color: var(--background);
 }
 
 main {
-    max-width: 1200px;
+    max-width: 1000px;
     margin: 2rem auto;
-    padding: 0 1rem;
+    padding: 0 1.5rem;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5 {
     color: var(--primary);
     margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 1.75rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+h5 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 1rem;
+    color: var(--text-light);
 }
 
 section {
     margin-bottom: 2rem;
     background-color: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.results-summary {
-    background-color: var(--secondary);
-    border-radius: 8px;
-    padding: 1.5rem;
-    border: 1px solid var(--accent);
-}
-
-.result-item {
-    margin-bottom: 2rem;
-}
-
-.result-item h4 {
-    color: var(--primary);
-    margin-bottom: 1rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 .survey-info {
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--accent);
+}
+
+.survey-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 .survey-status {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
@@ -61,113 +78,166 @@ section {
     letter-spacing: 0.5px;
 }
 
-.survey-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.survey-status:before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 0.5rem;
 }
 
 .survey-status.active {
-    background-color: rgba(46, 92, 138, 0.2);
+    background-color: rgba(46, 92, 138, 0.15);
     color: var(--primary);
+}
+
+.survey-status.active:before {
+    content: '\f254'; /* fa-hourglass */
 }
 
 .survey-status.completed {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #155724;
+    background-color: rgba(40, 167, 69, 0.15);
+    color: var(--success);
+}
+
+.survey-status.completed:before {
+    content: '\f058'; /* fa-check-circle */
 }
 
 .survey-description {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: var(--text);
+    line-height: 1.7;
 }
 
 .survey-deadline {
-    color: #6c757d;
+    color: var(--text-light);
     font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.survey-deadline:before {
+    content: '\f073'; /* fa-calendar */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 0.5rem;
+    color: var(--primary);
 }
 
 .results-summary {
-    background-color: var(--secondary);
-    border-radius: 8px;
-    padding: 1.5rem;
-    border: 1px solid var(--accent);
+    background-color: white;
+    border-radius: 1rem;
+    padding: 0;
+    border: none;
+    box-shadow: none;
 }
 
 .result-item {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background-color: var(--secondary);
+    border-radius: 1rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
-.result-item h4 {
-    color: var(--primary);
+.result-stats {
+    display: flex;
+    justify-content: flex-end;
     margin-bottom: 1rem;
 }
 
-.result-bar-container {
+.total-answers {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    background-color: rgba(0,0,0,0.05);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+}
+
+/* Contenedores de gráficos */
+.chart-container {
+    height: 350px;
+    width: 100%;
+    margin: 1.5rem 0;
+}
+
+/* Estilos para análisis de texto en preguntas libres */
+.text-analysis {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.5rem;
 }
 
-.result-bar {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    height: 30px;
-    padding-left: 1rem;
-    font-weight: bold;
-    border-radius: 4px;
-    transition: width 1s ease-in-out;
+.wordcloud-container {
+    width: 100%;
+    height: 300px;
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
 }
 
-.result-bar-label {
-    width: 85px;
-    margin-right: 1rem;
-}
-
-.result-bar-percentage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.wordcloud {
+    width: 100%;
     height: 100%;
-    border-radius: 4px;
-    color: white;
 }
 
-.result-bar-percentage[data-color="blue"] {
-    background-color: #4a90e2; /* Soft blue */
+.text-responses {
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
 }
 
-.result-bar-percentage[data-color="green"] {
-    background-color: #50c878; /* Soft green */
+.responses-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 1rem;
 }
 
-.result-bar-percentage[data-color="light-green"] {
-    background-color: #90ee90; /* Light green */
+.response-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--accent);
+    line-height: 1.5;
+    color: var(--text);
 }
 
-.result-bar-percentage[data-color="neutral"] {
-    background-color: #a9a9a9; /* Neutral gray */
+.response-item:last-child {
+    border-bottom: none;
 }
 
-.result-bar-percentage[data-color="light-yellow"] {
-    background-color: #f0e68c; /* Light yellow */
+.no-results, .no-answers {
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-light);
+    background-color: var(--secondary);
+    border-radius: 1rem;
 }
 
-.result-bar-percentage[data-color="yellow"] {
-    background-color: #ffd700; /* Soft yellow */
+/* Estilos responsive */
+@media (max-width: 768px) {
+    section {
+        padding: 1.5rem;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
 }
 
-.result-bar-percentage[data-color="red"] {
-    background-color: #ff6b6b; /* Soft red */
+/* Scrollbar personalizada para listas de respuestas */
+.responses-list::-webkit-scrollbar {
+    width: 8px;
 }
 
-.chart-placeholder {
-    height: 200px;
-    background-color: var(--accent);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    margin-top: 1rem;
+.responses-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.responses-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.responses-list::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }

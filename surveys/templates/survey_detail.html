@@ -27,7 +27,7 @@
                     <p>Ya has respondido a esta encuesta. Gracias por tu participación.</p>
                 </div>
                 <div class="survey-actions">
-                    <a class="btn btn-primary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                    <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-primary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
                 </div>
             {% else %}
                 <form id="survey-form" method="POST" class="survey-form" data-survey-id="{{ survey.id }}">

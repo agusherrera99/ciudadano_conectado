@@ -6,61 +6,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados de Encuesta o Consulta</title>
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'css/survey_results.css' %}">
+    <!-- Añadimos ECharts -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- Añadimos la librería para nubes de palabras -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts-wordcloud@2.1.0/dist/echarts-wordcloud.min.js"></script>
 </head>
 <body>
     {% include 'components/navbar.html' %}
 
     <main>
+        {% include 'components/back_button.html' with url_link=url_link back_name='a Encuestas' %}
         <section id="survey-results">
             <div class="survey-info">
                 <div class="survey-header">
-                    <h3>Titulo de la encuesta</h3>
-                    <span class="survey-status active">Activa</span>
+                    <h2>{{ survey.name|capfirst }}</h2>
+                    <span class="survey-status {% if survey.status == 'activa' %}active{% else %}completed{% endif %}">
+                        {{ survey.status|capfirst }}
+                    </span>
                 </div>
-                <p class="survey-description">descripción de la encuesta</p>
-                <p class="survey-deadline">Fecha límite: 12/34/56</p>
+                <p class="survey-description">{{ survey.description|capfirst }}</p>
+                <p class="survey-deadline">Fecha límite: {{ survey.end_date|date:"d-m-Y" }}</p>
             </div>
 
             <div class="results-summary">
                 <h3>Resumen de Resultados</h3>
-                <div class="result-item">
-                    <h4>Pregunta 1: ¿Cómo calificarías el transporte público actual?</h4>
-                    <div class="result-bar-container">
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Excelente</div>
-                            <div class="result-bar-percentage" data-percentage="10" data-color="blue">10%</div>
+                
+                {% if results %}
+                    {% for result in results %}
+                        <div class="result-item">
+                            <h4>Pregunta {{ forloop.counter }}: {{ result.question.text|capfirst }}</h4>
+                            <div class="result-stats">
+                                <span class="total-answers">{{ result.total_answers }} respuestas</span>
+                            </div>
+                            
+                            {% if result.question.type == 'predefinida' %}
+                                <!-- Contenedor para el gráfico de ECharts -->
+                                <div id="chart-{{ result.question.id }}" class="chart-container"></div>
+                            {% else %}
+                                <div class="text-analysis">
+                                    {% if result.total_answers > 0 %}
+                                        <!-- Nube de palabras para preguntas libres -->
+                                        <div class="wordcloud-container">
+                                            <div id="wordcloud-{{ result.question.id }}" class="wordcloud"></div>
+                                        </div>
+                                    {% else %}
+                                        <p class="no-answers">No hay respuestas para esta pregunta.</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                         </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Muy buena</div>
-                            <div class="result-bar-percentage" data-percentage="15" data-color="green">15%</div>
-                        </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Buena</div>
-                            <div class="result-bar-percentage" data-percentage="5" data-color="light-green">5%</div>
-                        </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Promedio</div>
-                            <div class="result-bar-percentage" data-percentage="40" data-color="neutral">40%</div>
-                        </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Mala</div>
-                            <div class="result-bar-percentage" data-percentage="15" data-color="light-yellow">15%</div>
-                        </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Muy Mala</div>
-                            <div class="result-bar-percentage" data-percentage="10" data-color="yellow">10%</div>
-                        </div>
-                        <div class="result-bar" >
-                            <div class="result-bar-label">Pesima</div>
-                            <div class="result-bar-percentage" data-percentage="5" data-color="red">5%</div>
-                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-results">
+                        <p>No hay resultados disponibles para esta encuesta.</p>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </section>
     </main>
+
+    <!-- Pasamos los datos de forma segura usando json_script -->
+    {{ chart_data|json_script:"chart-data" }}
+
     <script src="{% static 'js/survey_results.js' %}"></script>
 </body>
 </html>
