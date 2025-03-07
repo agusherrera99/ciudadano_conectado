@@ -1,6 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth import get_user_model
 from django.forms import BaseInlineFormSet
 from .models import Survey, Question, Option
+
+
+from notifications.models import Notification
 
 class OptionInlineFormSet(BaseInlineFormSet):
     def clean(self):
@@ -35,9 +39,21 @@ class SurveyAdmin(admin.ModelAdmin):
     exclude = ('pollster',)
     
     def save_model(self, request, obj, form, change):
+        is_new = obj.pk is None  # Verificar si es una nueva actualización
         if not change:
             obj.pollster = request.user
+
         super().save_model(request, obj, form, change)
+        
+        if is_new: 
+            users = get_user_model().objects.all().exclude(pk=request.user.pk)
+            # Crear notificaciones para los usuarios
+            for user in users:
+                Notification.objects.create(
+                    user=user,
+                    survey=obj,
+                    message=f"Nueva encuesta: {obj.name}"
+                )
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
