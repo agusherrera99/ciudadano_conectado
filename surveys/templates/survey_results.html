@@ -43,13 +43,13 @@
                             
                             {% if result.question.type == 'predefinida' %}
                                 <!-- Contenedor para el gráfico de ECharts -->
-                                <div id="chart-{{ result.question.id }}" class="chart-container"></div>
+                                <div id="chart-{{ result.question.id }}" class="chart-container" role="img" aria-label="Gráfico de resultados para la pregunta {{ forloop.counter }}"></div>
                             {% else %}
                                 <div class="text-analysis">
                                     {% if result.total_answers > 0 %}
                                         <!-- Nube de palabras para preguntas libres -->
                                         <div class="wordcloud-container">
-                                            <div id="wordcloud-{{ result.question.id }}" class="wordcloud"></div>
+                                            <div id="wordcloud-{{ result.question.id }}" class="wordcloud" role="img" aria-label="Nube de palabras para la pregunta {{ forloop.counter }}"></div>
                                         </div>
                                     {% else %}
                                         <p class="no-answers">No hay respuestas para esta pregunta.</p>

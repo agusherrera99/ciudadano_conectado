@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -43,31 +43,35 @@
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
-                                <p>No hay encuestas activas en este momento.</p>
+                                <p class="no-surveys">No hay encuestas activas en este momento.</p>
                             {% endif %}
                         </ul>
                         
                         <!-- Surveys history -->
                         <div id="survey-history">
                             <h3>Historial de Encuestas y Consultas</h3>
-                            {% if surveys %}
-                                {% for survey in surveys %}
-                                    {% if survey.status == "finalizada" %}
-                                        <li class="survey-item completed">
-                                            <div class="survey-header">
-                                                <h4>{{survey.name|capfirst}}</h4>
-                                                <span class="survey-status completed">Finalizada</span>
-                                            </div>
-                                            <p class="survey-description">{{survey.description|capfirst}}</p>
-                                            <div class="survey-actions">
-                                                <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-secondary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
-                                            </div>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                            {% else %}
-                                <p>No hay encuestas finalizadas.</p>
-                            {% endif %}
+                            <ul class="survey-items">
+                                {% if surveys %}
+                                    {% for survey in surveys %}
+                                        {% if survey.status == "finalizada" %}
+                                            <li class="survey-item completed">
+                                                <div class="survey-header">
+                                                    <h4>{{survey.name|capfirst}}</h4>
+                                                    <span class="survey-status completed">Finalizada</span>
+                                                </div>
+                                                <p class="survey-description">{{survey.description|capfirst}}</p>
+                                                <div class="survey-actions">
+                                                    <div class="survey-action">
+                                                        <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-secondary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="no-surveys">No hay encuestas finalizadas.</p>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>   
                 </div>

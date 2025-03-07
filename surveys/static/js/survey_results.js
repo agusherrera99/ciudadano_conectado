@@ -241,7 +241,68 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ]
                             };
                         }
-                        
+
+                        // Función para ajustar las configuraciones de los gráficos según el tamaño de pantalla
+                        function adjustChartForScreenSize(chartOption, chartType) {
+                            // Obtener el ancho actual de la ventana
+                            const windowWidth = window.innerWidth;
+                            
+                            // Ajustes para pantallas pequeñas (móviles)
+                            if (windowWidth <= 576) {
+                                if (chartType === 'pie') {
+                                    // Reducir el radio del gráfico circular
+                                    chartOption.series[0].radius = ['30%', '60%'];
+                                    
+                                    // Mover la leyenda debajo del gráfico en pantallas pequeñas
+                                    chartOption.legend.orient = 'horizontal';
+                                    chartOption.legend.top = 'bottom';
+                                    chartOption.legend.right = 'auto';
+                                    chartOption.legend.left = 'center';
+                                    chartOption.legend.itemWidth = 10;
+                                    chartOption.legend.itemHeight = 10;
+                                    chartOption.legend.textStyle = {
+                                        ...chartOption.legend.textStyle,
+                                        fontSize: 10
+                                    };
+                                    
+                                    // Ajustar etiquetas internas para que sean más pequeñas
+                                    if (chartOption.series[0].label) {
+                                        chartOption.series[0].label.fontSize = 10;
+                                    }
+                                } else if (chartType === 'bar') {
+                                    // Aumentar el espacio para las etiquetas en gráficos de barras
+                                    chartOption.grid.left = '20%';
+                                    
+                                    // Reducir tamaño de fuente
+                                    chartOption.xAxis.nameTextStyle = { fontSize: 10 };
+                                    chartOption.xAxis.axisLabel = { fontSize: 10 };
+                                    chartOption.yAxis.axisLabel = { fontSize: 10 };
+                                    
+                                    // Acortar nombres muy largos
+                                    if (chartOption.yAxis.data && chartOption.yAxis.data.length > 0) {
+                                        chartOption.yAxis.data = chartOption.yAxis.data.map(name => {
+                                            if (name.length > 20) {
+                                                return name.substring(0, 18) + '...';
+                                            }
+                                            return name;
+                                        });
+                                    }
+                                }
+                            } 
+                            // Ajustes para tablets
+                            else if (windowWidth <= 768) {
+                                if (chartType === 'pie') {
+                                    chartOption.series[0].radius = ['35%', '65%'];
+                                }
+                            }
+                            
+                            return chartOption;
+                        }
+
+                        // Y luego, antes de aplicar la configuración:
+                        // Ajustar la configuración según el tamaño de pantalla
+                        chartOption = adjustChartForScreenSize(chartOption, chartType);
+
                         // Quitar el indicador de carga
                         loadingEl.remove();
                         
@@ -317,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         
                         // Configuración de la nube de palabras
-                        const option = {
+                        let option = {
                             tooltip: {
                                 show: true
                             },
@@ -356,6 +417,18 @@ document.addEventListener("DOMContentLoaded", function () {
                                 data: wordFrequency
                             }]
                         };
+
+                        // Ajustes para visualización responsiva de nubes de palabras
+                        if (window.innerWidth <= 576) {
+                            // Reducir tamaños para pantallas pequeñas
+                            option.series[0].sizeRange = [8, 40];
+                            option.series[0].rotationRange = [-30, 30];
+                            option.series[0].gridSize = 6;
+                        } else if (window.innerWidth <= 768) {
+                            // Ajustes para tablets
+                            option.series[0].sizeRange = [10, 50];
+                            option.series[0].gridSize = 7;
+                        }
                         
                         // Quitar el indicador de carga
                         loadingEl.remove();
