@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 // Si fue exitoso, redirigir después de un tiempo
-                console.log(data.status);
                 if (data.status) {
                     location.reload();
                 } else {

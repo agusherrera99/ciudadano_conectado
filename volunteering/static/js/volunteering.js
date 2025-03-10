@@ -74,4 +74,44 @@ document.addEventListener('DOMContentLoaded', function() {
             opportunities.scrollIntoView({ behavior: 'smooth' });
         });
     }
+
+    // Manejo de Envio de Formulario
+    const volunteerForm = document.getElementById('volunteer-form');
+
+    if (volunteerForm) {
+        volunteerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validar el formulario
+            const volunteerId = document.getElementById('volunteering-id').value;
+            if (!volunteerId) {
+                return;
+            }
+            
+            // Preparar los datos del formulario
+            const formData = new FormData(this);
+            // Enviar el formulario
+            fetch('/volunteering/apply/', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === 'success') {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    }
 });

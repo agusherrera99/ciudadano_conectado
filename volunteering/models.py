@@ -1,4 +1,3 @@
-from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -20,6 +19,9 @@ class Places(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Places"
 
 
 class VolunteerCategory(models.Model):
@@ -29,6 +31,9 @@ class VolunteerCategory(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Volunteer Categories"
     
 
 class Volunteering(models.Model):
@@ -99,8 +104,12 @@ class Volunteering(models.Model):
 
 
 class Volunteer(models.Model):
-    user = get_user_model()
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
     volunteering = models.ForeignKey(Volunteering, on_delete=models.CASCADE)
+    availability = models.CharField(max_length=100, blank=True, default='')
+    skills = models.TextField(blank=True, null=True)
+    motivation = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.volunteering.title}"

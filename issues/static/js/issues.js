@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
             .catch(error => {
-                console.error('There was an error:', error);
+                console.error('Error:', error);
             });
         });
     });
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     map.setView([lat, lng], 15);
                 },
                 function(error) {
-                    console.log('Error obteniendo ubicación:', error);
+                    throw new Error('Error al obtener ubicación:', error);
                 }
             );
         }
