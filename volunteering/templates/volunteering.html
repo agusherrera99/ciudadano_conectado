@@ -55,15 +55,25 @@
                     <div class="volunteering-grid">
                         {% for volunteering in volunteerings %}
                         <div class="volunteering-card" data-category="{{ volunteering.category }}">
-                            <div class="card-badge"><i class="fas fa-leaf"></i>{{volunteering.category|capfirst}}</div>
-                            <img src="{% static 'img/volunteerings/{{volunteering.title}}_1.jpg' %}" alt="{{volunteering.title|capfirst}}" class="card-image">
+                            <div class="card-badge"></i>{{volunteering.category|capfirst}}</div>
+
+                            {% if volunteering.images %}
+                                <img src="{{ volunteering.images.url }}" alt="{{ volunteering.title|capfirst }}" class="card-image">
+                            {% else %}
+                                <img src="{% static 'img/volunteering/default.jpg' %}" alt="{{ volunteering.title|capfirst }}" class="card-image">
+                            {% endif %}
+
                             <div class="card-content">
                                 <h3>{{volunteering.title|capfirst}}</h3>
                                 <p class="card-description">{{volunteering.description}}</p>
                                 <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> {{volunteering.days}}</span>
-                                    <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
-                                    <span><i class="fas fa-map-market-alt"></i> {{volunteering.place|capfirst}}</span>
+                                    <div class="card-info">
+                                        <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
+                                        <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
+                                    </div>
+                                    <div class="card-location">
+                                        <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+                                    </div>
                                 </div>
                                 <div class="card-actions">
                                     <a href="" class="btn btn-secondary">Ver detalles</a>
@@ -72,114 +82,6 @@
                             </div>
                         </div>
                         {% endfor %}
-                        
-                        <!-- <div class="volunteering-card" data-category="environment">
-                            <div class="card-badge"><i class="fas fa-leaf"></i> Medio Ambiente</div>
-                            <img src="{% static 'img/volunteering/reforestation.jpg' %}" alt="Reforestación" class="card-image">
-                            <div class="card-content">
-                                <h3>Reforestación Urbana</h3>
-                                <p class="card-description">Participa en la plantación de árboles en áreas urbanas para mejorar la calidad del aire y embellecer espacios públicos.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Sábados</span>
-                                    <span><i class="fas fa-clock"></i> 4 horas</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Parque Central</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="1">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="1">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="volunteering-card" data-category="environment">
-                            <div class="card-badge"><i class="fas fa-leaf"></i> Medio Ambiente</div>
-                            <img src="{% static 'img/volunteering/cleaning.jpg' %}" alt="Limpieza" class="card-image">
-                            <div class="card-content">
-                                <h3>Limpieza de Espacios Públicos</h3>
-                                <p class="card-description">Ayuda a mantener limpios nuestros espacios comunes, ríos y plazas mediante jornadas de limpieza regulares.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Domingos</span>
-                                    <span><i class="fas fa-clock"></i> 3 horas</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Varios puntos</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="2">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="2">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="volunteering-card" data-category="social">
-                            <div class="card-badge"><i class="fas fa-hands-helping"></i> Social</div>
-                            <img src="{% static 'img/volunteering/foodbank.jpg' %}" alt="Banco de alimentos" class="card-image">
-                            <div class="card-content">
-                                <h3>Banco de Alimentos</h3>
-                                <p class="card-description">Colabora en la recolección, clasificación y distribución de alimentos para familias en situación de vulnerabilidad.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Lunes a Viernes</span>
-                                    <span><i class="fas fa-clock"></i> Flexible</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Centro Comunitario</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="3">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="3">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="volunteering-card" data-category="social">
-                            <div class="card-badge"><i class="fas fa-hands-helping"></i> Social</div>
-                            <img src="{% static 'img/volunteering/elderly.jpg' %}" alt="Acompañamiento adultos mayores" class="card-image">
-                            <div class="card-content">
-                                <h3>Acompañamiento a Adultos Mayores</h3>
-                                <p class="card-description">Brinda compañía y apoyo a adultos mayores mediante visitas regulares y actividades recreativas.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Martes y Jueves</span>
-                                    <span><i class="fas fa-clock"></i> 2-3 horas</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Centro de Jubilados</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="4">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="4">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="volunteering-card" data-category="education">
-                            <div class="card-badge"><i class="fas fa-book"></i> Educación</div>
-                            <img src="{% static 'img/volunteering/tutoring.jpg' %}" alt="Apoyo escolar" class="card-image">
-                            <div class="card-content">
-                                <h3>Apoyo Escolar</h3>
-                                <p class="card-description">Ayuda a niños y adolescentes con tareas escolares y refuerzo en materias específicas.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Lunes a Viernes</span>
-                                    <span><i class="fas fa-clock"></i> 2 horas</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Biblioteca Municipal</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="5">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="5">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="volunteering-card" data-category="education">
-                            <div class="card-badge"><i class="fas fa-book"></i> Educación</div>
-                            <img src="{% static 'img/volunteering/digital.jpg' %}" alt="Inclusión digital" class="card-image">
-                            <div class="card-content">
-                                <h3>Inclusión Digital</h3>
-                                <p class="card-description">Enseña habilidades digitales básicas a personas de todas las edades para reducir la brecha tecnológica.</p>
-                                <div class="card-details">
-                                    <span><i class="fas fa-calendar"></i> Sábados</span>
-                                    <span><i class="fas fa-clock"></i> 3 horas</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Centro Cultural</span>
-                                </div>
-                                <div class="card-actions">
-                                    <button class="btn btn-tertiary details-btn" data-id="6">Ver detalles</button>
-                                    <button class="btn btn-primary apply-btn" data-id="6">Inscribirme</button>
-                                </div>
-                            </div>
-                        </div> -->
                     </div>
                 </section>
                 

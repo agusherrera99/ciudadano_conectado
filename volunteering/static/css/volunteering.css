@@ -185,23 +185,27 @@ section {
 
 .card-description {
     color: var(--text-muted);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     flex-grow: 1;
 }
 
 .card-details {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.card-details span {
+.card-info, .card-location {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     color: var(--text-muted);
     font-size: 0.9rem;
+}
+
+.card-info {
+    justify-content: space-between;
 }
 
 .card-actions {
