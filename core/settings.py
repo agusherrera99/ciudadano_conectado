@@ -152,8 +152,8 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 # Custom settings
 LOGIN_REDIRECT_URL = 'pages:panel'
 LOGOUT_REDIRECT_URL = 'pages:home'
+LOGIN_URL = 'account:login'
 AUTH_USER_MODEL = 'account.CustomUser'
