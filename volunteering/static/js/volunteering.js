@@ -2,12 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Funcionalidad de filtrado por categoría
     const tabBtns = document.querySelectorAll('.tab-btn');
     const volunteeringCards = document.querySelectorAll('.volunteering-card');
-
+    
     tabBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-            // Quitar clase activa de todos los botones
             tabBtns.forEach(b => b.classList.remove('active'));
-            // Añadir clase activa al botón clickeado
             this.classList.add('active');
             
             const category = this.dataset.category;
@@ -22,79 +20,83 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
-
-    // Mostrar formulario de inscripción al presionar el botón de inscripción
-    const opportunities = document.getElementById('opportunities');
-    const myEnrollments = document.getElementById('my-enrollments');
-    const applyForm = document.getElementById('apply-form');
-    const closeFormBtn = document.getElementById('close-form-btn');
     
-    // Variables para los campos del formulario
-    const selectedTitle = document.getElementById('selected-volunteering-title');
-    const selectedDescription = document.getElementById('selected-volunteering-description');
-    const volunteeringIdField = document.getElementById('volunteering-id');
-
-    // Cambiar de ID a clase para los botones de inscripción
-    document.querySelectorAll('.volunteering-card').forEach(card => {
-        // Solo procesar tarjetas donde el usuario no está inscrito
-        if (!card.classList.contains('already-enrolled')) {
-            const applyBtn = card.querySelector('#apply-btn');
-            if (applyBtn) {
-                // Asignar clase en lugar de id
-                applyBtn.id = '';
-                applyBtn.classList.add('apply-btn');
+    // manejo de formulario de inscripción
+    const applyBtns = document.querySelectorAll('#apply-btn');
+    console.log("Botones de inscripción encontrados: ", applyBtns.length);
+    
+    applyBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            console.log("Botón de inscripción clickeado");
+            e.preventDefault();
+            
+            const card = this.closest('.volunteering-card');
+            const title = card.querySelector('h3').textContent;
+            const description = card.querySelector('.card-description').textContent;
+            const volunteerId = card.getAttribute('data-id');
+            
+            // Ocultar secciones
+            const opportunities = document.getElementById('opportunities');
+            const myEnrollments = document.getElementById('my-enrollments');
+            const applyForm = document.getElementById('apply-form');
+            
+            if (opportunities) opportunities.classList.add('hidden');
+            if (myEnrollments) myEnrollments.classList.add('hidden');
+            
+            // Actualizar y mostrar formulario
+            if (applyForm) {
+                const selectedTitle = document.getElementById('selected-volunteering-title');
+                const selectedDescription = document.getElementById('selected-volunteering-description');
+                const volunteeringIdField = document.getElementById('volunteering-id');
                 
-                // Obtener datos del voluntariado desde la tarjeta
-                const title = card.querySelector('h3').textContent;
-                const description = card.querySelector('.card-description').textContent;
-                const volunteerId = card.getAttribute('data-id'); // Asegúrate de que las tarjetas tengan este atributo
+                if (selectedTitle) selectedTitle.textContent = title;
+                if (selectedDescription) selectedDescription.textContent = description;
+                if (volunteeringIdField) volunteeringIdField.value = volunteerId || '';
                 
-                // Agregar listener al botón
-                applyBtn.addEventListener('click', function() {
-                    // Actualizar la información en el formulario
-                    selectedTitle.textContent = title;
-                    selectedDescription.textContent = description;
-                    volunteeringIdField.value = volunteerId || '';
-                    
-                    // Mostrar el formulario y ocultar las oportunidades
-                    opportunities.classList.add('hidden');
-                    myEnrollments.classList.add('hidden');
-                    applyForm.classList.remove('hidden');
-                    
-                    // Hacer scroll al formulario
-                    applyForm.scrollIntoView({ behavior: 'smooth' });
-                });
+                applyForm.classList.remove('hidden');
+                applyForm.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                console.error("Elemento #apply-form no encontrado");
             }
-        }
+        });
     });
-
-    // Botón para cerrar el formulario
+    
+    // botón de cerrar formulario
+    const closeFormBtn = document.getElementById('close-form-btn');
     if (closeFormBtn) {
         closeFormBtn.addEventListener('click', function() {
-            applyForm.classList.add('hidden');
-            opportunities.classList.remove('hidden');
-            myEnrollments.classList.remove('hidden');
+            console.log("Botón cerrar formulario clickeado");
             
-            // Volver a las oportunidades
-            opportunities.scrollIntoView({ behavior: 'smooth' });
+            const opportunities = document.getElementById('opportunities');
+            const myEnrollments = document.getElementById('my-enrollments');
+            const applyForm = document.getElementById('apply-form');
+            
+            if (applyForm) applyForm.classList.add('hidden');
+            if (opportunities) opportunities.classList.remove('hidden');
+            if (myEnrollments) myEnrollments.classList.remove('hidden');
+            
+            if (opportunities) opportunities.scrollIntoView({ behavior: 'smooth' });
         });
+    } else {
+        console.error("Elemento #close-form-btn no encontrado");
     }
-
-    // Manejo de Envio de Formulario
+    
+    // enviar formulario
     const volunteerForm = document.getElementById('volunteer-form');
-
     if (volunteerForm) {
         volunteerForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            console.log("Formulario enviado");
             
-            // Validar el formulario
-            const volunteerId = document.getElementById('volunteering-id').value;
+            const volunteerId = document.getElementById('volunteering-id')?.value;
             if (!volunteerId) {
+                console.error("No se ha seleccionado un voluntariado");
                 return;
             }
             
             // Preparar los datos del formulario
             const formData = new FormData(this);
+            
             // Enviar el formulario
             fetch('/volunteering/apply/', {
                 method: 'POST',
@@ -112,11 +114,15 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if (data.status === 'success') {
                     location.reload();
+                } else {
+                    console.error("Error en respuesta:", data.message);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         });
+    } else {
+        console.error("Elemento #volunteer-form no encontrado");
     }
 });

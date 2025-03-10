@@ -45,7 +45,8 @@
                 <section id="opportunities" class="opportunities-section">
                     <h2>Oportunidades de Voluntariado</h2>
                     
-                    <div class="category-tabs">
+                    <!-- Añadir clases para mejorar la responsividad en dispositivos móviles -->
+                    <div class="category-tabs mobile-scroll">
                         <button class="tab-btn active" data-category="all">Todos</button>
                         {% for category in categories %}
                             <button class="tab-btn" data-category="{{ category.name|lower }}">{{ category.name|capfirst }}</button>
@@ -136,9 +137,7 @@
                 {% endif %}
                 
                 <section id="apply-form" class="apply-section hidden">
-                    <h2>Inscripción como Voluntario</h2>
-                    <p class="section-intro">Completa el siguiente formulario para registrarte como voluntario. Nos pondremos en contacto contigo pronto.</p>
-                    
+                    <h2>Inscripción como Voluntario</h2>                    
                     <form id="volunteer-form" class="volunteer-form">
                         {% csrf_token %}
                         

@@ -1,4 +1,7 @@
 @import url('../../../static/css/components/back_button.css');
+:root {
+    --card-padding: 1.5rem;
+}
 
 /* Base Styles */
 * {
@@ -181,6 +184,9 @@ section {
     color: var(--text-muted);
     margin-bottom: 1rem;
     flex-grow: 1;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .card-details {
@@ -266,11 +272,6 @@ section {
 /* Apply Section */
 .apply-section {
     background-color: var(--background);
-}
-
-.section-intro {
-    text-align: center;
-    margin-bottom: 2rem;
 }
 
 .volunteer-form {
@@ -419,34 +420,236 @@ textarea {
     display: none !important;
 }
 
-/* Responsive */
+/* Mejoras de accesibilidad */
+.btn,
+.tab-btn,
+input,
+textarea,
+select {
+    font-size: 1rem; /* Tamaño mínimo para asegurar legibilidad */
+}
+
+/* Dar más espacio a los elementos interactivos en pantallas táctiles */
+@media (hover: none) {
+    .card-actions {
+        margin-top: 1.5rem;
+    }
+    
+    .btn {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+}
+
+/* Celulares pequeños */
+@media (max-width: 480px) {
+    .card-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .card-details {
+        gap: 0.75rem;
+    }
+    
+    .card-badge {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    .status-badge {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Ajustar espaciado en tarjetas */
+    .card-content {
+        padding: 1rem;
+    }
+    
+    .card-color-header {
+        height: 100px;
+    }
+    
+    .card-color-header i {
+        font-size: 2.5rem;
+    }
+    
+    /* Ajustar formularios */
+    input[type="text"],
+    select,
+    textarea {
+        padding: 0.6rem;
+        font-size: 0.95rem;
+    }
+    
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+/* Ajustes de orientación para dispositivos móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Celulares medianos/grandes */
 @media (max-width: 768px) {
+    :root {
+        --card-padding: 1rem;
+    }
+
+    /* Ajustes generales */
+    section {
+        padding: 1.5rem 1rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .container {
+        padding: 1.5rem 0.75rem;
+    }
+    
     h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     h2 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
     }
     
+    h3 {
+        font-size: 1.3rem;
+    }
+    
+    /* Grids responsivos */
     .benefits-grid,
-    .volunteering-grid {
+    .volunteering-grid,
+    .enrollments-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    /* Ajustes de tarjetas */
+    .card-color-header {
+        height: 110px;
+    }
+    
+    .card-color-header i {
+        font-size: 2.8rem;
+    }
+    
+    .card-content {
+        padding: 1.25rem;
     }
     
     .card-actions {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.75rem;
     }
     
+    .card-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Ajustes para los tabs de categorías */
+    .category-tabs {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+    }
+    
+    .category-tabs::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .tab-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    /* Ajustes banner de estado */
+    .volunteer-status-banner {
+        flex-direction: column;
+        padding: 1rem;
+        text-align: center;
+    }
+    
+    .volunteer-status-banner i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    /* Ajustes para formulario */
+    .volunteer-form {
+        padding: 0;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
 }
 
+/* Tablets medianas */
+@media (min-width: 569px) and (max-width: 768px) {
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+/* Tablets más grandes */
 @media (min-width: 769px) and (max-width: 1024px) {
     .benefits-grid {
         grid-template-columns: repeat(2, 1fr);
     }
     
-    .volunteering-grid {
+    .volunteering-grid,
+    .enrollments-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .section {
+        padding: 1.75rem;
+    }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Pantallas muy grandes */
+@media (min-width: 1441px) {
+    .container {
+        max-width: 1400px;
+    }
+    
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(4, 1fr);
     }
 }
