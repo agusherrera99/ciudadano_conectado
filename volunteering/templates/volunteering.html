@@ -47,21 +47,20 @@
                     
                     <div class="category-tabs">
                         <button class="tab-btn active" data-category="all">Todos</button>
-                        <button class="tab-btn" data-category="medio ambiente">Medio Ambiente</button>
-                        <button class="tab-btn" data-category="social">Social</button>
-                        <button class="tab-btn" data-category="educación">Educación</button>
+                        {% for category in categories %}
+                            <button class="tab-btn" data-category="{{ category.name|lower }}">{{ category.name|capfirst }}</button>
+                        {% endfor %}
                     </div>
                     
                     <div class="volunteering-grid">
                         {% for volunteering in volunteerings %}
                         <div class="volunteering-card" data-category="{{ volunteering.category }}">
-                            <div class="card-badge"></i>{{volunteering.category|capfirst}}</div>
+                            
+                            <div class="card-color-header" data-category="{{ volunteering.category.name|lower }}">
+                                <i class="fas {{ volunteering.icon }}"></i>
+                            </div>
 
-                            {% if volunteering.images %}
-                                <img src="{{ volunteering.images.url }}" alt="{{ volunteering.title|capfirst }}" class="card-image">
-                            {% else %}
-                                <img src="{% static 'img/volunteering/default.jpg' %}" alt="{{ volunteering.title|capfirst }}" class="card-image">
-                            {% endif %}
+                            <div class="card-badge">{{ volunteering.category.name|capfirst }}</div>
 
                             <div class="card-content">
                                 <h3>{{volunteering.title|capfirst}}</h3>

@@ -32,6 +32,20 @@ class VolunteerCategory(models.Model):
     
 
 class Volunteering(models.Model):
+    ICON_CHOICES = [
+        ('fa-leaf', 'Hoja'),
+        ('fa-hands-helping', 'Manos ayudando'),
+        ('fa-book', 'Libro'),
+        ('fa-heart', 'Corazón'),
+        ('fa-tree', 'Árbol'),
+        ('fa-users', 'Usuarios'),
+        ('fa-seedling', 'Planta'),
+        ('fa-utensils', 'Cubiertos'),
+        ('fa-child', 'Niño'),
+        ('fa-paint-brush', 'Pincel'),
+        ('fa-music', 'Música'),
+    ]
+
     title = models.CharField(max_length=100)
     description = models.TextField()
     days = models.ManyToManyField(Day)
@@ -39,6 +53,12 @@ class Volunteering(models.Model):
     place = models.ForeignKey(Places, on_delete=models.CASCADE)
     images = models.ImageField(upload_to="volunteering", blank=True, null=True)
     category = models.ForeignKey(VolunteerCategory, on_delete=models.CASCADE)
+    icon = models.CharField(
+        max_length=30, 
+        choices=ICON_CHOICES, 
+        default='fa-heart', 
+        help_text='Icono de FontAwesome para mostrar en la tarjeta'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -28,6 +28,16 @@
     --chart-color-7: #5BB974;
     --chart-color-8: #F6C934;
 
+    /* Colores para categorías de voluntariados */
+    --color-medio-ambiente: #4CAF50;;
+    --color-social: #2196F3;
+    --color-educacion: #FF9800;
+    --color-salud: #E91E63;
+    --color-cultura: #9C27B0;
+    --color-comunitario: #8BC34A;
+    --color-deporte: #00BCD4;
+    --color-default: #607D8B;
+
     /* Status colors */
     --status-pending-bg: rgba(255, 193, 7, 0.2);
     --status-pending-text: #856404;
