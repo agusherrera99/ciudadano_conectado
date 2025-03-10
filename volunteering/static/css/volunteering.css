@@ -253,7 +253,7 @@ section {
 
 /* Categoría por defecto */
 .card-color-header {
-    background-color: #607D8B;
+    background-color: var(--color-default);
 }
 
 /* Icono en el encabezado */
@@ -265,7 +265,7 @@ section {
 
 /* Apply Section */
 .apply-section {
-    background-color: #f9f9f9;
+    background-color: var(--background);
 }
 
 .section-intro {
@@ -317,7 +317,9 @@ textarea {
 }
 
 .form-actions {
+    display: flex;
     margin-top: 2rem;
+    gap: 1rem;
 }
 
 /* Utilities */

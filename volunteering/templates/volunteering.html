@@ -75,8 +75,8 @@
                                     </div>
                                 </div>
                                 <div class="card-actions">
-                                    <a href="" class="btn btn-secondary">Ver detalles</a>
-                                    <a href="" class="btn btn-primary">Inscribirme</a>
+                                    <a class="btn btn-secondary" >Ver detalles</a>
+                                    <a class="btn btn-primary" id="apply-btn">Inscribirme</a>
                                 </div>
                             </div>
                         </div>
@@ -84,27 +84,12 @@
                     </div>
                 </section>
                 
-                <section id="apply" class="apply-section">
+                <section id="apply-form" class="apply-section hidden">
                     <h2>Inscripción como Voluntario</h2>
                     <p class="section-intro">Completa el siguiente formulario para registrarte como voluntario. Nos pondremos en contacto contigo pronto.</p>
                     
                     <form id="volunteer-form" class="volunteer-form">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="interests">Áreas de interés (selecciona todas las que apliquen)*</label>
-                            <div class="checkbox-group">
-                                <label>
-                                    <input type="checkbox" name="interests" value="environment"> Medio Ambiente
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="interests" value="social"> Social
-                                </label>
-                                <label>
-                                    <input type="checkbox" name="interests" value="education"> Educación
-                                </label>
-                            </div>
-                        </div>
-                        
                         <div class="form-group">
                             <label for="availability">Disponibilidad*</label>
                             <div class="checkbox-group">
@@ -132,6 +117,7 @@
                         
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+                            <button type="button" class="btn btn-secondary" id="close-form-btn">Cancelar</button>
                         </div>
                     </form>
                 </section>                
