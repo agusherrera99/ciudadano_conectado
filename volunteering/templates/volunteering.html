@@ -52,36 +52,88 @@
                         {% endfor %}
                     </div>
                     
+                    <!-- Voluntariados disponibles -->
                     <div class="volunteering-grid">
                         {% for volunteering in volunteerings %}
-                        <div class="volunteering-card" data-category="{{ volunteering.category.name|lower }}" data-id="{{ volunteering.id }}">
-                            
-                            <div class="card-color-header" data-category="{{ volunteering.category.name|lower }}">
-                                <i class="fas {{ volunteering.icon }}"></i>
-                            </div>
-
-                            <div class="card-badge">{{ volunteering.category.name|capfirst }}</div>
-
-                            <div class="card-content">
-                                <h3>{{volunteering.title|capfirst}}</h3>
-                                <p class="card-description">{{volunteering.description}}</p>
-                                <div class="card-details">
-                                    <div class="card-info">
-                                        <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
-                                        <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
+                            {% if volunteering.id not in user_volunteerings %}
+                                <div class="volunteering-card" 
+                                    data-category="{{ volunteering.category.name|lower }}" 
+                                    data-id="{{ volunteering.id }}">
+                                    
+                                    <div class="card-color-header" data-category="{{ volunteering.category.name|lower }}">
+                                        <i class="fas {{ volunteering.icon }}"></i>
                                     </div>
-                                    <div class="card-location">
-                                        <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+
+                                    <div class="card-badge">{{ volunteering.category.name|capfirst }}</div>
+
+                                    <div class="card-content">
+                                        <h3>{{volunteering.title|capfirst}}</h3>
+                                        <p class="card-description">{{volunteering.description}}</p>
+                                        <div class="card-details">
+                                            <div class="card-info">
+                                                <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
+                                                <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
+                                            </div>
+                                            <div class="card-location">
+                                                <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-actions">
+                                            <a class="btn btn-primary" id="apply-btn">Inscribirme</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-actions">
-                                    <a class="btn btn-primary" id="apply-btn">Inscribirme</a>
-                                </div>
-                            </div>
-                        </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </section>
+                
+                <!-- Mis Voluntariados -->
+                {% if already_volunteered %}
+                <section id="my-enrollments" class="my-enrollments-section">
+                    <h2>Mis Inscripciones</h2>
+                    <div class="volunteer-status-banner">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Ya estás inscrito en una o más oportunidades de voluntariado. Serás contactado pronto por los organizadores.</p>
+                    </div>
+                    
+                    <div class="enrollments-grid">
+                        {% for volunteering in volunteerings %}
+                            {% if volunteering.id in user_volunteerings %}
+                            <div class="volunteering-card already-enrolled" 
+                                data-category="{{ volunteering.category.name|lower }}" 
+                                data-id="{{ volunteering.id }}">
+                                
+                                <div class="card-color-header" data-category="{{ volunteering.category.name|lower }}">
+                                    <i class="fas {{ volunteering.icon }}"></i>
+                                </div>
+
+                                <div class="card-badge">{{ volunteering.category.name|capfirst }}</div>
+
+                                <div class="card-content">
+                                    <h3>{{volunteering.title|capfirst}}</h3>
+                                    <p class="card-description">{{volunteering.description}}</p>
+                                    <div class="card-details">
+                                        <div class="card-info">
+                                            <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
+                                            <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
+                                        </div>
+                                        <div class="card-location">
+                                            <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="enrollment-status">
+                                        <span class="status-badge">
+                                            <i class="fas fa-check-circle"></i> Inscrito
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
                 
                 <section id="apply-form" class="apply-section hidden">
                     <h2>Inscripción como Voluntario</h2>

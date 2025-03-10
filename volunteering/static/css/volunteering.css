@@ -347,6 +347,73 @@ textarea {
     font-size: 0.9rem;
 }
 
+/* Banner de estado */
+.volunteer-status-banner {
+    background-color: #E3F2FD;
+    border-left: 4px solid #2196F3;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.volunteer-status-banner i {
+    font-size: 1.5rem;
+    color: #2196F3;
+}
+
+.volunteer-status-banner p {
+    margin: 0;
+    color: #0D47A1;
+}
+
+/* Sección de mis inscripciones */
+.my-enrollments-section {
+    margin-bottom: 3rem;
+}
+
+.enrollments-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Estilos para las tarjetas de voluntariado ya inscritas */
+.volunteering-card.already-enrolled {
+    border: 2px solid var(--success-color);
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.2);
+    position: relative;
+}
+
+/* Efecto de brillo alrededor de las tarjetas inscritas */
+.volunteering-card.already-enrolled::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    background: linear-gradient(45deg, rgba(76, 175, 80, 0.3) 0%, rgba(76, 175, 80, 0.1) 100%);
+    z-index: -1;
+}
+
+.enrollment-status {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.status-badge {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+    padding: 0.3rem 0.75rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
 /* Utilities */
 .hidden {
     display: none !important;

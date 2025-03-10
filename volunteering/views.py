@@ -10,10 +10,16 @@ from .models import Volunteer, Volunteering, VolunteerCategory
 def volunteering(request):
     volunteerings = Volunteering.objects.all()
     categories = VolunteerCategory.objects.all()
+    
+    # Obtener todos los voluntariados en los que el usuario ya está inscrito
+    user_volunteerings = Volunteer.objects.filter(user=request.user).values_list('volunteering_id', flat=True)
+    already_volunteered = user_volunteerings.exists()
 
     context = {
         'url_link': reverse('pages:participation'),
         'volunteerings': volunteerings,
+        'already_volunteered': already_volunteered,
+        'user_volunteerings': list(user_volunteerings),  # Lista de IDs de voluntariados inscritos
         'categories': categories,
     }
     return render(request, 'volunteering.html', context=context)

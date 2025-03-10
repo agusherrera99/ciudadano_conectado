@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mostrar formulario de inscripción al presionar el botón de inscripción
     const opportunities = document.getElementById('opportunities');
+    const myEnrollments = document.getElementById('my-enrollments');
     const applyForm = document.getElementById('apply-form');
     const closeFormBtn = document.getElementById('close-form-btn');
     
@@ -35,32 +36,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cambiar de ID a clase para los botones de inscripción
     document.querySelectorAll('.volunteering-card').forEach(card => {
-        // Cambiar el selector de ID a selector de clase
-        const applyBtn = card.querySelector('#apply-btn');
-        if (applyBtn) {
-            // Asignar clase en lugar de id
-            applyBtn.id = '';
-            applyBtn.classList.add('apply-btn');
-            
-            // Obtener datos del voluntariado desde la tarjeta
-            const title = card.querySelector('h3').textContent;
-            const description = card.querySelector('.card-description').textContent;
-            const volunteerId = card.getAttribute('data-id'); // Asegúrate de que las tarjetas tengan este atributo
-            
-            // Agregar listener al botón
-            applyBtn.addEventListener('click', function() {
-                // Actualizar la información en el formulario
-                selectedTitle.textContent = title;
-                selectedDescription.textContent = description;
-                volunteeringIdField.value = volunteerId || '';
+        // Solo procesar tarjetas donde el usuario no está inscrito
+        if (!card.classList.contains('already-enrolled')) {
+            const applyBtn = card.querySelector('#apply-btn');
+            if (applyBtn) {
+                // Asignar clase en lugar de id
+                applyBtn.id = '';
+                applyBtn.classList.add('apply-btn');
                 
-                // Mostrar el formulario y ocultar las oportunidades
-                opportunities.classList.add('hidden');
-                applyForm.classList.remove('hidden');
+                // Obtener datos del voluntariado desde la tarjeta
+                const title = card.querySelector('h3').textContent;
+                const description = card.querySelector('.card-description').textContent;
+                const volunteerId = card.getAttribute('data-id'); // Asegúrate de que las tarjetas tengan este atributo
                 
-                // Hacer scroll al formulario
-                applyForm.scrollIntoView({ behavior: 'smooth' });
-            });
+                // Agregar listener al botón
+                applyBtn.addEventListener('click', function() {
+                    // Actualizar la información en el formulario
+                    selectedTitle.textContent = title;
+                    selectedDescription.textContent = description;
+                    volunteeringIdField.value = volunteerId || '';
+                    
+                    // Mostrar el formulario y ocultar las oportunidades
+                    opportunities.classList.add('hidden');
+                    myEnrollments.classList.add('hidden');
+                    applyForm.classList.remove('hidden');
+                    
+                    // Hacer scroll al formulario
+                    applyForm.scrollIntoView({ behavior: 'smooth' });
+                });
+            }
         }
     });
 
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
         closeFormBtn.addEventListener('click', function() {
             applyForm.classList.add('hidden');
             opportunities.classList.remove('hidden');
+            myEnrollments.classList.remove('hidden');
             
             // Volver a las oportunidades
             opportunities.scrollIntoView({ behavior: 'smooth' });
