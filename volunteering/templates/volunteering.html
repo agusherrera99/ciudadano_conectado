@@ -75,8 +75,9 @@
                                                 <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
                                                 <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
                                             </div>
-                                            <div class="card-location">
+                                            <div class="card-info">
                                                 <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+                                                <span><i class="fas fa-users"> {{volunteering.enrollment_count}}</i></span>
                                             </div>
                                         </div>
                                         <div class="card-actions">
@@ -119,8 +120,9 @@
                                             <span><i class="fas fa-calendar"></i> {{volunteering.get_days_display}}</span>
                                             <span><i class="fas fa-clock"></i> {{volunteering.hours}} horas</span>
                                         </div>
-                                        <div class="card-location">
+                                        <div class="card-info">
                                             <span><i class="fas fa-location-dot"></i> {{volunteering.place.name|capfirst}}</span>
+                                            <span><i class="fas fa-users"> {{volunteering.enrollment_count}}</i></span>
                                         </div>
                                     </div>
                                     <div class="enrollment-status">
@@ -137,7 +139,8 @@
                 {% endif %}
                 
                 <section id="apply-form" class="apply-section hidden">
-                    <h2>Inscripción como Voluntario</h2>                    
+                    <h2>Inscripción como Voluntario</h2>
+                    
                     <form id="volunteer-form" class="volunteer-form">
                         {% csrf_token %}
                         

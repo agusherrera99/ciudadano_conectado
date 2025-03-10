@@ -1,25 +1,33 @@
 from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.db.models import Count
 
 from .models import Volunteer, Volunteering, VolunteerCategory
 # Create your views here.
 
 @login_required
 def volunteering(request):
-    volunteerings = Volunteering.objects.all()
+    # Obtener voluntariados con conteo de inscripciones
+    volunteerings = Volunteering.objects.annotate(
+        enrollment_count=Count('volunteer')
+    ).all()
     categories = VolunteerCategory.objects.all()
     
     # Obtener todos los voluntariados en los que el usuario ya está inscrito
     user_volunteerings = Volunteer.objects.filter(user=request.user).values_list('volunteering_id', flat=True)
     already_volunteered = user_volunteerings.exists()
 
+    enrollment_counts = Volunteer.objects.values('volunteering').annotate(count=models.Count('volunteering'))
+
     context = {
         'url_link': reverse('pages:participation'),
         'volunteerings': volunteerings,
         'already_volunteered': already_volunteered,
-        'user_volunteerings': list(user_volunteerings),  # Lista de IDs de voluntariados inscritos
+        'user_volunteerings': list(user_volunteerings),
+        'enrollment_counts': enrollment_counts,
         'categories': categories,
     }
     return render(request, 'volunteering.html', context=context)

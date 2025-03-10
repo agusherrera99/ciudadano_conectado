@@ -196,17 +196,15 @@ section {
     margin-bottom: 1.5rem;
 }
 
-.card-info, .card-location {
+.card-info {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 0.5rem;
     color: var(--text-muted);
     font-size: 0.9rem;
 }
 
-.card-info {
-    justify-content: space-between;
-}
 
 .card-actions {
     display: flex;
@@ -267,6 +265,35 @@ section {
     font-size: 3.5rem;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+}
+
+/* Contador de inscripciones */
+.enrollment-counter {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: var(--text);
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+.enrollment-counter i {
+    color: var(--primary);
+    font-size: 0.9rem;
+}
+
+/* Efecto hover para el contador */
+.volunteering-card:hover .enrollment-counter {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Apply Section */
@@ -486,6 +513,15 @@ select {
     
     .form-group {
         margin-bottom: 1rem;
+    }
+
+    .enrollment-counter {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.75rem;
+    }
+    
+    .enrollment-counter i {
+        font-size: 0.8rem;
     }
 }
 /* Ajustes de orientación para dispositivos móviles */
