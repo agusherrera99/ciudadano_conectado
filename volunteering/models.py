@@ -101,6 +101,13 @@ class Volunteering(models.Model):
         else:
             # Si no son consecutivos, mostrar separados por coma
             return ", ".join([day.name for day in days])
+        
+    def save(self, *args, **kwargs):
+        # Eliminar espacios al principio y al final
+        self.title = self.title.strip()
+        self.description = self.description.strip()
+        
+        super(Volunteering, self).save(*args, **kwargs)
 
 
 class Volunteer(models.Model):
@@ -113,3 +120,16 @@ class Volunteer(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.volunteering.title}"
+    
+    def save(self, *args, **kwargs):
+        # Eliminar espacios al principio y al final
+        self.skills = self.skills.strip()
+        self.motivation = self.motivation.strip()
+
+        # Asegurar que availability sea una cadena separada por comas
+        if self.availability:
+            self.availability = ",".join(self.availability.split(","))
+        else:
+            self.availability = ""
+        
+        super(Volunteer, self).save(*args, **kwargs)

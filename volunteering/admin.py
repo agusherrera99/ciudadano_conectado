@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 
-from .models import Places, Volunteering, VolunteerCategory
+from .models import Places, Volunteer, Volunteering, VolunteerCategory
 
 # Register your models here.
 class VolunteeringForm(forms.ModelForm):
@@ -22,6 +22,19 @@ class VolunteeringAdmin(admin.ModelAdmin):
 
     list_per_page = 25
     list_display_links = ('title',)
+
+    show_facets = admin.ShowFacets.ALWAYS
+
+@admin.register(Volunteer)
+class VolunteerAdmin(admin.ModelAdmin):
+    list_display = ('user', 'volunteering', 'created_at',)
+    list_filter = ('volunteering',)
+    search_fields = ('user', 'volunteering')
+    date_hierarchy = 'created_at'
+    ordering = ('-created_at',)
+
+    list_per_page = 25
+    list_display_links = ('user',)
 
     show_facets = admin.ShowFacets.ALWAYS
 

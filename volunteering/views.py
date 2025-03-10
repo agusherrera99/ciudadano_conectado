@@ -44,7 +44,7 @@ def apply_volunteering(request):
             
             # Obtener disponibilidad como una lista
             availability_values = request.POST.getlist('availability')
-            availability_str = ','.join(availability_values)
+            availability_str = '-'.join(availability_values)
 
             volunteer = Volunteer.objects.create(
                 user=request.user,

@@ -80,6 +80,20 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Elemento #close-form-btn no encontrado");
     }
+
+    // manejo de checkboxes de disponibilidad
+    var checkboxes = document.querySelectorAll('.availability-checkbox');
+    
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Si cualquier checkbox está marcado, quitar el required de todos
+            var anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            
+            checkboxes.forEach(function(cb) {
+                cb.required = !anyChecked;
+            });
+        });
+    });
     
     // enviar formulario
     const volunteerForm = document.getElementById('volunteer-form');

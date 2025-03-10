@@ -155,18 +155,20 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="availability">Disponibilidad*</label>
-                            <div class="checkbox-group">
+                            <label for="availability">Disponibilidad<span class="required">*</span></label>
+                            <div class="checkbox-group" role="group" aria-labelledby="availability-group">
+                                <!-- El primer checkbox tiene un atributo especial -->
                                 <label>
-                                    <input type="checkbox" name="availability" value="mañana"> de mañana
+                                    <input type="checkbox" name="availability" value="mañana" class="availability-checkbox" required> de mañana
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="availability" value="tarde"> por la tarde
+                                    <input type="checkbox" name="availability" value="tarde" class="availability-checkbox"> por la tarde
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="availability" value="noche"> por la noche
+                                    <input type="checkbox" name="availability" value="noche" class="availability-checkbox"> por la noche
                                 </label>
                             </div>
+                            <div class="form-help-text">Selecciona al menos una opción</div>
                         </div>
                         
                         <div class="form-group">
