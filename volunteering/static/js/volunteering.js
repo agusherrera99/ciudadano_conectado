@@ -25,20 +25,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mostrar formulario de inscripción al presionar el botón de inscripción
     const opportunities = document.getElementById('opportunities');
-    const applyBtns = document.querySelectorAll('#apply-btn'); // Todos los botones tienen el mismo ID - problema
     const applyForm = document.getElementById('apply-form');
-    const sectionIntro = document.getElementsByClassName('section-intro');
     const closeFormBtn = document.getElementById('close-form-btn');
+    
+    // Variables para los campos del formulario
+    const selectedTitle = document.getElementById('selected-volunteering-title');
+    const selectedDescription = document.getElementById('selected-volunteering-description');
+    const volunteeringIdField = document.getElementById('volunteering-id');
 
-    // Iterar sobre todos los botones de inscripción y agregar event listener a cada uno
-    applyBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            opportunities.classList.add('hidden');
-            applyForm.classList.remove('hidden');
+    // Cambiar de ID a clase para los botones de inscripción
+    document.querySelectorAll('.volunteering-card').forEach(card => {
+        // Cambiar el selector de ID a selector de clase
+        const applyBtn = card.querySelector('#apply-btn');
+        if (applyBtn) {
+            // Asignar clase en lugar de id
+            applyBtn.id = '';
+            applyBtn.classList.add('apply-btn');
             
-            // Hacer scroll al formulario
-            applyForm.scrollIntoView({ behavior: 'smooth' });
-        });
+            // Obtener datos del voluntariado desde la tarjeta
+            const title = card.querySelector('h3').textContent;
+            const description = card.querySelector('.card-description').textContent;
+            const volunteerId = card.getAttribute('data-id'); // Asegúrate de que las tarjetas tengan este atributo
+            
+            // Agregar listener al botón
+            applyBtn.addEventListener('click', function() {
+                // Actualizar la información en el formulario
+                selectedTitle.textContent = title;
+                selectedDescription.textContent = description;
+                volunteeringIdField.value = volunteerId || '';
+                
+                // Mostrar el formulario y ocultar las oportunidades
+                opportunities.classList.add('hidden');
+                applyForm.classList.remove('hidden');
+                
+                // Hacer scroll al formulario
+                applyForm.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
     });
 
     // Botón para cerrar el formulario

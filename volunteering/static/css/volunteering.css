@@ -322,6 +322,31 @@ textarea {
     gap: 1rem;
 }
 
+/* Estilos para el campo de voluntariado seleccionado */
+.selected-volunteering {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--accent);
+}
+
+.selected-volunteering-info {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+}
+
+.selected-volunteering-info h4 {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.selected-volunteering-info p {
+    margin-bottom: 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
 /* Utilities */
 .hidden {
     display: none !important;

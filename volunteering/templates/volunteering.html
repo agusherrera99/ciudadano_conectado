@@ -54,7 +54,7 @@
                     
                     <div class="volunteering-grid">
                         {% for volunteering in volunteerings %}
-                        <div class="volunteering-card" data-category="{{ volunteering.category }}">
+                        <div class="volunteering-card" data-category="{{ volunteering.category.name|lower }}" data-id="{{ volunteering.id }}">
                             
                             <div class="card-color-header" data-category="{{ volunteering.category.name|lower }}">
                                 <i class="fas {{ volunteering.icon }}"></i>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="card-actions">
-                                    <a class="btn btn-secondary" >Ver detalles</a>
+                                    <a class="btn btn-secondary">Ver detalles</a>
                                     <a class="btn btn-primary" id="apply-btn">Inscribirme</a>
                                 </div>
                             </div>
@@ -90,17 +90,28 @@
                     
                     <form id="volunteer-form" class="volunteer-form">
                         {% csrf_token %}
+                        
+                        <!-- Campo para mostrar el voluntariado seleccionado -->
+                        <div class="form-group selected-volunteering">
+                            <label>Oportunidad seleccionada:</label>
+                            <div class="selected-volunteering-info">
+                                <h4 id="selected-volunteering-title">No se ha seleccionado una oportunidad</h4>
+                                <p id="selected-volunteering-description"></p>
+                            </div>
+                            <input type="hidden" id="volunteering-id" name="volunteering_id" value="">
+                        </div>
+                        
                         <div class="form-group">
                             <label for="availability">Disponibilidad*</label>
                             <div class="checkbox-group">
                                 <label>
-                                    <input type="checkbox" name="availability" value="weekday-morning"> Lunes a Viernes (mañana)
+                                    <input type="checkbox" name="availability" value="morning"> de mañana
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="availability" value="weekday-afternoon"> Lunes a Viernes (tarde)
+                                    <input type="checkbox" name="availability" value="afternoon"> por la tarde
                                 </label>
                                 <label>
-                                    <input type="checkbox" name="availability" value="weekend"> Fines de semana
+                                    <input type="checkbox" name="availability" value="night"> por la noche
                                 </label>
                             </div>
                         </div>
