@@ -23,11 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // manejo de formulario de inscripción
     const applyBtns = document.querySelectorAll('#apply-btn');
-    console.log("Botones de inscripción encontrados: ", applyBtns.length);
     
     applyBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            console.log("Botón de inscripción clickeado");
             e.preventDefault();
             
             const card = this.closest('.volunteering-card');
@@ -65,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeFormBtn = document.getElementById('close-form-btn');
     if (closeFormBtn) {
         closeFormBtn.addEventListener('click', function() {
-            console.log("Botón cerrar formulario clickeado");
             
             const opportunities = document.getElementById('opportunities');
             const myEnrollments = document.getElementById('my-enrollments');
@@ -100,7 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (volunteerForm) {
         volunteerForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            console.log("Formulario enviado");
             
             const volunteerId = document.getElementById('volunteering-id')?.value;
             if (!volunteerId) {
