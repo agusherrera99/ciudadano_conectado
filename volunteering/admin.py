@@ -1,7 +1,9 @@
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
+from django.contrib.auth import get_user_model
 
 from .models import Places, Volunteer, Volunteering, VolunteerCategory
+from notifications.models import Notification
 
 # Register your models here.
 class VolunteeringForm(forms.ModelForm):
@@ -24,6 +26,19 @@ class VolunteeringAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
 
     show_facets = admin.ShowFacets.ALWAYS
+
+    def save_model(self, request, obj, form, change):
+        is_new = obj.pk is None
+        super().save_model(request, obj, form, change)
+
+        if is_new:
+            users = get_user_model().objects.all().exclude(pk=request.user.pk)
+            for user in users:
+                Notification.objects.create(
+                    user=user,
+                    volunteering=obj,
+                    message=f"Nueva oportunidad de voluntariado: {obj.title}"
+                )
 
 @admin.register(Volunteer)
 class VolunteerAdmin(admin.ModelAdmin):

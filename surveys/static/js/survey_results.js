@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             
         } catch (error) {
+            console.error('Error al cargar los datos:', error);
             // Asegurarse de que los indicadores de carga desaparezcan en caso de error
             document.querySelectorAll('.chart-loading').forEach(loader => {
                 loader.style.display = 'none';

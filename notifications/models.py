@@ -6,6 +6,7 @@ class Notification(models.Model):
     user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
     issue = models.ForeignKey('issues.Issue', on_delete=models.CASCADE, null=True, blank=True)
     survey = models.ForeignKey('surveys.Survey', on_delete=models.CASCADE, null=True, blank=True)
+    volunteering = models.ForeignKey('volunteering.Volunteering', on_delete=models.CASCADE, null=True, blank=True)
     message = models.TextField()
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

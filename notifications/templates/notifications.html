@@ -1,12 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Notificaciones</title>
-        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+        <meta name="description" content="Centro de notificaciones para ciudadanos conectados">
+        <title>Notificaciones - Ciudadano Conectado</title>
+        <link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.css' %}" type="text/css">
+        <link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}" type="text/css"> 
         <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
     </head>
 
@@ -14,15 +15,16 @@
         {% include 'components/navbar.html' %}
         <main>
             <!-- Notifications Section -->
-            <section id="notifications">
-                <h2>Notificaciones</h2>
-                <ul class="notification-items">
-                    {% if notifications %}
+            <section id="notifications" aria-labelledby="notifications-heading">
+                <h2 id="notifications-heading">Notificaciones</h2>
+                
+                {% if notifications %}
+                    <ul class="notification-items">
                         {% for notification in notifications %}
-                            <li class="notification-item" data-id="{{ notification.id }}">
-                                <i class="fas fa-circle-exclamation" aria-hidden="true"></i>
+                            <li class="notification-item {% if not notification.is_read %}unread{% endif %}" data-id="{{ notification.id }}">
+                                <i class="fas {% if not notification.is_read %}fa-circle-exclamation{% else %}fa-bell{% endif %}" aria-hidden="true"></i>
                                 <p>{{notification.message}}</p>
-                                <span class="notification-date">{{notification.created_at}}</span>
+                                <span class="notification-date">{{notification.created_at|date:"d M, Y H:i"}}</span>
                                 {% if not notification.is_read %}
                                     <button class="mark-read-btn" aria-label="Marcar como leída">
                                         <i class="fas fa-check"></i>
@@ -30,15 +32,16 @@
                                 {% endif %}
                             </li>
                         {% endfor %}
-                    {% else %}
-                        <li class="notification-item">
-                            <p>No tienes notificaciones</p>
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash" aria-hidden="true"></i>
+                        <p>No tienes notificaciones en este momento</p>
+                    </div>
+                {% endif %}
             </section>
         </main>
-    </body>
 
-    <script src="{% static 'js/notification.js' %}"></script>
+        <script src="{% static 'js/notification.js' %}"></script>
+    </body>
 </html>

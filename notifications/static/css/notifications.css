@@ -4,22 +4,36 @@
     padding: 0;
 }
 
+:root {
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+}
+
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: var(--text);
     background-color: var(--background);
+    -webkit-text-size-adjust: 100%;
 }
 
 main {
     width: 100%;
-    margin: 1rem 0;
-    padding: 0 1rem;
+    padding: var(--spacing-md);
+    margin: 0 auto;
+    max-width: 100%;
 }
 
 h1, h2, h3 {
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+h2 {
+    font-size: 1.5rem;
 }
 
 .hidden {
@@ -27,126 +41,243 @@ h1, h2, h3 {
 }
 
 section {
-    margin: 1rem;
-    padding: 1rem;
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-md);
     background-color: white;
     border: 1px solid var(--accent);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.notification-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notification-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+        "icon content button"
+        "icon date button";
+    gap: var(--spacing-sm);
+    background-color: var(--secondary);
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
 .notification-item i {
+    grid-area: icon;
     color: var(--primary);
     font-size: 1.1rem;
+    margin-top: 0.25rem;
+}
+
+.notification-item p {
+    grid-area: content;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.notification-date {
+    grid-area: date;
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.mark-read-btn {
+    grid-area: button;
+    height: fit-content;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 50%;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.mark-read-btn i {
+    color: white;
+    margin: 0;
+    font-size: 0.9rem;
 }
 
 .notification-item.unread {
     border-left: 4px solid var(--primary);
 }
 
-.notification-date {
-    font-size: 0.8rem;
+/* Accesibilidad mejorada */
+.mark-read-btn:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* Estado de carga - opcional */
+.loading {
+    text-align: center;
+    padding: var(--spacing-md);
     color: #6c757d;
-    margin-left: 0;
 }
 
-.notification-items {
-    list-style-type: none;
+/* Estado vacío mejorado */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-xl) var(--spacing-md);
 }
 
-.notification-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    background-color: var(--secondary);
-    border-radius: 8px;
-    border: 1px solid var(--accent);
-    padding: 1rem;
-    margin-bottom: 0.75rem;
-    position: relative;
-    transition: all 0.3s ease;
+.empty-state i {
+    font-size: 3rem;
+    color: #d1d1d1;
+    margin-bottom: var(--spacing-md);
 }
 
-.notification-item p {
-    font-size: 0.9rem;
-    line-height: 1.4;
+.empty-state p {
+    color: #6c757d;
+    font-size: 1rem;
 }
 
-.mark-read-btn {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    padding: 0.4rem 0.8rem;
-    border: none;
-    border-radius: 1rem;
-    background: var(--primary);
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* Añadir al CSS - optimizaciones para pantallas táctiles */
+@media (pointer: coarse) {
+    .mark-read-btn {
+        min-width: 2.5rem; /* Asegurar área táctil suficiente */
+        min-height: 2.5rem;
+    }
+    
+    /* Aumentar espaciado para facilitar el toque */
+    .notification-item {
+        margin-bottom: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
 }
 
-.mark-read-btn i {
-    color: white;
+/* Hover states - solo en dispositivos que soporten hover */
+@media (hover: hover) {
+    .mark-read-btn:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        background-color: var(--primary-dark, #0056b3);
+    }
 }
 
-.mark-read-btn:hover {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-}
-
-/* Mobile and Tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
+/* celulares pequeños */
+@media only screen and (max-width: 480px) {
     main {
-        margin: 2rem auto;
-        max-width: 90%;
+        padding: var(--spacing-xs);
     }
 
     section {
-        margin: 0;
-        padding: 1.5rem;
+        padding: var(--spacing-sm);
+        margin: var(--spacing-sm) 0;
     }
 
     .notification-item {
-        flex-direction: row;
-        align-items: center;
-        padding: 1.25rem;
-        margin-bottom: 1rem;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "content button"
+            "date button";
+        padding: var(--spacing-sm);
+    }
+
+    .notification-item i {
+        display: none; /* Ocultar icono en pantallas muy pequeñas */
+    }
+
+    h2 {
+        font-size: 1.3rem;
     }
 
     .notification-item p {
-        flex: 1;
+        font-size: 0.85rem;
+    }
+
+    .notification-date {
+        font-size: 0.75rem;
+    }
+
+    .mark-read-btn {
+        width: 2rem;
+        height: 2rem;
+        padding: 0.3rem;
+    }
+}
+
+/* celulares medianos/grandes */
+@media only screen and (min-width: 481px) and (max-width: 767px) {
+    main {
+        padding: var(--spacing-sm);
+    }
+
+    .notification-item {
+        padding: var(--spacing-md);
+    }
+}
+
+/* tablets */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    main {
+        padding: var(--spacing-md);
+        max-width: 90%;
+        margin: var(--spacing-md) auto;
+    }
+
+    section {
+        padding: var(--spacing-lg);
+    }
+
+    .notification-item {
+        grid-template-columns: auto 1fr auto auto;
+        grid-template-areas: "icon content date button";
+        align-items: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        gap: var(--spacing-md);
+    }
+
+    .notification-item p {
         font-size: 1rem;
     }
 
     .notification-date {
         font-size: 0.9rem;
-        margin-left: auto;
-        margin-right: 3rem;
-    }
-
-    .mark-read-btn {
-        position: static;
-        padding: 0.5rem 1rem;
+        margin-right: var(--spacing-sm);
     }
 }
 
-/* Desktop */
-@media (min-width: 1025px) {
+/* laptops/desktops */
+@media only screen and (min-width: 1025px) {
     main {
         max-width: 800px;
-        margin: 2rem auto;
+        margin: var(--spacing-xl) auto;
+        padding: 0;
     }
 
     section {
-        padding: 2rem;
+        padding: var(--spacing-xl);
     }
 
     .notification-item {
-        flex-direction: row;
+        grid-template-columns: auto 1fr auto auto;
+        grid-template-areas: "icon content date button";
         align-items: center;
-        padding: 1.5rem;
-        gap: 1.5rem;
-        margin-bottom: 1rem;
+        padding: var(--spacing-lg);
+        gap: var(--spacing-lg);
+        margin-bottom: var(--spacing-md);
+    }
+
+    h2 {
+        font-size: 1.8rem;
     }
 
     .notification-item i {
@@ -154,23 +285,29 @@ section {
     }
 
     .notification-item p {
-        flex: 1;
         font-size: 1rem;
         line-height: 1.5;
     }
 
     .notification-date {
         font-size: 0.9rem;
-        margin-right: 4rem;
     }
 
     .mark-read-btn {
-        position: static;
-        padding: 0.5rem 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
+}
 
-    .mark-read-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+@media only screen and (min-width: 1440px) {
+    main {
+        max-width: 900px;
     }
+}
+
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
