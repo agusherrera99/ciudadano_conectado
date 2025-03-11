@@ -18,7 +18,6 @@ def participation(request):
     }
     return render(request, 'participation.html', context=context)
 
-@login_required
 def transparency(request):
     context = {
         'url_link': reverse('pages:panel')
