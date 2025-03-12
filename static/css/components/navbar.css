@@ -7,6 +7,19 @@ nav {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--accent);
+    transition: all 0.3s ease;
+}
+
+/* New styles for internal user navbar */
+nav.internal-nav {
+    background-color: var(--internal-primary);
+    border-bottom: 1px solid var(--internal-border);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav.internal-nav .nav-logo .site-name {
+    color: var(--light-text);
+    position: relative;
 }
 
 .nav-left, .nav-right {

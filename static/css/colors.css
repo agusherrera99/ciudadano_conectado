@@ -1,5 +1,5 @@
 :root {
-    /* Existing colors */
+    /* Colores */
     --primary: #2E5C8A;
     --secondary: #f8f9fa;
     --tertiary: #f1f3f5;
@@ -10,6 +10,11 @@
     --text: #212529;
     --text-muted: #6c757d;
     --avatar-color: #f8f9fa;
+    
+    /* Colores para usuarios internos */
+    --internal-primary: #5D4777;
+    --internal-accent: #7D649A;
+    --internal-border: #8f7aaa;
     
     --success: #28a745;
     --warning: #ffc107;
@@ -38,7 +43,7 @@
     --color-deporte: #00BCD4;
     --color-default: #607D8B;
 
-    /* Status colors */
+    /* Colores de estados */
     --status-pending-bg: rgba(255, 193, 7, 0.2);
     --status-pending-text: #856404;
     --status-pending-dot: #ffc107;
@@ -55,6 +60,6 @@
     --status-resolved-text: #155724;
     --status-resolved-dot: #28a745;
 
-    /* Shadow color */
+    /* Sombra */
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
