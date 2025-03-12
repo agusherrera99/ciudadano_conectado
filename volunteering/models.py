@@ -3,40 +3,48 @@ from django.db import models
 
 # Create your models here.
 class Day(models.Model):
-    name = models.CharField(max_length=20, unique=True)
+    class Meta:
+        verbose_name = 'Día'
+        verbose_name_plural = 'Días'
+        ordering = ['id']
+
+    name = models.CharField(max_length=20, unique=True, verbose_name='Nombre')
 
     def __str__(self):
         return self.name
-    
-    class Meta:
-        ordering = ['id']
 
 
 class Places(models.Model):
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name = "Lugar"
+        verbose_name_plural = "Lugares"
+
+    name = models.CharField(max_length=100, verbose_name='Nombre')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
     def __str__(self):
         return self.name
-    
-    class Meta:
-        verbose_name_plural = "Places"
 
 
 class VolunteerCategory(models.Model):
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    class Meta:
+        verbose_name_plural = "Categorías de voluntariado"
+
+    name = models.CharField(max_length=100, verbose_name='Nombre')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
     def __str__(self):
         return self.name
     
-    class Meta:
-        verbose_name_plural = "Volunteer Categories"
-    
 
 class Volunteering(models.Model):
+    class Meta:
+        verbose_name = 'Voluntariado'
+        verbose_name_plural = 'Voluntariados'
+        ordering = ['id']
+
     ICON_CHOICES = [
         ('fa-leaf', 'Hoja'),
         ('fa-hands-helping', 'Manos ayudando'),
@@ -51,21 +59,22 @@ class Volunteering(models.Model):
         ('fa-music', 'Música'),
     ]
 
-    title = models.CharField(max_length=100)
-    description = models.TextField()
-    days = models.ManyToManyField(Day)
-    hours = models.IntegerField()
-    place = models.ForeignKey(Places, on_delete=models.CASCADE)
-    images = models.ImageField(upload_to="volunteering", blank=True, null=True)
-    category = models.ForeignKey(VolunteerCategory, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, verbose_name='Título')
+    description = models.TextField(verbose_name='Descripción')
+    days = models.ManyToManyField(Day, verbose_name='Días')
+    hours = models.IntegerField(verbose_name='Horas')
+    place = models.ForeignKey(Places, on_delete=models.CASCADE, verbose_name='Lugar')
+    images = models.ImageField(upload_to="volunteering", blank=True, null=True, verbose_name='Imágenes')
+    category = models.ForeignKey(VolunteerCategory, on_delete=models.CASCADE, verbose_name='Categoría')
     icon = models.CharField(
         max_length=30, 
         choices=ICON_CHOICES, 
         default='fa-heart', 
+        verbose_name='Icono',
         help_text='Icono de FontAwesome para mostrar en la tarjeta'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
 
     def __str__(self):
         return self.title
@@ -111,12 +120,17 @@ class Volunteering(models.Model):
 
 
 class Volunteer(models.Model):
-    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE)
-    volunteering = models.ForeignKey(Volunteering, on_delete=models.CASCADE)
-    availability = models.CharField(max_length=100, blank=True, default='')
-    skills = models.TextField(blank=True, null=True)
-    motivation = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        verbose_name = 'Voluntario'
+        verbose_name_plural = 'Voluntarios'
+        ordering = ['id']
+
+    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, verbose_name='Usuario')
+    volunteering = models.ForeignKey(Volunteering, on_delete=models.CASCADE, verbose_name='Voluntariado')
+    availability = models.CharField(max_length=100, blank=True, default='', verbose_name='Disponibilidad')
+    skills = models.TextField(blank=True, null=True, verbose_name='Habilidades')
+    motivation = models.TextField(blank=True, null=True, verbose_name='Motivación')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
 
     def __str__(self):
         return f"{self.user.username} - {self.volunteering.title}"
