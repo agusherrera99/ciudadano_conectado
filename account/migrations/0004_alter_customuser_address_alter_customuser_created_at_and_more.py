@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('account', '0003_customuser_internal_user'),
+        ('account', '0003_customuser_is_internal'),
     ]
 
     operations = [
@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='customuser',
-            name='internal_user',
+            name='is_internal',
             field=models.BooleanField(default=False, verbose_name='Usuario interno'),
         ),
         migrations.AlterField(

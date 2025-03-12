@@ -17,11 +17,11 @@ class CustomUserAdmin(UserAdmin):
         "created_at",
         "updated_at",
         "is_staff",
-        "internal_user",
+        "is_internal",
         "is_superuser"
     ]
     search_fields = ["username", "email", "phone_number", "address", "dni"]
-    list_filter = ["created_at", "updated_at", "is_staff", "internal_user", "is_superuser"]
+    list_filter = ["created_at", "updated_at", "is_staff", "is_internal", "is_superuser"]
     ordering = ["created_at"]
     list_per_page = 25
     list_display_links = ["username"]
@@ -31,7 +31,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
         ("Personal info", {"fields": ("first_name", "last_name", "phone_number", "address", "dni")}),
-        ("Permissions", {"fields": ("is_active", "is_staff", "internal_user", "is_superuser", "groups", "user_permissions")}),
+        ("Permissions", {"fields": ("is_active", "is_staff", "is_internal", "is_superuser", "groups", "user_permissions")}),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
 

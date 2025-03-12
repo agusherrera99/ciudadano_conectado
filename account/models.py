@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
         related_name='customuser_permission_set',  # Added a unique related_name
         blank=True
     )
-    internal_user = models.BooleanField(default=False, verbose_name='Usuario interno')
+    is_internal = models.BooleanField(default=False, verbose_name='Usuario interno')
 
     def __str__(self):
         return self.username
