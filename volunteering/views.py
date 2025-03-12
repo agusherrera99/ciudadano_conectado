@@ -1,14 +1,14 @@
-from django.contrib.auth.decorators import login_required
 from django.db import models
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Count
 
+from core.decorators import external_user_required
 from .models import Volunteer, Volunteering, VolunteerCategory
 # Create your views here.
 
-@login_required
+@external_user_required
 def volunteering(request):
     # Obtener voluntariados con conteo de inscripciones
     volunteerings = Volunteering.objects.annotate(
@@ -32,7 +32,7 @@ def volunteering(request):
     }
     return render(request, 'volunteering.html', context=context)
 
-@login_required
+@external_user_required
 def apply_volunteering(request):
     if request.method == 'POST':
         try:

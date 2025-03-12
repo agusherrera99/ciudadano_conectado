@@ -1,12 +1,12 @@
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
+from core.decorators import external_user_required
 from .models import Answer, Survey, Question
 
 # Create your views here.
-@login_required
+@external_user_required
 def surveys(request):
     surveys = Survey.objects.all()
     context = {
@@ -15,7 +15,7 @@ def surveys(request):
     }
     return render(request, 'surveys.html', context=context)
 
-@login_required
+@external_user_required
 def survey_detail(request, survey_id):
     survey = Survey.objects.get(pk=survey_id)
     questions = Question.objects.filter(survey=survey).all()
@@ -29,7 +29,7 @@ def survey_detail(request, survey_id):
     }
     return render(request, 'survey_detail.html', context=context)
 
-@login_required
+@external_user_required
 def survey_results(request, survey_id):
     survey = get_object_or_404(Survey, pk=survey_id)
     questions = Question.objects.filter(survey=survey).prefetch_related('options')
@@ -108,7 +108,7 @@ def survey_results(request, survey_id):
     
     return render(request, 'survey_results.html', context=context)
 
-@login_required
+@external_user_required
 def submit_survey(request, survey_id):
     if request.method == 'POST':
         try:

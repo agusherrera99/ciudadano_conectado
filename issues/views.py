@@ -1,13 +1,13 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.urls import reverse
 
+from core.decorators import external_user_required
 from .models import Issue, IssueUpdate
 
 # Create your views here.
 
-@login_required
+@external_user_required
 def issues(request):
     user_issues = Issue.objects.filter(user=request.user)
     issues = Issue.objects.all().order_by('-votes_count').exclude(user=request.user)[:5]
@@ -19,7 +19,7 @@ def issues(request):
     }
     return render(request, 'issues.html', context=context)
 
-@login_required
+@external_user_required
 def issue_detail(request, issue_id):
     issue = Issue.objects.filter(user=request.user, id=issue_id).first()
 
@@ -40,7 +40,7 @@ def issue_detail(request, issue_id):
 
     return render(request, 'issue_detail.html', context=context)
 
-@login_required
+@external_user_required
 def create_issue(request):
     if request.method == 'POST':
         try:
@@ -64,7 +64,7 @@ def create_issue(request):
             return JsonResponse({'status': False, 'error': str(e)})
     return JsonResponse({'status': False, 'error': 'Método no permitido'})
 
-@login_required
+@external_user_required
 def vote_issue(request, issue_id):
     if request.method == 'POST':
         try:

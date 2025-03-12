@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import TemplateView
 
+from core.decorators import external_user_required
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -11,7 +12,7 @@ class HomePageView(TemplateView):
 def panel(request):
     return render(request, 'panel.html')
 
-@login_required
+@external_user_required
 def participation(request):
     context = {
         'url_link': reverse('pages:panel')
@@ -24,7 +25,7 @@ def transparency(request):
     }
     return render(request, 'transparency.html', context=context)
 
-@login_required
+@external_user_required
 def comunication(request):
     context = {
         'url_link': reverse('pages:panel')
