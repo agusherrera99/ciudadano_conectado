@@ -58,7 +58,7 @@ class Issue(models.Model):
             self.save(update_fields=['votes_count'])
 
     def __str__(self):
-        return f"Issue: #{self.uuid}"
+        return f"Solicitud #{self.uuid}"
     
     def save(self, *args, **kwargs):
         self.description = self.description.lower().strip()
@@ -87,7 +87,7 @@ class IssueUpdate(models.Model):
     status = models.CharField(max_length=20, choices=Issue.STATUS_CHOICES, default='pendiente')
 
     def __str__(self):
-        return f"Issue Update: #{self.id} - Issue: {self.issue.uuid}"
+        return f"Actualización de solicitud #{self.id} - Solicitud #{self.issue.uuid}"
     
     def save(self, *args, **kwargs):
         self.description = self.description.lower().strip()

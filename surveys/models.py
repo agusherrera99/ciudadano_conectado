@@ -21,7 +21,7 @@ class Survey(models.Model):
     pollster = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='pollster', blank=True, null=True, verbose_name='Encuestador')
 
     def __str__(self):
-        return self.name
+        return f"Ecuesta #{self.id}"
     
     def save(self, *args, **kwargs):
         self.name = self.name.lower().strip()
@@ -78,7 +78,7 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     
     def __str__(self):
-        return self.answer_text
+        return f"Respuesta de {self.user} a {self.question}: {self.answer_text}"
     
     def save(self, *args, **kwargs):
         self.answer_text = self.answer_text.lower().strip()

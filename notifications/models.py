@@ -17,4 +17,4 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de Creación')
 
     def __str__(self):
-        return f"Notification: #{self.id} - User: {self.user.username}"
+        return f"Notificación #{self.id}"
