@@ -5,11 +5,11 @@ from django.utils import timezone
 # Create your models here.
 
 class CustomUser(AbstractUser):
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    dni = models.CharField(max_length=20, blank=True, null=True)
-    created_at = models.DateTimeField(default=timezone.now)
-    updated_at = models.DateTimeField(default=timezone.now)
+    phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='Teléfono')
+    address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Dirección')
+    dni = models.CharField(max_length=20, blank=True, null=True, verbose_name='DNI')
+    created_at = models.DateTimeField(default=timezone.now, verbose_name='Fecha de creación')
+    updated_at = models.DateTimeField(default=timezone.now, verbose_name='Fecha de actualización')
     groups = models.ManyToManyField(
         'auth.Group', 
         related_name='customuser_set',  # Added a unique related_name
@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
         related_name='customuser_permission_set',  # Added a unique related_name
         blank=True
     )
-    internal_user = models.BooleanField(default=False)
+    internal_user = models.BooleanField(default=False, verbose_name='Usuario interno')
 
     def __str__(self):
         return self.username
