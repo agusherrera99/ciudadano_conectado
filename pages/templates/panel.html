@@ -14,30 +14,40 @@
 
     <main class="dashboard">
         <section class="module-grid">
-            <!-- Participación Ciudadana -->
-            <a href="{% url 'pages:participation' %}" class="module-card">
-                <h2 class="module-title">Participación Ciudadana</h2>
-                <p class="module-desc">
-                    Envíe solicitudes, participe en encuestas y colaboré para influir en las decisiones locales.
-                </p>
-            </a>
+            {% if request.user.is_internal %}
+                <!-- Ordenamiento Urbano -->
+                <a class="module-card">
+                    <h2 class="module-title">Ordenamiento Urbano</h2>
+                    <p class="module-desc">
+                        Administración y regulación del entorno urbano.
+                    </p>
+                </a>
+            {% else %}
+                <!-- Participación Ciudadana -->
+                <a href="{% url 'pages:participation' %}" class="module-card">
+                    <h2 class="module-title">Participación Ciudadana</h2>
+                    <p class="module-desc">
+                        Envíe solicitudes, participe en encuestas y colaboré para influir en las decisiones locales.
+                    </p>
+                </a>
 
-            <!-- Transparencia -->
-            <a href="{% url 'pages:transparency' %}" class="module-card">
-                <h2 class="module-title">Transparencia</h2>
-                <p class="module-desc">
-                    Visualice datos y estadísticas sobre solicitudes, presupuestos, cumplimientos, obras y servicios públicos.
-                </p>
-            </a>
+                <!-- Transparencia -->
+                <a href="{% url 'pages:transparency' %}" class="module-card">
+                    <h2 class="module-title">Transparencia</h2>
+                    <p class="module-desc">
+                        Visualice datos y estadísticas sobre solicitudes, presupuestos, cumplimientos, obras y servicios públicos.
+                    </p>
+                </a>
 
-            <!-- Información y Comunicación -->
-            <a class="module-card inactive">
-                <span class="development-badge">En desarrollo</span>
-                <h2 class="module-title">Información y Comunicación</h2>
-                <p class="module-desc">
-                    Consulte noticias, eventos y reuniones de interés público.
-                </p>
-            </a>
+                <!-- Información y Comunicación -->
+                <a class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Información y Comunicación</h2>
+                    <p class="module-desc">
+                        Consulte noticias, eventos y reuniones de interés público.
+                    </p>
+                </a>
+            {% endif %}
         </section>
     </main>
 </body>

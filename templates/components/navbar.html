@@ -3,10 +3,10 @@
 <link rel="stylesheet" href="{% static 'css/components/navbar.css' %}">
 
 <header>
-    <nav class="{% if request.user.internal_user %} internal-nav {% endif %}">
+    <nav class="{% if request.user.is_internal %} internal-nav {% endif %}">
         <div class="nav-left">
             {% if request.user.is_authenticated %}
-                {% if request.user.internal_user %}
+                {% if request.user.is_internal %}
                     <a class="nav-logo" href="{% url 'pages:panel' %}">
                         <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadanos Conectados" class="logo mobile-hide">
                         <span class="site-name">Ciudadanos Conectados - Interno</span>
