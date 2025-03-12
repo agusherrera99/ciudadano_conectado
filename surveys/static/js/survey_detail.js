@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const surveyId = surveyForm.getAttribute('data-survey-id');
             
             // Enviar los datos al servidor
-            await fetch(`/surveys/${surveyId}/submit/`, {
+            await fetch(`/encuestas/${surveyId}/enviar/`, {
                 method: 'POST',
                 body: formData,
                 headers: {

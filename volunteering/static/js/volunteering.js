@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData(this);
             
             // Enviar el formulario
-            fetch('/volunteering/apply/', {
+            fetch('/voluntariados/aplicar/', {
                 method: 'POST',
                 body: formData,
                 headers: {

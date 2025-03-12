@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = new FormData();
             formData.append('action', action);
     
-            fetch(`/issues/${issueId}/vote/`, {
+            fetch(`/solicitudes/${issueId}/votar/`, {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         const formData = new FormData(this);
-        fetch('/issues/create/', {
+        fetch('/solicitudes/crear/', {
             method: 'POST',
             body: formData,
             headers: {

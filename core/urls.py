@@ -19,11 +19,11 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('account.urls', namespace='account')),
+    path('cuenta/', include('account.urls', namespace='account')),
     path('account/', include('django.contrib.auth.urls')),
     path('', include('pages.urls')),
-    path('notifications/', include('notifications.urls', namespace='notifications')),
-    path('issues/', include('issues.urls', namespace='issues')),
-    path('surveys/', include('surveys.urls', namespace='surveys')),
-    path('volunteering/', include('volunteering.urls', namespace='volunteering')),
+    path('notificaciones/', include('notifications.urls', namespace='notifications')),
+    path('solicitudes/', include('issues.urls', namespace='issues')),
+    path('encuestas/', include('surveys.urls', namespace='surveys')),
+    path('voluntariados/', include('volunteering.urls', namespace='volunteering')),
 ]

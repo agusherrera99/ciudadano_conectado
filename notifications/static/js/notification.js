@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             // Enviar solicitud al servidor para marcar como leída
-            fetch(`/notifications/mark-read/${notificationId}/`, {
+            fetch(`/notificaciones/marcar-como-leida/${notificationId}/`, {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': getCookie('csrftoken'),
