@@ -1,5 +1,6 @@
 from django.db import models
 
+from account.models import InternalUser
 # Create your models here.
 class Ordering(models.Model):
     class Meta:
@@ -35,8 +36,9 @@ class Ordering(models.Model):
     priority = models.CharField(max_length=60, choices=PRIORITY_CHOICES, default='alta', verbose_name='Prioridad')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    manager = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='ordering_manager', blank=True, null=True, verbose_name='Gestor')
-    responsible = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='responsible', blank=True, null=True, verbose_name='Responsable')
+    manager = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_manager', blank=True, null=True, verbose_name='Gestor')
+    inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='Inspector')
+    operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')
 
     latitude = models.FloatField(null=True, blank=True, verbose_name='Latitud')
     longitude = models.FloatField(null=True, blank=True, verbose_name='Longitud')
@@ -47,6 +49,13 @@ class Ordering(models.Model):
     
     def save(self, *args, **kwargs):
         self.description = self.description.lower().strip()
+
+        if not self.manager:
+            try:
+                self.manager = InternalUser.objects.get(department__name='corralon_municipal', position__name='gestor')
+            except InternalUser.DoesNotExist:
+                # Manejar el caso donde no existe un gestor por defecto
+                pass
 
         if not self.uuid:
             if self.category == 'escombros':
@@ -76,7 +85,6 @@ class OrderingUpdate(models.Model):
     status = models.CharField(max_length=60, choices=Ordering.STATUS_CHOICES, default='pendiente', verbose_name='Estado')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    responsible = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='responsible_updates', blank=True, null=True, verbose_name='Responsable')
 
     def __str__(self):
         return f"Actualización de ordenamiento #{self.id}"
