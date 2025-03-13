@@ -157,10 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status) {
-                location.reload();  // Recargar para ver la nueva solicitud
+                location.reload();
             } else {
                 console.error('Error al enviar solicitud:', data.error);
-                alert('Error al enviar la solicitud: ' + data.error);
+                alert('Error al enviar la solicitud');
             }
         })
         .catch(error => {

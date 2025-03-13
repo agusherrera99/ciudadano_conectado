@@ -7,12 +7,12 @@ class Ordering(models.Model):
         verbose_name_plural = 'Ordenamientos'
 
     CATEGORY_CHOICES = (
-        ('escrombros', 'Escombros'),
+        ('escombros', 'Escombros'),
         ('ramas', 'Ramas'),
         ('malezas', 'Malezas'),
         ('residuos', 'Residuos'),
         ('vehiculos abandonados', 'Vehículos abandonados'),
-        ('terrenos baldíos', 'Terrenos baldíos'),
+        ('terrenos baldios', 'Terrenos baldios'),
         ('otro', 'Otro'),
     )
 
@@ -49,20 +49,20 @@ class Ordering(models.Model):
         self.description = self.description.lower().strip()
 
         if not self.uuid:
-            if self.category == 'escrombros':
-                self.uuid = 'ESC' + str(Ordering.objects.filter(category='escrombros').count() + 1).zfill(4)
+            if self.category == 'escombros':
+                self.uuid = 'ESC' + str(Ordering.objects.filter(category='escombros').count() + 1)
             elif self.category == 'ramas':
-                self.uuid = 'RAM' + str(Ordering.objects.filter(category='ramas').count() + 1).zfill(4)
+                self.uuid = 'RAM' + str(Ordering.objects.filter(category='ramas').count() + 1)
             elif self.category == 'malezas':
-                self.uuid = 'MAL' + str(Ordering.objects.filter(category='malezas').count() + 1).zfill(4)
+                self.uuid = 'MAL' + str(Ordering.objects.filter(category='malezas').count() + 1)
             elif self.category == 'residuos':
-                self.uuid = 'RES' + str(Ordering.objects.filter(category='residuos').count() + 1).zfill(4)
+                self.uuid = 'RES' + str(Ordering.objects.filter(category='residuos').count() + 1)
             elif self.category == 'vehiculos abandonados':
-                self.uuid = 'VAB' + str(Ordering.objects.filter(category='vehiculos abandonados').count() + 1).zfill(4)
-            elif self.category == 'terrenos baldíos':
-                self.uuid = 'TER' + str(Ordering.objects.filter(category='terrenos baldíos').count() + 1).zfill(4)
+                self.uuid = 'VAB' + str(Ordering.objects.filter(category='vehiculos abandonados').count() + 1)
+            elif self.category == 'terrenos baldios':
+                self.uuid = 'TER' + str(Ordering.objects.filter(category='terrenos baldios').count() + 1)
             else:
-                self.uuid = 'OTR' + str(Ordering.objects.filter(category='otro').count() + 1).zfill(4)
+                self.uuid = 'OTR' + str(Ordering.objects.filter(category='otro').count() + 1)
 
         super(Ordering, self).save(*args, **kwargs)
 
