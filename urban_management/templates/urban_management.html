@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenamiento Urbano</title>
+    <link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesomefree.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/urban_management.css' %}">
+</head>
+<body>
+    {% include 'components/navbar.html' %}
+
+    <main>
+        {% include 'components/back_button.html' with url_link=url_link back_name='a Panel' %}
+    </main>
+</body>
+</html>

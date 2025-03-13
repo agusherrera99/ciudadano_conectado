@@ -16,7 +16,7 @@
         <section class="module-grid">
             {% if request.user.is_internal %}
                 <!-- Ordenamiento Urbano -->
-                <a class="module-card">
+                <a href="{% url 'urban_management:urban_management' %}" class="module-card">
                     <h2 class="module-title">Ordenamiento Urbano</h2>
                     <p class="module-desc">
                         Administración y regulación del entorno urbano.
