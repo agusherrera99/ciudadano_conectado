@@ -6,4 +6,4 @@ def urban_management(request):
     context = {
         'url_link': reverse('pages:panel')
     }
-    return render(request, 'urban_management.html')
+    return render(request, 'urban_management.html', context=context)
