@@ -60,6 +60,22 @@
     --status-resolved-text: #155724;
     --status-resolved-dot: #28a745;
 
+    /* Colores para banners de alerta */
+    --alert-info-bg: #d1ecf1;
+    --alert-info-text: #0c5460;
+    --alert-info-icon: #0c5460;
+    --alert-info-border: #bee5eb;  
+
+    --alert-warning-bg: #fff3cd;
+    --alert-warning-text: #856404;
+    --aler-warning-icon: #856404;
+    --alert-warning-border: #ffeeba;
+
+    --alert-danger-bg: #f8d7da;
+    --alert-danger-text: #721c24;
+    --alert-danger-icon: #721c24;
+    --alert-danger-border: #f5c6cb;
+
     /* Sombra */
     --shadow-color: rgba(0, 0, 0, 0.1);
 }

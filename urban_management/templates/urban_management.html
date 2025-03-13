@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordenamiento Urbano</title>
-    <link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesomefree.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'fontawesomefree/css/fontawesome.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'fontawesomefree/css/solid.css' %}" type="text/css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
     <link rel="stylesheet" href="{% static 'css/urban_management.css' %}">
@@ -21,7 +21,14 @@
                 <h1 class="ordering-title">Gestión de Ordenamientos Urbanos</h1>
                 
                 <div class="ordering-content">
-                    <button id="new-order-btn" class="btn btn-primary" aria-label="Nuevo Ordenamiento">Nuevo Ordenamiento</button>
+                    {% if is_inspector %}
+                        <button id="new-order-btn" class="btn btn-primary" aria-label="Nuevo Ordenamiento">Nuevo Ordenamiento</button>
+                    {% else %}
+                        <div class="no-permission-banner">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Solo los inspectores autorizados pueden crear nuevas órdenes de ordenamiento urbano.</p>
+                        </div>
+                    {% endif %}
 
                     <div id="new-order-form" class="hidden">
                         <h3>Crear Nuevo Ordenamiento</h3>

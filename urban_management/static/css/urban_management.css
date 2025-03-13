@@ -34,6 +34,29 @@ section {
     margin-bottom: 1rem;
 }
 
+/* Banner */
+/* rojo */
+.no-permission-banner {
+    background-color: var(--alert-info-bg);
+    border-left: 4px solid var(--alert-info-border);
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.no-permission-banner i {
+    font-size: 1.5rem;
+    color: var(--alert-info-icon);
+}
+
+.no-permission-banner p {
+    margin: 0;
+    color: var(--alert-info-text);
+}
+
 /* Form */
 #new-order-form {
     border-top: 1px solid var(--accent);
