@@ -132,9 +132,11 @@ class Volunteer(models.Model):
 
     user = models.ForeignKey('account.ExternalUser', on_delete=models.CASCADE, verbose_name='Usuario')
     volunteering = models.ForeignKey(Volunteering, on_delete=models.CASCADE, verbose_name='Voluntariado')
+    
     availability = models.CharField(max_length=100, blank=True, default='', verbose_name='Disponibilidad')
     skills = models.TextField(blank=True, null=True, verbose_name='Habilidades')
     motivation = models.TextField(blank=True, null=True, verbose_name='Motivación')
+    
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
 
     def __str__(self):

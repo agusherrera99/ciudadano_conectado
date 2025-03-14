@@ -151,6 +151,7 @@ section {
     height: 100%;
     display: flex;
     flex-direction: column;
+    min-width: 280px; /* Ancho mínimo base para todas las tarjetas */
 }
 
 .card-badge {
@@ -523,7 +524,21 @@ select {
     .enrollment-counter i {
         font-size: 0.8rem;
     }
+
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: 1fr; /* Una columna en dispositivos muy pequeños */
+        gap: 1.25rem;
+    }
+    
+    .volunteering-card {
+        min-width: 250px; /* Ancho mínimo para celulares pequeños */
+        width: 100%; /* Ocupar todo el ancho disponible */
+        margin: 0 auto; /* Centrar la tarjeta */
+        max-width: 100%; /* No permitir que se desborde */
+    }
 }
+
 /* Ajustes de orientación para dispositivos móviles */
 @media (max-width: 768px) and (orientation: landscape) {
     .volunteering-grid,
@@ -636,6 +651,24 @@ select {
     .form-actions .btn {
         width: 100%;
     }
+
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+    
+    .volunteering-card {
+        min-width: 280px; /* Ancho mínimo para celulares medianos */
+    }
+    
+    /* Ajuste especial para orientación horizontal en móviles */
+    @media (orientation: landscape) {
+        .volunteering-grid,
+        .enrollments-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 }
 
 /* Tablets medianas */
@@ -660,6 +693,15 @@ select {
     .section {
         padding: 1.75rem;
     }
+
+    .volunteering-grid,
+    .enrollments-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    
+    .volunteering-card {
+        min-width: 300px; /* Ancho mínimo para tablets */
+    }
 }
 
 /* Pantallas grandes */
@@ -671,6 +713,10 @@ select {
     
     .benefits-grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .volunteering-card {
+        min-width: 330px; /* Ancho mínimo para tablets */
     }
 }
 
@@ -687,5 +733,9 @@ select {
     
     .benefits-grid {
         grid-template-columns: repeat(4, 1fr);
+    }
+
+    .volunteering-card {
+        min-width: 360px; /* Ancho mínimo para tablets */
     }
 }

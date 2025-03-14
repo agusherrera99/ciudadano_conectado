@@ -52,7 +52,7 @@ def apply_volunteering(request):
             availability_values = request.POST.getlist('availability')
             availability_str = '-'.join(availability_values)
 
-            external_user = ExternalUser.objects.get(user=request.user.id)
+            external_user = ExternalUser.objects.get(id=request.user.id)
             volunteer = Volunteer.objects.create(
                 user=external_user,
                 volunteering=volunteering,

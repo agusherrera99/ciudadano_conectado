@@ -123,6 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(data => {
                 if (data.status) {
+                    volunteerForm.reset();
                     location.reload();
                 } else {
                     console.error("Error en respuesta:", data.message);
