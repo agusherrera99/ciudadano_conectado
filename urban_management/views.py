@@ -2,33 +2,13 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from account.models import InternalUser
-from core.decorators import internal_user_required
-from urban_management.models import Ordering
+from core.decorators import position_required
+from urban_management.models import InternalUser, Ordering
 
-# Create your views here.
-def get_inspector_user(user):
-    """
-    Verifica si un usuario es un inspector interno.
-    Retorna (internal_user, is_inspector)
-    """
-    internal_user = None
-    is_inspector = False
-    
-    if user.is_authenticated:
-        try:
-            internal_user = InternalUser.objects.get(id=user.id)
-            if internal_user.position and internal_user.position.name == 'inspector':
-                is_inspector = True
-        except InternalUser.DoesNotExist:
-            pass
-            
-    return internal_user, is_inspector
-
-@internal_user_required
+@position_required('inspector')
 def urban_management(request):
     orderings = Ordering.objects.all().order_by('-priority', 'created_at')
-    internal_user, is_inspector = get_inspector_user(request.user)
+    is_inspector = request.user.specific_instance.position.name == 'inspector'
     
     context = {
         'url_link': reverse('pages:panel'),
@@ -37,13 +17,18 @@ def urban_management(request):
     }
     return render(request, 'urban_management.html', context=context)
 
+@position_required('inspector')
 def create_order(request):
-    internal_user, is_inspector = get_inspector_user(request.user)
-
+    is_internal = request.user.is_internal
+    if not is_internal:
+        return JsonResponse({'status': False, 'message': 'No tienes permisos para realizar esta acción'}, status=403)
+    
+    is_inspector = request.user.specific_instance.position.name == 'inspector'
     if not is_inspector:
         return JsonResponse({'status': False, 'message': 'No tienes permisos para realizar esta acción'}, status=403)
 
     if request.method == 'POST':
+        internal_user = InternalUser.objects.get(id=request.user.id)
         try:
             ordering = Ordering.objects.create(
                 category=request.POST['category'],

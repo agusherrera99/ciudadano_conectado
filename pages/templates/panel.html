@@ -15,13 +15,15 @@
     <main class="dashboard">
         <section class="module-grid">
             {% if request.user.is_internal %}
-                <!-- Ordenamiento Urbano -->
-                <a href="{% url 'urban_management:urban_management' %}" class="module-card">
-                    <h2 class="module-title">Ordenamiento Urbano</h2>
-                    <p class="module-desc">
-                        Administración y regulación del entorno urbano.
-                    </p>
-                </a>
+                {% if request.user.specific_instance.position.name == 'inspector' %}
+                    <!-- Ordenamiento Urbano -->
+                    <a href="{% url 'urban_management:urban_management' %}" class="module-card">
+                        <h2 class="module-title">Ordenamiento Urbano</h2>
+                        <p class="module-desc">
+                            Administración y regulación del entorno urbano.
+                        </p>
+                    </a>
+                {% endif %}
             {% else %}
                 <!-- Participación Ciudadana -->
                 <a href="{% url 'pages:participation' %}" class="module-card">
