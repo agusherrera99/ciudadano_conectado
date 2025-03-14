@@ -1,0 +1,146 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+    #map-container {
+        margin: 20px 0;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    #map {
+        height: 400px;
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+{% block after_field_sets %}
+{{ block.super }}
+<div id="map-container">
+    <h3>Ubicación Geográfica</h3>
+    <div id="map"></div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Extraer coordenadas del DOM de forma más robusta
+        function extractCoordinates() {
+            try {
+                // Obtener el campo de latitud
+                const fieldLatitude = document.querySelector('.field-latitude');
+                if (!fieldLatitude) return null;
+                
+                // Extraer el valor del texto readonly o del input
+                let latValue;
+                const latReadOnly = fieldLatitude.querySelector('.readonly');
+                const latInput = fieldLatitude.querySelector('input');
+                
+                if (latReadOnly) {
+                    latValue = latReadOnly.textContent.trim();
+                } else if (latInput) {
+                    latValue = latInput.value.trim();
+                } else {
+                    return null;
+                }
+                
+                // Obtener el campo de longitud
+                const fieldLongitude = document.querySelector('.field-longitude');
+                if (!fieldLongitude) return null;
+                
+                // Extraer el valor del texto readonly o del input
+                let lngValue;
+                const lngReadOnly = fieldLongitude.querySelector('.readonly');
+                const lngInput = fieldLongitude.querySelector('input');
+                
+                if (lngReadOnly) {
+                    lngValue = lngReadOnly.textContent.trim();
+                } else if (lngInput) {
+                    lngValue = lngInput.value.trim();
+                } else {
+                    return null;
+                }
+                
+                // CORRECCIÓN: Reemplazar comas por puntos antes de convertir a número
+                latValue = latValue.replace(',', '.');
+                lngValue = lngValue.replace(',', '.');
+                
+                // Convertir a números
+                const lat = parseFloat(latValue);
+                const lng = parseFloat(lngValue);
+                
+                if (isNaN(lat) || isNaN(lng)) return null;
+                
+                return { lat, lng };
+            } catch (error) {
+                console.error("Error al extraer coordenadas:", error);
+                return null;
+            }
+        }
+        
+        // Extraer dirección del DOM de forma más robusta
+        function extractAddress() {
+            try {
+                const fieldAddress = document.querySelector('.field-address');
+                if (!fieldAddress) return "";
+                
+                const addressReadOnly = fieldAddress.querySelector('.readonly');
+                const addressInput = fieldAddress.querySelector('input');
+                
+                if (addressReadOnly) {
+                    return addressReadOnly.textContent.trim();
+                } else if (addressInput) {
+                    return addressInput.value.trim();
+                } else {
+                    return "";
+                }
+            } catch (error) {
+                return "";
+            }
+        }
+
+        // Inicializar mapa
+        function initMap() {
+            // Obtener coordenadas
+            const coords = extractCoordinates();
+            if (!coords) {
+                // Ocultar el contenedor del mapa si no hay coordenadas
+                document.getElementById('map-container').style.display = 'none';
+                return;
+            }
+            
+            const address = extractAddress();
+            
+            // Crear mapa centrado en las coordenadas
+            const map = L.map('map').setView([coords.lat, coords.lng], 16);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        
+            // Añadir marcador
+            L.marker([coords.lat, coords.lng]).addTo(map)
+                .bindPopup(`
+                    <strong>Dirección:</strong> ${address}<br>
+                    <strong>Coordenadas:</strong> ${coords.lat}, ${coords.lng}
+                `);
+            
+            // Deshabilitar zoom por rueda y arrastre para hacerlo de solo visualización
+            map.scrollWheelZoom.disable();
+            map.dragging.disable();
+            map.touchZoom.disable();
+            map.doubleClickZoom.disable();
+            map.boxZoom.disable();
+            map.keyboard.disable();
+            if (map.tap) map.tap.disable();
+        }
+
+        // Esperar un momento para asegurar que DOM esté completamente cargado
+        setTimeout(initMap, 300);
+    });
+</script>
+{% endblock %}
