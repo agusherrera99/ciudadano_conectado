@@ -24,9 +24,11 @@
                 </a>
             {% endif %}
         </div>
-        <div class="nav-right">
-            {% include 'components/notifications_button.html' %}
-            {% include 'components/user_badge.html' %}
-        </div>
+        {% if request.user.is_authenticated %}
+            <div class="nav-right">
+                {% include 'components/notifications_button.html' %}
+                {% include 'components/user_badge.html' %}
+            </div>
+        {% endif %}
     </nav>
 </header>
