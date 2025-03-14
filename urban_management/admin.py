@@ -19,6 +19,8 @@ class OrderingManagerForm(ModelForm):
 
 @admin.register(Ordering)
 class OrderingAdmin(admin.ModelAdmin):
+    change_form_template = 'admin/urban_management/ordering/change_form.html'
+
     list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'manager', 'operator')
     list_filter = ('category', 'status', 'priority', 'manager', 'operator')
     search_fields = ('uuid', 'description', 'manager__username', 'operator__username')
@@ -126,6 +128,13 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         if obj is None:
             return []
         
+
+        if obj.ordering.operator.id == request.user.id:
+            editable_fields = ['description', 'status']
+            all_fields = [field.name for field in self.model._meta.fields 
+                         if field.name not in ['id', 'updated_at']]
+            return [f for f in all_fields if f not in editable_fields]
+
         # Para otros usuarios, todo es readonly
         return [field.name for field in self.model._meta.fields]
     
@@ -139,3 +148,11 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
             Q(ordering__manager=request.user) |
             Q(ordering__operator=request.user)
         )
+    
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+
+        if 'status' in form.changed_data:
+            order = obj.ordering
+            order.status = obj.status
+            order.save()
