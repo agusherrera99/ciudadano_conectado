@@ -72,15 +72,21 @@ def create_issue(request):
 
 @external_user_required
 def vote_issue(request, issue_id):
+    is_external = request.user.is_external
+    if not is_external:
+        return JsonResponse({'status': False, 'error': 'No tienes permisos para realizar esta acción'}, status=403)
+    
     if request.method == 'POST':
         try:
+            external_user = ExternalUser.objects.get(id=request.user.id)
+
             issue = Issue.objects.get(id=issue_id)
             action = request.POST.get('action')
 
             if action == 'up':
-                issue.add_vote(request.user)
+                issue.add_vote(external_user)
             elif action == 'down':
-                issue.remove_vote(request.user)
+                issue.remove_vote(external_user)
 
             issue.refresh_from_db()
             votes_count = issue.votes_count
