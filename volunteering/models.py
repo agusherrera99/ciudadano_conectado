@@ -29,6 +29,7 @@ class Places(models.Model):
 
 class VolunteerCategory(models.Model):
     class Meta:
+        verbose_name = "Categoría de voluntariado"
         verbose_name_plural = "Categorías de voluntariado"
 
     name = models.CharField(max_length=100, verbose_name='Nombre')
@@ -61,10 +62,13 @@ class Volunteering(models.Model):
 
     title = models.CharField(max_length=100, verbose_name='Título')
     description = models.TextField(verbose_name='Descripción')
+    
     days = models.ManyToManyField(Day, verbose_name='Días')
     hours = models.IntegerField(verbose_name='Horas')
+    
     place = models.ForeignKey(Places, on_delete=models.CASCADE, verbose_name='Lugar')
     images = models.ImageField(upload_to="volunteering", blank=True, null=True, verbose_name='Imágenes')
+    
     category = models.ForeignKey(VolunteerCategory, on_delete=models.CASCADE, verbose_name='Categoría')
     icon = models.CharField(
         max_length=30, 
@@ -72,6 +76,7 @@ class Volunteering(models.Model):
         default='fa-heart', 
         verbose_name='Icono',
         help_text='Icono de FontAwesome para mostrar en la tarjeta'
+    
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
@@ -125,7 +130,7 @@ class Volunteer(models.Model):
         verbose_name_plural = 'Voluntarios'
         ordering = ['id']
 
-    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, verbose_name='Usuario')
+    user = models.ForeignKey('account.ExternalUser', on_delete=models.CASCADE, verbose_name='Usuario')
     volunteering = models.ForeignKey(Volunteering, on_delete=models.CASCADE, verbose_name='Voluntariado')
     availability = models.CharField(max_length=100, blank=True, default='', verbose_name='Disponibilidad')
     skills = models.TextField(blank=True, null=True, verbose_name='Habilidades')

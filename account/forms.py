@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 
+from account.models import ExternalUser
+
 class UserRegisterForm(forms.ModelForm):
     password1 = forms.CharField(
         label='Contraseña',
@@ -13,7 +15,7 @@ class UserRegisterForm(forms.ModelForm):
     )
 
     class Meta:
-        model = get_user_model()
+        model = ExternalUser
         fields = ['username', 'email', 'first_name', 'last_name', 'dni', 'phone_number', 'address']
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),

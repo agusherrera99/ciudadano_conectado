@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.json();
             })
             .then(data => {
-                if (data.status === 'success') {
+                if (data.status) {
                     location.reload();
                 } else {
                     console.error("Error en respuesta:", data.message);
