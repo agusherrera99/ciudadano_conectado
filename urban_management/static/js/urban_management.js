@@ -93,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status) {
-                location.reload();
                 orderForm.reset();
+                location.reload();
             } else {
                 console.error('Error al enviar ordenamiento:', data.error);
                 alert('Error al enviar la solicitud');

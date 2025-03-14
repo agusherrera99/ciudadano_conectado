@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 // Si fue exitoso, redirigir después de un tiempo
                 if (data.status) {
+                    surveyForm.reset();
                     location.reload();
                 } else {
                     // Restaurar el botón si hay error

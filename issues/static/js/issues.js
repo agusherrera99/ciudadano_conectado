@@ -157,8 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.status) {
-                location.reload();
                 requestForm.reset();
+                location.reload();
             } else {
                 alert('Error al enviar la solicitud');
             }
