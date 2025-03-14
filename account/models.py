@@ -113,6 +113,7 @@ class InternalUser(CustomUser):
         return f"{self.username} ({self.department.name} - {self.position.name})"
     
     def save(self, *args, **kwargs):
+        self.is_external = False
         self.is_internal = True
         self.is_staff = True
 
@@ -132,6 +133,9 @@ class ExternalUser(CustomUser):
     class Meta:
         verbose_name = 'Usuario externo'
         verbose_name_plural = 'Usuarios externos'
+
+    def __str__(self):
+        return self.username
     
     def save(self, *args, **kwargs):
         self.is_external = True

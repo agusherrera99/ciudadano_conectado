@@ -2,11 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 # Register your models here.
-from .models import CustomUser, InternalUser, Department, Position
+from .models import Department, ExternalUser, InternalUser,  Position
 
 
-@admin.register(CustomUser)
-class CustomUserAdmin(UserAdmin):
+@admin.register(ExternalUser)
+class ExternalUserAdmin(UserAdmin):
     list_display = [
         "username",
         "email",
@@ -15,12 +15,9 @@ class CustomUserAdmin(UserAdmin):
         "dni",
         "created_at",
         "updated_at",
-        "is_staff",
-        "is_internal",
-        "is_superuser"
     ]
     search_fields = ["username", "email", "phone_number", "address", "dni"]
-    list_filter = ["created_at", "updated_at", "is_staff", "is_internal", "is_superuser"]
+    list_filter = ["created_at", "updated_at"]
     ordering = ["created_at"]
     list_per_page = 25
     list_display_links = ["username"]
