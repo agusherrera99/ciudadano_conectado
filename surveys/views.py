@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 
 from account.models import ExternalUser
 from core.decorators import external_user_required
@@ -9,6 +10,15 @@ from .models import Answer, Survey, Question
 # Create your views here.
 @external_user_required
 def surveys(request):
+    # Actualizar estado de encuestas vencidas
+    expired_surveys = Survey.objects.filter(
+        status='activa',
+        end_date__lt=timezone.now()
+    )
+    
+    if expired_surveys.exists():
+        expired_surveys.update(status='finalizada')
+    
     surveys = Survey.objects.all()
     context = {
         'surveys': surveys,

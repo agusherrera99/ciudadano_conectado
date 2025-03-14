@@ -96,7 +96,7 @@ section {
 }
 
 .survey-status.active:before {
-    content: '\f254'; /* fa-hourglass */
+    content: '\f254';
 }
 
 .survey-status.completed {
@@ -105,7 +105,7 @@ section {
 }
 
 .survey-status.completed:before {
-    content: '\f058'; /* fa-check-circle */
+    content: '\f058';
 }
 
 .survey-description {

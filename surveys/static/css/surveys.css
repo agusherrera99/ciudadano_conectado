@@ -95,43 +95,37 @@ label {
 .survey-status {
     display: inline-flex;
     align-items: center;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 1rem;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     white-space: nowrap;
 }
 
+.survey-status:before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 0.5rem;
+}
+
 .survey-status.active {
-    background-color: rgba(46, 92, 138, 0.2);
+    background-color: rgba(46, 92, 138, 0.15);
     color: var(--primary);
 }
 
-.survey-status.active::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--primary);
-    margin-right: 6px;
+.survey-status.active:before {
+    content: '\f254';
 }
 
 .survey-status.completed {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: #155724;
+    background-color: rgba(40, 167, 69, 0.15);
+    color: var(--success);
 }
 
-.survey-status.completed::before {
-    content: '';
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #155724;
-    margin-right: 6px;
+.survey-status.completed:before {
+    content: '\f058';
 }
 
 .survey-description {

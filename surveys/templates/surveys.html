@@ -60,6 +60,7 @@
                                                     <span class="survey-status completed">Finalizada</span>
                                                 </div>
                                                 <p class="survey-description">{{survey.description|capfirst}}</p>
+                                                <span class="survey-deadline">Finalizada el: {{survey.end_date|date:"d-m-Y"}}</span>
                                                 <div class="survey-actions">
                                                     <div class="survey-action">
                                                         <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-secondary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>

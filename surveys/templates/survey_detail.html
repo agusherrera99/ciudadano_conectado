@@ -15,49 +15,65 @@
     <main>
         {% include 'components/back_button.html' with url_link=url_link back_name='a Encuestas' %}
         <section id="survey-detail">
-            <h2>Participar en Encuesta</h2>
+            <div class="survey-header">
+                <h2>Participar en Encuesta</h2>
+                <span class="survey-status {% if survey.status == 'activa' %}active{% else %}completed{% endif %}">
+                    {{ survey.status|capfirst }}
+                </span>
+            </div>
             <div class="survey-info">
                 <h3>{{survey.name|capfirst}}</h3>
                 <p class="survey-description">{{survey.description|capfirst}}</p>
-                <p class="survey-deadline">Fecha límite: {{survey.end_date|date:"d-m-Y"}}</p>
+                {% if survey.status == 'activa' %}
+                    <p class="survey-deadline">Fecha límite: {{survey.end_date|date:"d-m-Y"}}</p>
+                {% else %}
+                    <p class="survey-deadline">Finalizada el: {{survey.end_date|date:"d-m-Y"}}</p>
+                {% endif %}
+
             </div>
 
-            {% if already_answered %}
-                <div class="already_answered">
-                    <p>Ya has respondido a esta encuesta. Gracias por tu participación.</p>
-                </div>
+            {% if survey.status == 'activa' %}
+                {% if already_answered %}
+                    <div class="already_answered">
+                        <p>Ya has respondido a esta encuesta. Gracias por tu participación.</p>
+                    </div>
+                    <div class="survey-actions">
+                        <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-primary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
+                    </div>
+                {% else %}
+                    <form id="survey-form" method="POST" class="survey-form" data-survey-id="{{ survey.id }}">
+                        {% csrf_token %}
+                        
+                        {% if questions %}
+                            {% for question in questions %}
+                                <div class="form-group">
+                                    <label for="question-{{ question.id }}">Pregunta {{ forloop.counter }}: ¿{{ question.question_text|capfirst }}?</label>
+                                    
+                                    {% if question.question_type == 'predefinida' %}
+                                        <select id="question-{{ question.id }}" name="question-{{ question.id }}" required>
+                                            <option value="">Seleccione una opción</option>
+                                            {% for option in question.options.all %}
+                                                <option value="{{ option.id }}">{{ option.option_text|capfirst }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% else %}
+                                        <textarea id="question-{{ question.id }}" name="question-{{ question.id }}" rows="4" required></textarea>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>Esta encuesta no tiene preguntas disponibles.</p>
+                        {% endif %}
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
+                        </div>
+                    </form>
+                {% endif %}
+            {% else %}
                 <div class="survey-actions">
                     <a href="{% url 'surveys:survey_results' survey.id %}" class="btn btn-primary view-survey-results" aria-label="Ver resultados de consulta pública">Ver Resultados</a>
                 </div>
-            {% else %}
-                <form id="survey-form" method="POST" class="survey-form" data-survey-id="{{ survey.id }}">
-                    {% csrf_token %}
-                    
-                    {% if questions %}
-                        {% for question in questions %}
-                            <div class="form-group">
-                                <label for="question-{{ question.id }}">Pregunta {{ forloop.counter }}: ¿{{ question.question_text|capfirst }}?</label>
-                                
-                                {% if question.question_type == 'predefinida' %}
-                                    <select id="question-{{ question.id }}" name="question-{{ question.id }}" required>
-                                        <option value="">Seleccione una opción</option>
-                                        {% for option in question.options.all %}
-                                            <option value="{{ option.id }}">{{ option.option_text|capfirst }}</option>
-                                        {% endfor %}
-                                    </select>
-                                {% else %}
-                                    <textarea id="question-{{ question.id }}" name="question-{{ question.id }}" rows="4" required></textarea>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p>Esta encuesta no tiene preguntas disponibles.</p>
-                    {% endif %}
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Enviar Respuestas</button>
-                    </div>
-                </form>
             {% endif %}
         </section>
     </main>

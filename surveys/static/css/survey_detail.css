@@ -36,6 +36,60 @@ section {
     margin-bottom: 2rem;
 }
 
+.survey-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.survey-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.survey-status:before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 0.5rem;
+}
+
+.survey-status.active {
+    background-color: rgba(46, 92, 138, 0.15);
+    color: var(--primary);
+}
+
+.survey-status.active:before {
+    content: '\f254';
+}
+
+.survey-status.completed {
+    background-color: rgba(40, 167, 69, 0.15);
+    color: var(--success);
+}
+
+.survey-status.completed:before {
+    content: '\f058';
+}
+
+.survey-closed {
+    background-color: rgba(220, 53, 69, 0.15);
+    color: var(--danger);
+}
+
+.survey-closed:before {
+    content: '\f254';
+}
+
 .survey-description {
     margin-bottom: 1rem;
     color: var(--text);

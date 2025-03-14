@@ -1,9 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth import get_user_model
 from django.forms import BaseInlineFormSet
 from .models import Survey, Question, Option
 
-
+from account.models import ExternalUser
 from notifications.models import Notification
 
 class OptionInlineFormSet(BaseInlineFormSet):
@@ -40,13 +39,13 @@ class SurveyAdmin(admin.ModelAdmin):
     
     def save_model(self, request, obj, form, change):
         is_new = obj.pk is None  # Verificar si es una nueva actualización
-        if not change:
-            obj.pollster = request.user
+        if not change and request.user.is_internal:
+            obj.pollster = request.user.specific_instance
 
         super().save_model(request, obj, form, change)
         
         if is_new: 
-            users = get_user_model().objects.all().exclude(pk=request.user.pk)
+            users = ExternalUser.objects.all().exclude(pk=request.user.pk)
             # Crear notificaciones para los usuarios
             for user in users:
                 Notification.objects.create(
