@@ -13,7 +13,9 @@
     {% include 'components/navbar.html' %}
 
     <main class="dashboard">
-        {% include 'components/back_button.html' with url_link=url_link back_name='al Panel' %}
+        {% if request.user.is_authenticated %}
+            {% include 'components/back_button.html' with url_link=url_link back_name='al Panel' %}
+        {% endif %}
 
         <section class="module-grid">
             <!-- Centro Estadístico -->
