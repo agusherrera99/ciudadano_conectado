@@ -22,56 +22,54 @@
                 
                 <div class="ordering-content">
                     {% if is_inspector %}
-                        <button id="new-order-btn" class="btn btn-primary" aria-label="Nuevo Ordenamiento">Nuevo Ordenamiento</button>
+                        <div id="new-order-form">
+                            <h3>Crear Nuevo Ordenamiento</h3>
+                            <p>Por favor, complete el siguiente formulario para solicitar un nuevo ordenamiento.</p>
+
+                            <form id="order-form" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="category">Tipo de Ordenamiento</label>
+                                    <select name="category" id="category">
+                                        <option value="">Seleccione una categoría</option>
+                                        <option value="escombros">Escombros</option>
+                                        <option value="ramas">Ramas</option>
+                                        <option value="malezas">Malezas</option>
+                                        <option value="residuos">Residuos</option>
+                                        <option value="vehiculos abandonados">Vehiculos Abandonados</option>
+                                        <option value="terrenos baldios">Terrenos Baldíos</option>
+                                        <option value="otro">Otro</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Descripción</label>
+                                    <textarea name="description" id="description" cols="30" rows="10" required></textarea>
+                                </div>
+
+                                <div id="location-container" class="form-group">
+                                    <label for="location-map">Ubicación del ordenamiento</label>
+                                    <div id="location-map"></div>
+                                    <p class="map-helper">Indica la ubicación exacta del ordenamiento en el mapa.</p>
+                                    <div class="location-details">
+                                        <input id="latitude" name="latitude" type="hidden">
+                                        <input id="longitude" name="longitude" type="hidden">
+                                        <input id="address" name="address" placeholder="Dirección..." type="text" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button class="btn btn-primary" type="submit" aria-label="Enviar Solicitud">Enviar Solicitud</button>
+                                    <button id="cancel-order-btn" class="btn btn-secondary" type="button" aria-label="Cancelar Solicitud">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
                     {% else %}
                         <div class="no-permission-banner">
                             <i class="fas fa-info-circle"></i>
                             <p>Solo los inspectores autorizados pueden crear nuevas órdenes de ordenamiento urbano.</p>
                         </div>
                     {% endif %}
-
-                    <div id="new-order-form" class="hidden">
-                        <h3>Crear Nuevo Ordenamiento</h3>
-                        <p>Por favor, complete el siguiente formulario para solicitar un nuevo ordenamiento.</p>
-
-                        <form id="order-form" method="POST">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="category">Tipo de Ordenamiento</label>
-                                <select name="category" id="category">
-                                    <option value="">Seleccione una categoría</option>
-                                    <option value="escombros">Escombros</option>
-                                    <option value="ramas">Ramas</option>
-                                    <option value="malezas">Malezas</option>
-                                    <option value="residuos">Residuos</option>
-                                    <option value="vehiculos abandonados">Vehiculos Abandonados</option>
-                                    <option value="terrenos baldios">Terrenos Baldíos</option>
-                                    <option value="otro">Otro</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea name="description" id="description" cols="30" rows="10" required></textarea>
-                            </div>
-
-                            <div id="location-container" class="form-group hidden">
-                                <label for="location-map">Ubicación del ordenamiento</label>
-                                <div id="location-map"></div>
-                                <p class="map-helper">Indica la ubicación exacta del ordenamiento en el mapa.</p>
-                                <div class="location-details">
-                                    <input id="latitude" name="latitude" type="hidden">
-                                    <input id="longitude" name="longitude" type="hidden">
-                                    <input id="address" name="address" placeholder="Dirección..." type="text" readonly>
-                                </div>
-                            </div>
-
-                            <div class="form-actions">
-                                <button class="btn btn-primary" type="submit" aria-label="Enviar Solicitud">Enviar Solicitud</button>
-                                <button id="cancel-order-btn" class="btn btn-secondary" type="button" aria-label="Cancelar Solicitud">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </section>
         </div>

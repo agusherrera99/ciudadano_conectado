@@ -1,7 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Mapa para ubicación de reclamos
-    const locationContainer = document.getElementById('location-container');
-    
     let map = null;
     let marker = null;
 
@@ -66,21 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('address').value = 'No se pudo determinar la dirección';
             });
     }
+    initMap();
 
     // Formulario de nuevo ordenamiento
-    const newOrderBtn = document.getElementById('new-order-btn');
-    const newOrderForm = document.getElementById('new-order-form');
     const orderForm = document.getElementById('order-form');
-    
-    newOrderBtn.addEventListener('click', function() {
-        newOrderBtn.classList.toggle('hidden');
-        newOrderForm.classList.toggle('hidden');
-        
-        locationContainer.classList.remove('hidden');
-        initMap();
-        
-        orderForm.reset();
-    });
     
     // Enviar Nuevo Ordenamiento
     orderForm.addEventListener('submit', function(e) {
@@ -122,11 +109,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelOrderBtn = document.getElementById('cancel-order-btn');
 
     cancelOrderBtn.addEventListener('click', function() {
-        newOrderBtn.classList.toggle('hidden');
-        newOrderForm.classList.toggle('hidden');
-        
-        locationContainer.classList.add('hidden');
-        
         if (marker) {
             map.removeLayer(marker);
             marker = null;
