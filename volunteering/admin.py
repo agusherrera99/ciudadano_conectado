@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
-from django.contrib.auth import get_user_model
+
+from account.models import ExternalUser
 
 from .models import Places, Volunteer, Volunteering, VolunteerCategory
 from notifications.models import Notification
@@ -32,7 +33,7 @@ class VolunteeringAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
         if is_new:
-            users = get_user_model().objects.all().exclude(pk=request.user.pk)
+            users = ExternalUser.objects.all().exclude(pk=request.user.pk)
             for user in users:
                 Notification.objects.create(
                     user=user,
