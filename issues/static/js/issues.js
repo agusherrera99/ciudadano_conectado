@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             if (data.status) {
                 location.reload();
+                requestForm.reset();
             } else {
-                console.error('Error al enviar solicitud:', data.error);
                 alert('Error al enviar la solicitud');
             }
         })

@@ -32,10 +32,13 @@ class Ordering(models.Model):
     uuid = models.CharField(max_length=8, unique=True, blank=True)
     category = models.CharField(max_length=60, choices=CATEGORY_CHOICES, blank=True, verbose_name='Categoría')
     description = models.TextField(verbose_name='Descripción')
+    
     status = models.CharField(max_length=60, choices=STATUS_CHOICES, default='pendiente', verbose_name='Estado')
     priority = models.CharField(max_length=60, choices=PRIORITY_CHOICES, default='alta', verbose_name='Prioridad')
+    
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
+    
     manager = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_manager', blank=True, null=True, verbose_name='Gestor')
     inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='Inspector')
     operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')

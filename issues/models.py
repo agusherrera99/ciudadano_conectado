@@ -30,17 +30,20 @@ class Issue(models.Model):
     uuid = models.CharField(max_length=8, unique=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='otro', verbose_name='Categoría')
     description = models.TextField(verbose_name='Descripción')
+    
+    votes = models.ManyToManyField('account.ExternalUser', related_name='votes', blank=True, verbose_name='Votos')
+    votes_count = models.IntegerField(default=0, verbose_name='Cantidad de votos')
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente', verbose_name='Estado')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='baja', verbose_name='Prioridad')
+    
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
-    votes = models.ManyToManyField('account.CustomUser', related_name='votes', blank=True, verbose_name='Votos')
-    votes_count = models.IntegerField(default=0, verbose_name='Cantidad de votos')
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pendiente', verbose_name='Estado')
-    user = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='user', verbose_name='Usuario')
-    manager = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='manager', blank=True, null=True, verbose_name='Responsable')
-    assigned_to = models.ForeignKey('account.CustomUser', on_delete=models.CASCADE, related_name='assigned_to', blank=True, null=True, verbose_name='Asignado a')
-    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='baja', verbose_name='Prioridad')
+    
+    user = models.ForeignKey('account.ExternalUser', on_delete=models.CASCADE, related_name='issue_external_user', verbose_name='Usuario')
+    manager = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='issue_manager', blank=True, null=True, verbose_name='Gestor')
+    operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='issue_operator', blank=True, null=True, verbose_name='Operador')
 
-    # Campos para coordenadas geográficas
     latitude = models.FloatField(null=True, blank=True, verbose_name='Latitud')
     longitude = models.FloatField(null=True, blank=True, verbose_name='Longitud')
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Dirección')

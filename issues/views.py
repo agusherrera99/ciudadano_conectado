@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
+from account.models import ExternalUser
 from core.decorators import external_user_required
 from .models import Issue, IssueUpdate
 
@@ -42,12 +43,17 @@ def issue_detail(request, issue_id):
 
 @external_user_required
 def create_issue(request):
+    is_external = request.user.is_external
+    if not is_external:
+        return JsonResponse({'status': False, 'error': 'No tienes permisos para realizar esta acción'}, status=403)
+    
     if request.method == 'POST':
+        external_user = ExternalUser.objects.get(id=request.user.id)
         try:
             issue = Issue.objects.create(
                 category=request.POST['category'],
                 description=request.POST['description'],
-                user=request.user,
+                user=external_user,
                 votes_count=1,
             )
             
@@ -57,7 +63,7 @@ def create_issue(request):
                 issue.longitude = request.POST.get('longitude')
                 issue.address = request.POST.get('address', '')
                 
-            issue.votes.set([request.user])
+            issue.votes.set([external_user])
             issue.save()
             return JsonResponse({'status': True})
         except Exception as e:
