@@ -6,6 +6,8 @@ from django.utils import timezone
 
 class CustomUser(AbstractUser):
     is_internal = models.BooleanField(default=False, verbose_name='Usuario interno')
+    is_external = models.BooleanField(default=True, verbose_name='Usuario externo')
+
     phone_number = models.CharField(max_length=20, blank=True, null=True, verbose_name='Teléfono')
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Dirección')
     dni = models.CharField(max_length=20, blank=True, null=True, verbose_name='DNI')
@@ -21,6 +23,19 @@ class CustomUser(AbstractUser):
         related_name='customuser_permission_set',
         blank=True
     )
+
+    @property
+    def specific_instance(self):
+        """
+        Retorna la instancia específica del usuario.
+        (InternalUser o ExternalUser)
+        """
+        if self.is_internal:
+            return self.internaluser
+        elif self.is_external:
+            return self.externaluser
+        else:
+            return None
 
     def __str__(self):
         return self.username
@@ -112,3 +127,15 @@ class InternalUser(CustomUser):
             self.position = Position.objects.get_or_create(name='sin cargo')[0]
         
         return super(InternalUser, self).save(*args, **kwargs)
+
+class ExternalUser(CustomUser):
+    class Meta:
+        verbose_name = 'Usuario externo'
+        verbose_name_plural = 'Usuarios externos'
+    
+    def save(self, *args, **kwargs):
+        self.is_external = True
+        self.is_internal = False
+        self.is_staff = False
+        
+        return super(ExternalUser, self).save(*args, **kwargs)
