@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
+from account.models import ExternalUser
 from core.decorators import external_user_required
 from .models import Answer, Survey, Question
 
@@ -19,7 +20,8 @@ def surveys(request):
 def survey_detail(request, survey_id):
     survey = Survey.objects.get(pk=survey_id)
     questions = Question.objects.filter(survey=survey).all()
-    already_answered = Answer.objects.filter(question__survey=survey, user=request.user).exists()
+    external_user = ExternalUser.objects.get(pk=request.user.id)
+    already_answered = Answer.objects.filter(question__survey=survey, user=external_user).exists()
 
     context = {
         'survey': survey,
@@ -110,7 +112,15 @@ def survey_results(request, survey_id):
 
 @external_user_required
 def submit_survey(request, survey_id):
+    is_external = request.user.is_external
+    if not is_external:
+        return JsonResponse({'status': False, 'error': 'No tienes permisos para realizar esta acción'})
+
     if request.method == 'POST':
+        external_user = ExternalUser.objects.get(pk=request.user.id)
+        if Answer.objects.filter(user=external_user, question__survey_id=survey_id).exists():
+            return JsonResponse({'status': False, 'error': 'Ya has respondido esta encuesta'})
+        
         try:
             survey = Survey.objects.get(pk=survey_id)
             
@@ -121,7 +131,7 @@ def submit_survey(request, survey_id):
                 
                 # Guardar cada respuesta
                 Answer.objects.create(
-                    user=request.user,
+                    user=external_user,
                     question=question,
                     answer_text=answer_text
                 )
