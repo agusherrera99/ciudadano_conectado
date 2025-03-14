@@ -40,17 +40,13 @@
                             <span>Creado el {{issue.created_at|date:"d/m/Y H:i"}}</span>
                         </div>
                         <div class="metadata-item">
-                            <i class="fas fa-user"></i>
-                            <span>Por {{issue.user.username}}</span>
-                        </div>
-                        <div class="metadata-item">
                             <i class="fas fa-thumbs-up"></i>
-                            <span>{{issue.votes_count}} votos</span>
+                            <span>{{issue.votes_count}}</span>
                         </div>
                         {% if issue.manager %}
                         <div class="metadata-item">
                             <i class="fas fa-user-tie"></i>
-                            <span>Manager: {{issue.manager.username}}</span>
+                            <span>{{issue.operator.first_name}} {{issue.operator.last_name}}</span>
                         </div>
                         {% endif %}
                         {% if issue.assigned_to %}

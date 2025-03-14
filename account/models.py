@@ -110,7 +110,7 @@ class InternalUser(CustomUser):
     position = models.ForeignKey(Position, on_delete=models.CASCADE, blank=True, null=True, related_name='users', verbose_name='Cargo')
     
     def __str__(self):
-        return f"{self.username} ({self.department.name} - {self.position.name})"
+        return self.username
     
     def save(self, *args, **kwargs):
         self.is_external = False
