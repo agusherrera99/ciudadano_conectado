@@ -1,0 +1,1 @@
+web: python3 manage.py makemigrations && python3 manage.py migrate && rm -rf staticfiles && python3 manage.py collectstatic --noinput && gunicorn core.wsgi:application
