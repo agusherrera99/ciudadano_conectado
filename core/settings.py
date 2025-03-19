@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -61,10 +62,8 @@ MIDDLEWARE = [
 ]
 
 if ENVIRONMENT == 'production':
-    MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-
     ALLOWED_HOSTS = ['ciudadanoconectado-production.up.railway.app']
-    CRSF_TRUSTED_ORIGINS = ['https://ciudadanoconectado-production.up.railway.app', 'http://ciudadanoconectado-production.up.railway.app']
+    CSRF_TRUSTED_ORIGINS = ['https://ciudadanoconectado-production.up.railway.app', 'http://ciudadanoconectado-production.up.railway.app']
     INTERNAL_IPS = ['127.0.0.1', 'localhost']
     
     USE_X_FORWARDED_HOST = True
@@ -83,8 +82,6 @@ if ENVIRONMENT == 'production':
             'PORT': config('POSTGRES_PORT'),
         }
     }
-
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_HOST = config('EMAIL_HOST')
@@ -163,6 +160,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
