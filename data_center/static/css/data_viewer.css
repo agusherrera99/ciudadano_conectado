@@ -1,0 +1,172 @@
+@import url('../../../static/css/components/back_button.css');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.data-category-title {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 2rem;
+    color: var(--primary);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+}
+
+section {
+    margin-bottom: 2rem;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.data-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.chart-selector, .time-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 1rem;
+}
+
+.chart-container {
+    position: relative;
+    height: 450px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.loading-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.loading-indicator i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.data-summary {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.data-notice {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    border-left: 3px solid var(--primary);
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.data-notice i {
+    color: var(--primary);
+    margin-right: 0.5rem;
+}
+
+/* Mejoras para tooltips */
+.tooltip-wrapper {
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    max-width: 250px;
+}
+
+/* Mejoras en leyendas */
+.legend-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .data-controls {
+        flex-direction: column;
+    }
+    
+    .chart-selector, .time-selector {
+        width: 100%;
+    }
+    
+    .chart-container {
+        height: 300px;
+    }
+    
+    .metric-card {
+        min-width: 100%;
+    }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1024px) {
+
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .chart-container {
+        height: 500px;
+    }
+}

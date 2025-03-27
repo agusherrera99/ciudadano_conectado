@@ -16,16 +16,14 @@
             {% include 'components/back_button.html' with url_link=url_link back_name='a Centro de Datos' %}
 
             <section class="module-grid">
-                <a href="" class="module-card inactive">
-                    <span class="development-badge">En desarrollo</span>
+                <a href="{% url 'data_center:data_viewer' category='edad-y-sexo' %}" class="module-card">
                     <h2 class="module-title">Edad y Sexo</h2>
                     <p class="module-desc">
                         Estadísticas demográficas por grupo etario y género. Indicadores de natalidad y mortalidad.
                     </p>
                 </a>
 
-                <a href="" class="module-card inactive">
-                    <span class="development-badge">En desarrollo</span>
+                <a href="{% url 'data_center:data_viewer' category='educación' %}" class="module-card">
                     <h2 class="module-title">Educación</h2>
                     <p class="module-desc">
                         Métricas de acceso, permanencia y calidad educativa. Infraestructura y recursos pedagógicos.

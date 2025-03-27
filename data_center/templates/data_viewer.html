@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Visualizador de Datos - {{ category|title }}</title>
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" href="{% static 'css/data_viewer.css' %}">
+        <!-- Chart.js CDN -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+
+    <body>
+        {% include 'components/navbar.html' %}
+        <main>
+            {% include 'components/back_button.html' with url_link=url_link back_name='a Áreas' %}
+            
+            <h1 class="data-category-title">Datos de {{ title }}</h1>
+
+            
+            <section class="data-controls">
+                <div class="chart-selector">
+                    <label for="chart-type">Tipo de gráfico:</label>
+                    <select id="chart-type" class="chart-type-select">
+                        <option value="bar">Gráfico de barras</option>
+                        <option value="line">Gráfico de líneas</option>
+                        <option value="pie">Gráfico circular</option>
+                        <option value="scatter">Gráfico de puntos</option>
+                    </select>
+                </div>
+                
+                <div class="time-selector">
+                    <label for="time-period">Período:</label>
+                    <select id="time-period" class="time-period-select">
+                        <option value="month">Último mes</option>
+                        <option value="quarter">Último trimestre</option>
+                        <option value="year" selected>Último año</option>
+                        <option value="5years">Últimos 5 años</option>
+                    </select>
+                </div>
+            </section>
+            
+            <section class="data-visualization">
+                <div class="chart-container">
+                    <canvas id="data-chart"></canvas>
+                </div>
+                <div class="loading-indicator" id="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>Cargando datos...</span>
+                </div>
+            </section>
+            
+            <section class="data-details">
+                <h2>Detalles</h2>
+                <div class="data-summary" id="data-summary">
+                    <p>Seleccione un tipo de gráfico y período para visualizar información detallada.</p>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Archivo JavaScript para el manejo de los gráficos -->
+        <script src="{% static 'js/data_viewer.js' %}"></script>
+        <script>
+            // Inicialización con los datos de la categoría
+            document.addEventListener('DOMContentLoaded', function() {
+                initDataViewer('{{ category }}');
+            });
+        </script>
+    </body>
+</html>
