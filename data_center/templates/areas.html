@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Áreas de interés</title>
+        <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+        <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css"> 
+        <link rel="stylesheet" href="{% static 'css/areas.css' %}">
+    </head>
+
+    <body>
+        {% include 'components/navbar.html' %}
+        <main class="dashboard">
+            {% include 'components/back_button.html' with url_link=url_link back_name='a Centro de Datos' %}
+
+            <section class="module-grid">
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Edad y Sexo</h2>
+                    <p class="module-desc">
+                        Estadísticas demográficas por grupo etario y género. Indicadores de natalidad y mortalidad.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Educación</h2>
+                    <p class="module-desc">
+                        Métricas de acceso, permanencia y calidad educativa. Infraestructura y recursos pedagógicos.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Emergencias</h2>
+                    <p class="module-desc">
+                        Registros de incidentes, protocolos preventivos y recursos para atención de emergencias.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Empleo</h2>
+                    <p class="module-desc">
+                        Indicadores laborales, tasas de ocupación y salarios por sector. Formalidad e informalidad.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Empresas y Economía</h2>
+                    <p class="module-desc">
+                        Estadísticas comerciales e industriales. Movimientos económicos, productividad e inversiones.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Familias</h2>
+                    <p class="module-desc">
+                        Composición de hogares, distribución de roles y dinámicas familiares en la comunidad.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Geografía</h2>
+                    <p class="module-desc">
+                        Información territorial, ambiental y climática. Mapeo de recursos naturales y ecosistemas.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Ingresos y Pobreza</h2>
+                    <p class="module-desc">
+                        Distribución económica, índices de pobreza y acceso a servicios básicos en la población.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Población</h2>
+                    <p class="module-desc">
+                        Densidad demográfica, patrones migratorios y distribución poblacional en el territorio.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Salud</h2>
+                    <p class="module-desc">
+                        Indicadores sanitarios, cobertura médica e infraestructura de salud pública y privada.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Sector Público</h2>
+                    <p class="module-desc">
+                        Transparencia administrativa, ejecución presupuestaria y contrataciones gubernamentales.
+                    </p>
+                </a>
+
+                <a href="" class="module-card inactive">
+                    <span class="development-badge">En desarrollo</span>
+                    <h2 class="module-title">Seguridad</h2>
+                    <p class="module-desc">
+                        Estadísticas delictivas, respuesta judicial y programas de seguridad ciudadana.
+                    </p>
+                </a>
+
+            </section>
+        </main>
+    </body>
+</html>

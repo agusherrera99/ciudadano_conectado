@@ -13,8 +13,12 @@
     <body>
         {% include 'components/navbar.html' %}
         <main class="dashboard">
+            {% if request.user.is_authenticated %}
+                {% include 'components/back_button.html' with url_link=url_link back_name='a Transparencia' %}
+            {% endif %}
+
             <section class="module-grid">
-                <a href="" class="module-card">
+                <a href="{% url 'data_center:areas' %}" class="module-card">
                     <h2 class="module-title">Áreas</h2>
                     <p class="module-desc">
                         Explore las áreas de interés y visualice los datos estadísticos.
