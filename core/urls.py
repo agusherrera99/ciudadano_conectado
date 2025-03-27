@@ -27,4 +27,5 @@ urlpatterns = [
     path('encuestas/', include('surveys.urls', namespace='surveys')),
     path('voluntariados/', include('volunteering.urls', namespace='volunteering')),
     path('ordenamientos-urbanos/', include('urban_management.urls', namespace='urban_management')),
+    path('centro-de-datos/', include('data_center.urls', namespace='data_center')),
 ]

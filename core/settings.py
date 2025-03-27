@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'surveys.apps.SurveysConfig',
     'volunteering.apps.VolunteeringConfig',
     'urban_management.apps.UrbanManagementConfig',
+    'data_center.apps.DataCenterConfig',
 
     # Third-party apps
     'fontawesomefree'

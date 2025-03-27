@@ -1,0 +1,21 @@
+@import url('../../../static/css/components/back_button.css');
+
+/* Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--background);
+}
+
+main {
+    max-width: 100%;
+    margin: 1rem;
+    padding: 0;
+}
