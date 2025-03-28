@@ -177,12 +177,31 @@ function initDataViewer(category) {
             .then(data => {
                 // Almacenar los datos completos
                 fullDataSet = data;
+                console.log('Datos completos obtenidos:', fullDataSet);
                 
                 // Procesar los datos según el período seleccionado
                 processDataForPeriod(timePeriodSelect.value);
                 
                 // Ocultar indicador de carga
                 loadingSpinner.style.display = 'none';
+
+                const indicators = document.getElementById('data-indicators');
+                indicators.innerHTML = '';
+
+                // Mostrar indicadores
+                if (fullDataSet.indicators) {
+                    fullDataSet.indicators.forEach(indicator => {
+                        const indicatorDiv = document.createElement('div');
+                        indicatorDiv.className = 'indicator-item';
+                        indicatorDiv.innerHTML = `
+                            <strong>${indicator.label}:</strong>
+                            <span class="value">${indicator.value}</span>
+                        `;
+                        indicators.appendChild(indicatorDiv);
+                    });
+                } else {
+                    indicators.innerHTML = '<p>No hay indicadores disponibles para esta categoría.</p>';
+                }
             })
             .catch(error => {
                 console.error('Error al obtener datos:', error);
@@ -190,11 +209,11 @@ function initDataViewer(category) {
                 loadingSpinner.style.display = 'none';
                 
                 // Mostrar mensaje de error
-                document.getElementById('data-summary').innerHTML = `
+                /* document.getElementById('data-summary').innerHTML = `
                     <div class="error-message">
                         <p>Error: ${error.message}</p>
                     </div>
-                `;
+                `; */
             });
     }
     
@@ -209,7 +228,6 @@ function initDataViewer(category) {
         const processedData = {
             labels: [],
             values: [],
-            title: fullDataSet.title || `Datos de ${currentCategory.replace('-', ' ')}`,
             description: `Información sobre ${currentCategory.replace('-', ' ')} durante el último ${periodToText(period)}.`
         };
         
@@ -349,11 +367,6 @@ function initDataViewer(category) {
         
         dataChart.data.datasets[0].label = data.title || 'Datos';
         dataChart.options.plugins.title.text = data.title || `Datos de ${currentCategory}`;
-        
-        // Actualizamos el resumen
-        document.getElementById('data-summary').innerHTML = `
-            <p>${data.description || 'No hay descripción disponible para estos datos.'}</p>
-        `;
         
         dataChart.update();
     }

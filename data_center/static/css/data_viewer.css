@@ -86,9 +86,43 @@ select {
     margin-bottom: 1rem;
 }
 
-.data-summary {
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+.data-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.data-indicators {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.indicator-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: #f1f3f5; 
+    border: 1px solid #e0e0e0; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    font-size: 1rem; 
+    color: #333; 
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.indicator-item strong {
+    font-size: 1.2rem; 
+    color: var(--primary);
+}
+
+.indicator-item .value {
+    font-weight: bold;
+    font-size: 1.2rem; 
+    color: #555; 
 }
 
 .data-notice {

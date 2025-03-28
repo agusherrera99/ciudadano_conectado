@@ -17,9 +17,8 @@
         <main>
             {% include 'components/back_button.html' with url_link=url_link back_name='a Áreas' %}
             
-            <h1 class="data-category-title">Datos de {{ title }}</h1>
+            <h1 class="data-category-title">Visualizador de Datos - {{ title }}</h1>
 
-            
             <section class="data-controls">
                 <div class="chart-selector">
                     <label for="chart-type">Tipo de gráfico:</label>
@@ -53,9 +52,9 @@
             </section>
             
             <section class="data-details">
-                <h2>Detalles</h2>
-                <div class="data-summary" id="data-summary">
-                    <p>Seleccione un tipo de gráfico y período para visualizar información detallada.</p>
+                <h2>Indicadores</h2>
+                <div class="data-indicators" id="data-indicators">
+                    
                 </div>
             </section>
         </main>

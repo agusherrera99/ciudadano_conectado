@@ -21,10 +21,10 @@ def data_viewer(request, category=None):
     title = 'Sin Categoria'
     if '-' in category:
         title = category.split('-')
-        title = ' '.join([word.capitalize() for word in title if word != 'y'])
+        title = ' '.join([word.capitalize() if word != 'y' else word for word in title])
     else:
         title = category.capitalize()
-
+        
     context = {
         'url_link': reverse('data_center:areas'),
         'category': category,
@@ -54,6 +54,9 @@ def generate_sample_data(category, period):
     # Generamos el conjunto completo de datos mensuales para 5 años
     full_labels = []
     full_values = []
+
+    # Lista para almacenar los indicadores
+    indicators = []
     
     # Crear datos para cada mes
     current_date = start_date
@@ -95,6 +98,29 @@ def generate_sample_data(category, period):
             five_year_values = [random.randint(10, 100) for _ in range(len(age_groups))]
             
             title = 'Distribución por grupos de edad'
+
+            indicators = [
+                {
+                    'label': 'Natalidad',
+                    'value': random.randint(100, 500),
+                    'description': 'Número de nacimientos en el último año',
+                },
+                {
+                    'label': 'Mortalidad',
+                    'value': random.randint(50, 300),
+                    'description': 'Número de muertes en el último año',
+                },
+                {
+                    'label': 'Esperanza de vida',
+                    'value': random.randint(70, 85),
+                    'description': 'Esperanza de vida al nacer',
+                },
+                {
+                    'label': 'Tasa de fecundidad',
+                    'value': f"{round(random.uniform(1.5, 3.0), 2)}%",
+                    'description': 'Número promedio de hijos por mujer',
+                }
+            ]
             
         elif category == 'educación':
             # Para educación, usamos niveles educativos pero con valores que cambian en el tiempo
@@ -172,7 +198,8 @@ def generate_sample_data(category, period):
             'yearly_labels': yearly_labels,
             'yearly_values': yearly_values,
             'five_year_labels': five_year_labels,
-            'five_year_values': five_year_values
+            'five_year_values': five_year_values,
+            'indicators': indicators,
         }
     
     # Para solicitudes específicas de período (no fulldata)
@@ -240,6 +267,7 @@ def generate_sample_data(category, period):
         'values': values,
         'title': title,
         'description': description,
+        'indicators': indicators,
     }
 
 def period_to_text(period):
