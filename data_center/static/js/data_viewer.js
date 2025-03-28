@@ -71,6 +71,7 @@ function processData(selectedGroup, selectedPeriod) {
     const processedData = {
         labels: [],
         values: [],
+        title: ''
     };
 
     // Obtener el grupo de datos seleccionado
@@ -80,7 +81,8 @@ function processData(selectedGroup, selectedPeriod) {
         return;
     }
 
-    console.log('Grupo de datos seleccionado:', groupData);
+    // Asignar título del grupo de datos
+    processedData.title = groupData.description
 
     // Procesar según el período seleccionado
     if (selectedPeriod === 'month') {
@@ -147,7 +149,6 @@ function fetchData() {
     .then(data => {
         // Almacenar los datos completos
         dataSet = data;
-        console.log('Datos completos obtenidos:', dataSet);
 
         dataGroupSelect.innerHTML = ''; // Limpiar opciones previas
         // Llenar el select con las categorías disponibles
@@ -316,7 +317,6 @@ function initDataViewer(category) {
                 },
                 title: {
                     display: true,
-                    text: `Datos de ${category.replace('-', ' ') || 'sin categoría'}`
                 },
                 tooltip: {
                     callbacks: {
