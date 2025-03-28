@@ -101,8 +101,8 @@ select {
 
 .indicator-item {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     padding: 1rem;
     background-color: #f1f3f5; 
     border: 1px solid #e0e0e0; 
@@ -110,33 +110,23 @@ select {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
     font-size: 1rem; 
     color: #333; 
-    gap: 1rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
 
-.indicator-item strong {
+.indicator-header strong {
     font-size: 1.2rem; 
     color: var(--primary);
 }
 
-.indicator-item .value {
+.indicator-header .indicator-value {
     font-weight: bold;
     font-size: 1.2rem; 
     color: #555; 
 }
 
-.data-notice {
-    margin-top: 0.5rem;
-    padding: 0.5rem;
-    background-color: #f8f9fa;
-    border-left: 3px solid var(--primary);
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.data-notice i {
-    color: var(--primary);
-    margin-right: 0.5rem;
+.indicator-item .indicator-description {
+    font-size: 0.9rem; 
+    color: #777; 
 }
 
 /* Mejoras para tooltips */

@@ -1,15 +1,260 @@
+// Elementos DOM
+const dataGroupSelect = document.getElementById('data-group');
+const chartTypeSelect = document.getElementById('chart-type');
+const timePeriodSelect = document.getElementById('time-period');
+const loadingSpinner = document.getElementById('loading-spinner');
+
 let dataChart = null;
 let currentCategory = '';
-let fullDataSet = null; // Almacenará el conjunto completo de datos
+let dataSet = null;
+
+function updateChartData(data) {
+    const chartType = chartTypeSelect.value;
+
+    // Verificar si hay muchas etiquetas para ajustar la visualización
+    const hasManyLabels = data.labels && data.labels.length > 12;
+
+    if (chartType === 'scatter') {
+        // Para scatter plot, necesitamos transformar los datos a formato {x, y}
+        const scatterData = [];
+        for (let i = 0; i < data.values.length; i++) {
+            scatterData.push({
+                x: i + 1, // Usamos índice+1 como valor X
+                y: data.values[i]
+            });
+        }
+        dataChart.data.datasets[0].data = scatterData;
+        // Scatter no usa etiquetas tradicionales
+        dataChart.data.labels = [];
+    } else {
+        // Formato normal para otros tipos de gráficos
+        dataChart.data.labels = data.labels;
+        dataChart.data.datasets[0].data = data.values;
+
+        // Si hay muchas etiquetas, ajustar visualización
+        if (hasManyLabels && (chartType === 'bar' || chartType === 'line')) {
+            // Configurar para etiquetas más compactas
+            dataChart.options.scales.x.ticks.autoSkip = true;
+            dataChart.options.scales.x.ticks.maxTicksLimit = 12;
+
+            // Mostrar leyenda cuando hay muchas etiquetas
+            dataChart.options.plugins.legend.display = true;
+
+            // Para gráfica de línea, añadir tooltip más detallado
+            if (chartType === 'line') {
+                dataChart.options.plugins.tooltip.callbacks.title = function (tooltipItems) {
+                    return data.labels[tooltipItems[0].dataIndex];
+                };
+            }
+        } else {
+            // Para pocos datos, podemos ocultar la leyenda si no es circular
+            if (chartType !== 'pie') {
+                dataChart.options.plugins.legend.display = false;
+            }
+        }
+    }
+
+    dataChart.data.datasets[0].label = data.title || 'Datos';
+    dataChart.options.plugins.title.text = data.title || `Datos de ${currentCategory.split('-').join(' ')}`;
+
+    dataChart.update();
+}
+
+function processData(selectedGroup, selectedPeriod) {
+    // Verificar si tenemos los datos necesarios
+    if (!dataSet.data) {
+        console.error('No hay datos disponibles');
+        return;
+    }
+
+    // Preparar objeto de datos procesados
+    const processedData = {
+        labels: [],
+        values: [],
+    };
+
+    // Obtener el grupo de datos seleccionado
+    const groupData = dataSet.data.find(group => group.title === selectedGroup);
+    if (!groupData) {
+        console.error(`Grupo de datos "${selectedGroup}" no encontrado`);
+        return;
+    }
+
+    console.log('Grupo de datos seleccionado:', groupData);
+
+    // Procesar según el período seleccionado
+    if (selectedPeriod === 'month') {
+        // Usar los datos mensuales si están disponibles
+        if (groupData.monthly_labels && groupData.monthly_values) {
+            processedData.labels = [...groupData.monthly_labels];
+            processedData.values = [...groupData.monthly_values];
+        } else {
+            console.warn('No hay datos mensuales disponibles.');
+        }
+    }
+    else if (selectedPeriod === 'quarter') {
+        // Usar los datos trimestrales si están disponibles
+        if (groupData.quarterly_labels && groupData.quarterly_values) {
+            processedData.labels = [...groupData.quarterly_labels];
+            processedData.values = [...groupData.quarterly_values];
+        } else {
+            console.warn('No hay datos trimestrales disponibles.');
+        }
+    }
+    else if (selectedPeriod === 'year') {
+        // Usar los datos anuales
+        if (groupData.yearly_labels && groupData.yearly_values) {
+            processedData.labels = [...groupData.yearly_labels];
+            processedData.values = [...groupData.yearly_values];
+        } else {
+            console.warn('No hay datos anuales disponibles.');
+
+        }
+    }
+    else if (selectedPeriod === '5years') {
+        // Usar los datos quinquenales
+        if (groupData.five_year_labels && groupData.five_year_values) {
+            processedData.labels = [...groupData.five_year_labels];
+            processedData.values = [...groupData.five_year_values];
+        } else {
+            console.warn('No hay datos quinquenales disponibles.');
+
+        }
+    }
+
+    // Ocultar indicador de carga
+    loadingSpinner.style.display = 'none';
+
+    // Actualizar la gráfica con los datos procesados
+    updateChartData(processedData);
+}
+
+function fetchData() {
+    // Mostrar indicador de carga
+    loadingSpinner.style.display = 'flex';
+
+    // Solicitar los datos completos (5 años)
+    const apiUrl = `/centro-de-datos/api/data/?category=${currentCategory}`;
+
+    // Petición AJAX
+    fetch(apiUrl)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta de la red');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Almacenar los datos completos
+        dataSet = data;
+        console.log('Datos completos obtenidos:', dataSet);
+
+        dataGroupSelect.innerHTML = ''; // Limpiar opciones previas
+        // Llenar el select con las categorías disponibles
+        dataSet.data.forEach(group => {
+            const option = document.createElement('option');
+            option.value = group.title;
+            option.textContent = group.title;
+            dataGroupSelect.appendChild(option);
+        })
+
+        // Procesar los datos según el período seleccionado
+        processData(dataGroupSelect.value, timePeriodSelect.value);
+
+        const indicators = document.getElementById('data-indicators');
+        indicators.innerHTML = '';
+
+        // Mostrar indicadores
+        if (dataSet.indicators) {
+            dataSet.indicators.forEach(indicator => {
+                const indicatorDiv = document.createElement('div');
+                indicatorDiv.className = 'indicator-item';
+                indicatorDiv.innerHTML = `
+                        <div class="indicator-header">
+                            <strong>${indicator.label}:</strong>
+                            <span class="indicator-value">${indicator.value}</span>
+                        </div>
+                        <p class="indicator-description">${indicator.description}</p>
+                    `;
+                indicators.appendChild(indicatorDiv);
+            });
+        } else {
+            indicators.innerHTML = '<p>No hay indicadores disponibles para esta categoría.</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error al obtener datos:', error);
+        // Ocultar indicador de carga
+        loadingSpinner.style.display = 'none';
+
+        // Mostrar mensaje de error
+        /* document.getElementById('data-summary').innerHTML = `
+            <div class="error-message">
+                <p>Error: ${error.message}</p>
+            </div>
+        `; */
+    });
+}
+
+function updateChart() {
+    const chartType = chartTypeSelect.value;
+    const timePeriod = timePeriodSelect.value;
+    const selectedGroup = dataGroupSelect.value;
+
+    // Actualizar tipo de gráfico
+    dataChart.config.type = chartType;
+
+    // Configuraciones específicas según tipo de gráfico
+    if (chartType === 'pie') {
+        dataChart.options.scales = {};
+        dataChart.options.plugins.legend.display = true;
+    } else if (chartType === 'scatter') {
+        // Para gráficos de dispersión necesitamos actualizar la estructura de datos
+        dataChart.options.scales = {
+            x: {
+                type: 'linear',
+                position: 'bottom',
+                title: {
+                    display: true,
+                    text: 'Valor X'
+                }
+            },
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Valor Y'
+                }
+            }
+        };
+        dataChart.options.plugins.legend.display = true;
+    } else {
+        dataChart.options.scales = {
+            x: {
+                ticks: {
+                    autoSkip: true,
+                    maxRotation: 45,
+                    minRotation: 45
+                }
+            },
+            y: {
+                beginAtZero: true
+            }
+        };
+    }
+
+    // Actualizar datos según el periodo seleccionado usando los datos almacenados
+    if (dataSet) {
+        processData(selectedGroup, timePeriod);
+    } else {
+        // Si no tenemos datos almacenados, solicitarlos
+        fetchData();
+    }
+}
 
 function initDataViewer(category) {
     currentCategory = category;
-    
-    // Elementos DOM
-    const chartTypeSelect = document.getElementById('chart-type');
-    const timePeriodSelect = document.getElementById('time-period');
-    const loadingSpinner = document.getElementById('loading-spinner');
-    
+
     // Inicialización del gráfico
     const ctx = document.getElementById('data-chart').getContext('2d');
     dataChart = new Chart(ctx, {
@@ -71,13 +316,13 @@ function initDataViewer(category) {
                 },
                 title: {
                     display: true,
-                    text: `Datos de ${category || 'Categoría'}`
+                    text: `Datos de ${category.replace('-', ' ') || 'sin categoría'}`
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             let label = context.dataset.label || '';
-                            
+
                             // Manejar diferentes tipos de gráficos
                             if (dataChart.config.type === 'pie' || dataChart.config.type === 'doughnut') {
                                 // Para gráficos de pastel
@@ -96,278 +341,12 @@ function initDataViewer(category) {
             }
         }
     });
-    
+
     // Event listeners
+    dataGroupSelect.addEventListener('change', updateChart);
     chartTypeSelect.addEventListener('change', updateChart);
     timePeriodSelect.addEventListener('change', updateChart);
-    
+
     // Carga inicial de datos completos
-    fetchFullData();
-    
-    function updateChart() {
-        const chartType = chartTypeSelect.value;
-        const timePeriod = timePeriodSelect.value;
-        
-        // Actualizar tipo de gráfico
-        dataChart.config.type = chartType;
-        
-        // Configuraciones específicas según tipo de gráfico
-        if (chartType === 'pie') {
-            dataChart.options.scales = {};
-            dataChart.options.plugins.legend.display = true;
-        } else if (chartType === 'scatter') {
-            // Para gráficos de dispersión necesitamos actualizar la estructura de datos
-            dataChart.options.scales = {
-                x: {
-                    type: 'linear',
-                    position: 'bottom',
-                    title: {
-                        display: true,
-                        text: 'Valor X'
-                    }
-                },
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Valor Y'
-                    }
-                }
-            };
-            dataChart.options.plugins.legend.display = true;
-        } else {
-            dataChart.options.scales = {
-                x: {
-                    ticks: {
-                        autoSkip: true,
-                        maxRotation: 45,
-                        minRotation: 45
-                    }
-                },
-                y: {
-                    beginAtZero: true
-                }
-            };
-        }
-        
-        // Actualizar datos según el periodo seleccionado usando los datos almacenados
-        if (fullDataSet) {
-            processDataForPeriod(timePeriod);
-        } else {
-            // Si no tenemos datos almacenados, solicitarlos
-            fetchFullData();
-        }
-    }
-    
-    function fetchFullData() {
-        // Mostrar indicador de carga
-        loadingSpinner.style.display = 'flex';
-        
-        // Solicitar los datos completos (5 años)
-        const apiUrl = `/centro-de-datos/api/data/?category=${currentCategory}&period=fulldata`;
-        
-        // Petición AJAX
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta de la red');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Almacenar los datos completos
-                fullDataSet = data;
-                console.log('Datos completos obtenidos:', fullDataSet);
-                
-                // Procesar los datos según el período seleccionado
-                processDataForPeriod(timePeriodSelect.value);
-                
-                // Ocultar indicador de carga
-                loadingSpinner.style.display = 'none';
-
-                const indicators = document.getElementById('data-indicators');
-                indicators.innerHTML = '';
-
-                // Mostrar indicadores
-                if (fullDataSet.indicators) {
-                    fullDataSet.indicators.forEach(indicator => {
-                        const indicatorDiv = document.createElement('div');
-                        indicatorDiv.className = 'indicator-item';
-                        indicatorDiv.innerHTML = `
-                            <strong>${indicator.label}:</strong>
-                            <span class="value">${indicator.value}</span>
-                        `;
-                        indicators.appendChild(indicatorDiv);
-                    });
-                } else {
-                    indicators.innerHTML = '<p>No hay indicadores disponibles para esta categoría.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error al obtener datos:', error);
-                // Ocultar indicador de carga
-                loadingSpinner.style.display = 'none';
-                
-                // Mostrar mensaje de error
-                /* document.getElementById('data-summary').innerHTML = `
-                    <div class="error-message">
-                        <p>Error: ${error.message}</p>
-                    </div>
-                `; */
-            });
-    }
-    
-    function processDataForPeriod(period) {
-        // Verificar si tenemos los datos necesarios
-        if (!fullDataSet) {
-            console.error('No hay datos disponibles');
-            return;
-        }
-        
-        // Preparar objeto de datos procesados
-        const processedData = {
-            labels: [],
-            values: [],
-            description: `Información sobre ${currentCategory.replace('-', ' ')} durante el último ${periodToText(period)}.`
-        };
-        
-        // Procesar según el período seleccionado
-        if (period === 'month') {
-            // Usar los datos mensuales si están disponibles
-            if (fullDataSet.monthly_labels && fullDataSet.monthly_values) {
-                processedData.labels = [...fullDataSet.monthly_labels];
-                processedData.values = [...fullDataSet.monthly_values];
-            } else {
-                console.warn('No hay datos mensuales disponibles, generando datos temporales');
-                // Generar datos de respaldo
-                const today = new Date();
-                for (let i = 0; i < 6; i++) {
-                    const day = new Date(today);
-                    day.setDate(today.getDate() - (30 - i*5));
-                    processedData.labels.push(day.getDate() + ' ' + day.toLocaleString('es', { month: 'short' }));
-                    // Usar datos aleatorios como respaldo
-                    processedData.values.push(Math.floor(Math.random() * 90) + 10);
-                }
-            }
-        } 
-        else if (period === 'quarter') {
-            // Usar los datos trimestrales si están disponibles
-            if (fullDataSet.quarterly_labels && fullDataSet.quarterly_values) {
-                processedData.labels = [...fullDataSet.quarterly_labels];
-                processedData.values = [...fullDataSet.quarterly_values];
-            } else {
-                console.warn('No hay datos trimestrales disponibles, generando datos temporales');
-                // Generar datos de respaldo
-                const today = new Date();
-                for (let i = 0; i < 3; i++) {
-                    const month = new Date(today);
-                    month.setMonth(today.getMonth() - (3 - i));
-                    
-                    // Primer punto del mes (día 1)
-                    const dateStr1 = '01 ' + month.toLocaleString('es', { month: 'short' });
-                    processedData.labels.push(dateStr1);
-                    processedData.values.push(Math.floor(Math.random() * 90) + 10);
-                    
-                    // Segundo punto del mes (día 15)
-                    const dateStr2 = '15 ' + month.toLocaleString('es', { month: 'short' });
-                    processedData.labels.push(dateStr2);
-                    processedData.values.push(Math.floor(Math.random() * 90) + 10);
-                }
-            }
-        }
-        else if (period === 'year') {
-            // Usar los datos anuales
-            if (fullDataSet.yearly_labels && fullDataSet.yearly_values) {
-                processedData.labels = [...fullDataSet.yearly_labels];
-                processedData.values = [...fullDataSet.yearly_values];
-            } else {
-                console.warn('No hay datos anuales disponibles');
-                // Usar los datos disponibles si es posible
-                if (fullDataSet.labels && fullDataSet.values) {
-                    processedData.labels = [...fullDataSet.labels];
-                    processedData.values = [...fullDataSet.values];
-                }
-            }
-        }
-        else if (period === '5years') {
-            // Usar los datos quinquenales
-            if (fullDataSet.five_year_labels && fullDataSet.five_year_values) {
-                processedData.labels = [...fullDataSet.five_year_labels];
-                processedData.values = [...fullDataSet.five_year_values];
-            } else {
-                console.warn('No hay datos quinquenales disponibles');
-                // Usar datos de respaldo
-                const currentYear = new Date().getFullYear();
-                for (let i = 0; i < 5; i++) {
-                    processedData.labels.push(String(currentYear - 4 + i));
-                    processedData.values.push(Math.floor(Math.random() * 90) + 10);
-                }
-            }
-        }
-        
-        // Actualizar la gráfica con los datos procesados
-        updateChartData(processedData);
-    }
-    
-    function periodToText(period) {
-        switch (period) {
-            case 'month': return 'mes';
-            case 'quarter': return 'trimestre';
-            case 'year': return 'año';
-            case '5years': return 'quinquenio';
-            default: return 'período';
-        }
-    }
-    
-    function updateChartData(data) {
-        const chartType = chartTypeSelect.value;
-
-        // Verificar si hay muchas etiquetas para ajustar la visualización
-        const hasManyLabels = data.labels && data.labels.length > 12;
-        
-        if (chartType === 'scatter') {
-            // Para scatter plot, necesitamos transformar los datos a formato {x, y}
-            const scatterData = [];
-            for (let i = 0; i < data.values.length; i++) {
-                scatterData.push({
-                    x: i + 1, // Usamos índice+1 como valor X
-                    y: data.values[i]
-                });
-            }
-            dataChart.data.datasets[0].data = scatterData;
-            // Scatter no usa etiquetas tradicionales
-            dataChart.data.labels = [];
-        } else {
-            // Formato normal para otros tipos de gráficos
-            dataChart.data.labels = data.labels;
-            dataChart.data.datasets[0].data = data.values;
-
-            // Si hay muchas etiquetas, ajustar visualización
-            if (hasManyLabels && (chartType === 'bar' || chartType === 'line')) {
-                // Configurar para etiquetas más compactas
-                dataChart.options.scales.x.ticks.autoSkip = true;
-                dataChart.options.scales.x.ticks.maxTicksLimit = 12;
-                
-                // Mostrar leyenda cuando hay muchas etiquetas
-                dataChart.options.plugins.legend.display = true;
-                
-                // Para gráfica de línea, añadir tooltip más detallado
-                if (chartType === 'line') {
-                    dataChart.options.plugins.tooltip.callbacks.title = function(tooltipItems) {
-                        return data.labels[tooltipItems[0].dataIndex];
-                    };
-                }
-            } else {
-                // Para pocos datos, podemos ocultar la leyenda si no es circular
-                if (chartType !== 'pie') {
-                    dataChart.options.plugins.legend.display = false;
-                }
-            }
-        }
-        
-        dataChart.data.datasets[0].label = data.title || 'Datos';
-        dataChart.options.plugins.title.text = data.title || `Datos de ${currentCategory}`;
-        
-        dataChart.update();
-    }
+    fetchData();
 }
