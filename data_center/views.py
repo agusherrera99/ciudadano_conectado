@@ -1,7 +1,11 @@
+import json
+import random
+import os
+
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import JsonResponse
-import random
+
 
 # Create your views here.
 def data_center(request):
@@ -11,7 +15,13 @@ def data_center(request):
     return render(request, 'data_center.html', context=context)
 
 def areas(request):
+    areas_path = os.path.join(os.path.dirname(__file__), 'static', 'json', 'areas.json')
+    with open(areas_path, 'r') as file:
+        areas = json.load(file)
+    areas = sorted(areas, key=lambda x: x['title'])
+    
     context = {
+        'areas': areas,
         'url_link': reverse('data_center:data_center')
     }
     return render(request, 'areas.html', context=context)

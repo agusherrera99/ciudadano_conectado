@@ -1,0 +1,74 @@
+[
+    {
+      "title": "Edad y Sexo",
+      "description": "Estadísticas demográficas por grupo etario y género. Indicadores de natalidad y mortalidad.",
+      "slug": "edad-y-sexo",
+      "in_development": false
+    },
+    {
+      "title": "Educación",
+      "description": "Métricas de acceso, permanencia y calidad educativa. Infraestructura y recursos pedagógicos.",
+      "slug": "educación",
+      "in_development": false
+    },
+    {
+      "title": "Emergencias",
+      "description": "Registros de incidentes, protocolos preventivos y recursos para atención de emergencias.",
+      "slug": "emergencias",
+      "in_development": true
+    },
+    {
+      "title": "Empleo",
+      "description": "Indicadores laborales, tasas de ocupación y salarios por sector. Formalidad e informalidad.",
+      "slug": "empleo",
+      "in_development": true
+    },
+    {
+      "title": "Empresas y Economía",
+      "description": "Estadísticas comerciales e industriales. Movimientos económicos, productividad e inversiones.",
+      "slug": "empresas-y-economía",
+      "in_development": true
+    },
+    {
+      "title": "Familias",
+      "description": "Composición de hogares, distribución de roles y dinámicas familiares en la comunidad.",
+      "slug": "familias",
+      "in_development": true
+    },
+    {
+      "title": "Geografía",
+      "description": "Información territorial, ambiental y climática. Mapeo de recursos naturales y ecosistemas.",
+      "slug": "geografía",
+      "in_development": true
+    },
+    {
+      "title": "Ingresos y Pobreza",
+      "description": "Distribución económica, índices de pobreza y acceso a servicios básicos en la población.",
+      "slug": "ingresos-y-pobreza",
+      "in_development": true
+    },
+    {
+      "title": "Población",
+      "description": "Densidad demográfica, patrones migratorios y distribución poblacional en el territorio.",
+      "slug": "población",
+      "in_development": true
+    },
+    {
+      "title": "Salud",
+      "description": "Indicadores sanitarios, cobertura médica e infraestructura de salud pública y privada.",
+      "slug": "salud",
+      "in_development": true
+    },
+    {
+      "title": "Sector Público",
+      "description": "Transparencia administrativa, ejecución presupuestaria y contrataciones gubernamentales.",
+      "slug": "sector-público",
+      "in_development": true
+    },
+    {
+      "title": "Seguridad",
+      "description": "Estadísticas delictivas, respuesta judicial y programas de seguridad ciudadana.",
+      "slug": "seguridad",
+      "in_development": true
+    }
+  ]
