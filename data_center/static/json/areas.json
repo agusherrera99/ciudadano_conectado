@@ -1,15 +1,21 @@
 [
     {
+        "title": "Accesibilidad y Movilidad",
+        "description": "Estadísticas de transporte público, infraestructura vial y accesibilidad en la comunidad.",
+        "slug": "accesibilidad-y-movilidad",
+        "in_development": true
+    },
+    {
       "title": "Edad y Sexo",
       "description": "Estadísticas demográficas por grupo etario y género. Indicadores de natalidad y mortalidad.",
       "slug": "edad-y-sexo",
-      "in_development": false
+      "in_development": true
     },
     {
       "title": "Educación",
       "description": "Métricas de acceso, permanencia y calidad educativa. Infraestructura y recursos pedagógicos.",
       "slug": "educación",
-      "in_development": false
+      "in_development": true
     },
     {
       "title": "Emergencias",
