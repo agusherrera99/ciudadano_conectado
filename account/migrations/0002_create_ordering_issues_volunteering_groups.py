@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(
             create_group(
-                group_name='ordenamiento_gestores',
+                group_name='ordenamientos_gestores',
                 app_label='urban_management',
                 model_name='ordering',
                 codenames=['view_ordering', 'change_ordering', 'view_orderingupdate']
@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(
             create_group(
-                group_name='ordenamiento_operadores',
+                group_name='ordenamientos_operadores',
                 app_label='urban_management',
                 model_name='ordering',
                 codenames=['view_ordering', 'add_orderingupdate', 'view_orderingupdate', 'change_orderingupdate']
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
         ),
         migrations.RunPython(
             create_group(
-                group_name='ordenamiento_inspectores',
+                group_name='ordenamientos_inspectores',
                 app_label='urban_management',
                 model_name='ordering',
                 codenames=['add_ordering', 'view_ordering']
