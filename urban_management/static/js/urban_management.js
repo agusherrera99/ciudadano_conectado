@@ -83,6 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const formData = new FormData(orderForm);
+        
+        // Mostrar indicador de carga o deshabilitar el botón de envío
+        const submitButton = orderForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.disabled = true;
+        submitButton.innerHTML = 'Enviando...';
+        
         fetch('/ordenamientos-urbanos/crear/', {
             method: 'POST',
             body: formData,
@@ -90,18 +97,76 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status) {
-                orderForm.reset();
-                location.reload();
+        .then(response => {
+            // Capturar el texto de la respuesta incluso si no es JSON válido
+            return response.text().then(text => {
+                try {
+                    // Intentar parsearlo como JSON
+                    return { 
+                        ok: response.ok, 
+                        status: response.status,
+                        data: JSON.parse(text) 
+                    };
+                } catch (e) {
+                    // Si no es JSON válido, devolver el texto sin procesar
+                    return { 
+                        ok: response.ok, 
+                        status: response.status,
+                        text: text,
+                        parseError: e.message
+                    };
+                }
+            });
+        })
+        .then(result => {
+            // Restaurar el botón
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            
+            if (result.ok) {
+                // La solicitud fue exitosa
+                if (result.data && result.data.status) {
+                    orderForm.reset();
+                    location.reload();
+                } else {
+                    // Respuesta exitosa pero con estado de error
+                    console.log('Respuesta completa del servidor:', result);
+                    
+                    let errorMessage = 'Error desconocido';
+                    if (result.data && result.data.error) {
+                        errorMessage = result.data.error;
+                    } else if (result.data && result.data.message) {
+                        errorMessage = result.data.message;
+                    } else if (result.text) {
+                        errorMessage = 'Respuesta no válida del servidor';
+                    }
+                    
+                    console.error('Error al enviar ordenamiento:', errorMessage);
+                    alert(`Error al enviar la solicitud: ${errorMessage}`);
+                }
             } else {
-                console.error('Error al enviar ordenamiento:', data.error);
-                alert('Error al enviar la solicitud');
+                // Error HTTP
+                console.error(`Error HTTP ${result.status}`);
+                console.log('Respuesta completa:', result);
+                
+                let errorMessage = `Error del servidor (${result.status})`;
+                if (result.data && (result.data.error || result.data.message)) {
+                    errorMessage = result.data.error || result.data.message;
+                } else if (result.text) {
+                    if (result.text.length < 100) {
+                        errorMessage += `: ${result.text}`;
+                    }
+                }
+                
+                alert(`Error al enviar la solicitud: ${errorMessage}`);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            // Restaurar el botón
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonText;
+            
+            console.error('Error de conexión:', error);
             alert('Error de conexión al enviar la solicitud');
         });
     });
