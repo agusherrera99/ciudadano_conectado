@@ -81,10 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Por favor, indica la ubicación del reclamo en el mapa.');
             return;
         }
-
-        const formData = new FormData(orderForm);
         
-        // Mostrar indicador de carga o deshabilitar el botón de envío
+        const formData = new FormData(orderForm);
+
+        // Cambio de texto del botón de envío
         const submitButton = orderForm.querySelector('button[type="submit"]');
         const originalButtonText = submitButton.innerHTML;
         submitButton.disabled = true;
@@ -98,75 +98,57 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(response => {
-            // Capturar el texto de la respuesta incluso si no es JSON válido
-            return response.text().then(text => {
-                try {
-                    // Intentar parsearlo como JSON
-                    return { 
-                        ok: response.ok, 
-                        status: response.status,
-                        data: JSON.parse(text) 
-                    };
-                } catch (e) {
-                    // Si no es JSON válido, devolver el texto sin procesar
-                    return { 
-                        ok: response.ok, 
-                        status: response.status,
-                        text: text,
-                        parseError: e.message
-                    };
-                }
-            });
+            // Log de la respuesta HTTP
+            console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
+            console.log('Headers:', Array.from(response.headers.entries()));
+            
+            // Clonar la respuesta antes de consumirla con .json()
+            return response.clone().text()
+                .then(text => {
+                    // Intentar parsear como JSON o mostrar el texto
+                    try {
+                        // Log del texto de respuesta para depuración
+                        console.log('Texto de respuesta completo:', text);
+                        return response.json();  // Continuar con el flujo normal
+                    } catch (e) {
+                        console.error('Error al parsear JSON de respuesta:', e);
+                        console.log('Texto de respuesta (no es JSON):', text);
+                        throw new Error('La respuesta no es un JSON válido');
+                    }
+                });
         })
-        .then(result => {
-            // Restaurar el botón
+        .then(data => {
+            console.log('Datos recibidos del servidor:', data);
+
+            // Restaurar el estado del botón
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
             
-            if (result.ok) {
-                // La solicitud fue exitosa
-                if (result.data && result.data.status) {
-                    orderForm.reset();
-                    location.reload();
-                } else {
-                    // Respuesta exitosa pero con estado de error
-                    console.log('Respuesta completa del servidor:', result);
-                    
-                    let errorMessage = 'Error desconocido';
-                    if (result.data && result.data.error) {
-                        errorMessage = result.data.error;
-                    } else if (result.data && result.data.message) {
-                        errorMessage = result.data.message;
-                    } else if (result.text) {
-                        errorMessage = 'Respuesta no válida del servidor';
-                    }
-                    
-                    console.error('Error al enviar ordenamiento:', errorMessage);
-                    alert(`Error al enviar la solicitud: ${errorMessage}`);
-                }
+            if (data.status) {
+                console.log('Ordenamiento creado exitosamente');
+                orderForm.reset();
+                location.reload();
+                alert('Ordenamiento creado exitosamente');
             } else {
-                // Error HTTP
-                console.error(`Error HTTP ${result.status}`);
-                console.log('Respuesta completa:', result);
-                
-                let errorMessage = `Error del servidor (${result.status})`;
-                if (result.data && (result.data.error || result.data.message)) {
-                    errorMessage = result.data.error || result.data.message;
-                } else if (result.text) {
-                    if (result.text.length < 100) {
-                        errorMessage += `: ${result.text}`;
-                    }
-                }
-                
-                alert(`Error al enviar la solicitud: ${errorMessage}`);
+                console.error('Error al enviar ordenamiento:', data.error || 'Error desconocido');
+                console.error('Datos completos de error:', data);
+                alert('Error al enviar la solicitud');
             }
         })
         .catch(error => {
-            // Restaurar el botón
+            console.error('Error completo:', error);
+            console.error('Stack trace:', error.stack);
+            console.error('Mensaje:', error.message);
+            
+            // Intentar obtener más detalles del error
+            if (error.response) {
+                console.error('Respuesta de error:', error.response);
+            }
+
+            // Restaurar el estado del botón también en caso de error
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
             
-            console.error('Error de conexión:', error);
             alert('Error de conexión al enviar la solicitud');
         });
     });
