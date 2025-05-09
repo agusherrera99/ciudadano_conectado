@@ -82,6 +82,20 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Validar que se seleccione una categoría
+        const category = document.getElementById('category').value;
+        if (!category) {
+            alert('Por favor, seleccione una categoría de ordenamiento.');
+            return;
+        }
+        
+        // Validar que haya una descripción
+        const description = document.getElementById('description').value.trim();
+        if (!description) {
+            alert('Por favor, ingrese una descripción del ordenamiento.');
+            return;
+        }
+        
         const formData = new FormData(orderForm);
 
         // Cambio de texto del botón de envío
@@ -98,24 +112,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(response => {
-            // Verificar el estado de la respuesta primero
             if (!response.ok) {
                 console.error(`Error HTTP: ${response.status} ${response.statusText}`);
                 return response.text().then(text => {
-                    throw new Error(`Error del servidor: ${response.status} ${response.statusText}\nContenido: ${text.substring(0, 200)}...`);
+                    console.error('Respuesta de error:', text);
+                    throw new Error(`Error del servidor: ${response.status} ${response.statusText}`);
                 });
             }
             
-            // Comprobar el tipo de contenido para saber si es JSON
-            const contentType = response.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                return response.json();
-            } else {
-                return response.text().then(text => {
-                    console.error('La respuesta no es JSON:', text.substring(0, 200));
-                    throw new Error('La respuesta del servidor no es JSON válido');
-                });
-            }
+            return response.text().then(text => {
+                try {
+                    // Intentar parsear como JSON
+                    return JSON.parse(text);
+                } catch (e) {
+                    console.error('Error al parsear JSON:', e);
+                    console.error('Contenido de la respuesta:', text);
+                    throw new Error('La respuesta del servidor no es un JSON válido');
+                }
+            });
         })
         .then(data => {
             console.log('Datos recibidos del servidor:', data);
@@ -124,27 +138,24 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
             
-            if (data.status) {
+            if (data && data.status === true) {
                 console.log('Ordenamiento creado exitosamente');
                 orderForm.reset();
-                location.reload();
                 alert('Ordenamiento creado exitosamente');
+                // Solo recargar después de que el usuario vea el mensaje
+                setTimeout(() => location.reload(), 500);
             } else {
-                console.error('Error al enviar ordenamiento:', data.error || 'Error desconocido');
-                console.error('Datos completos de error:', data);
-                alert('Error al enviar la solicitud: ' + (data.error || 'Error desconocido'));
+                console.error('Error al enviar ordenamiento:', data ? (data.message || 'Error desconocido') : 'Sin respuesta');
+                alert('Error al enviar la solicitud: ' + (data && data.message ? data.message : 'Error desconocido'));
             }
         })
         .catch(error => {
             console.error('Error completo:', error);
-            console.error('Stack trace:', error.stack);
-            console.error('Mensaje:', error.message);
             
             // Restaurar el estado del botón también en caso de error
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
             
-            // Mostrar un mensaje más informativo
             alert('Error al procesar la solicitud: ' + error.message);
         });
     });

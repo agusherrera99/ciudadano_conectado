@@ -28,7 +28,10 @@ def create_order(request):
         return JsonResponse({'status': False, 'message': 'No tienes permisos para realizar esta acción'}, status=403)
 
     if request.method == 'POST':
-        internal_user = InternalUser.objects.first(id=request.user.id)
+        internal_user = request.user.specific_instance
+        if not internal_user:
+            return JsonResponse({'status': False, 'message': 'Usuario interno no encontrado'}, status=404)
+        
         try:
             ordering = Ordering.objects.create(
                 category=request.POST['category'],
