@@ -97,26 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
         })
-        .then(response => {
-            // Log de la respuesta HTTP
-            console.log(`Respuesta del servidor: ${response.status} ${response.statusText}`);
-            console.log('Headers:', Array.from(response.headers.entries()));
-            
-            // Clonar la respuesta antes de consumirla con .json()
-            return response.clone().text()
-                .then(text => {
-                    // Intentar parsear como JSON o mostrar el texto
-                    try {
-                        // Log del texto de respuesta para depuración
-                        console.log('Texto de respuesta completo:', text);
-                        return response.json();  // Continuar con el flujo normal
-                    } catch (e) {
-                        console.error('Error al parsear JSON de respuesta:', e);
-                        console.log('Texto de respuesta (no es JSON):', text);
-                        throw new Error('La respuesta no es un JSON válido');
-                    }
-                });
-        })
+        .then(response => response.json())
         .then(data => {
             console.log('Datos recibidos del servidor:', data);
 
