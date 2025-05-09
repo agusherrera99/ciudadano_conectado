@@ -97,7 +97,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            // Verificar el estado de la respuesta primero
+            if (!response.ok) {
+                console.error(`Error HTTP: ${response.status} ${response.statusText}`);
+                return response.text().then(text => {
+                    throw new Error(`Error del servidor: ${response.status} ${response.statusText}\nContenido: ${text.substring(0, 200)}...`);
+                });
+            }
+            
+            // Comprobar el tipo de contenido para saber si es JSON
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return response.json();
+            } else {
+                return response.text().then(text => {
+                    console.error('La respuesta no es JSON:', text.substring(0, 200));
+                    throw new Error('La respuesta del servidor no es JSON válido');
+                });
+            }
+        })
         .then(data => {
             console.log('Datos recibidos del servidor:', data);
 
@@ -113,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('Error al enviar ordenamiento:', data.error || 'Error desconocido');
                 console.error('Datos completos de error:', data);
-                alert('Error al enviar la solicitud');
+                alert('Error al enviar la solicitud: ' + (data.error || 'Error desconocido'));
             }
         })
         .catch(error => {
@@ -121,16 +140,12 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Stack trace:', error.stack);
             console.error('Mensaje:', error.message);
             
-            // Intentar obtener más detalles del error
-            if (error.response) {
-                console.error('Respuesta de error:', error.response);
-            }
-
             // Restaurar el estado del botón también en caso de error
             submitButton.disabled = false;
             submitButton.innerHTML = originalButtonText;
             
-            alert('Error de conexión al enviar la solicitud');
+            // Mostrar un mensaje más informativo
+            alert('Error al procesar la solicitud: ' + error.message);
         });
     });
     
