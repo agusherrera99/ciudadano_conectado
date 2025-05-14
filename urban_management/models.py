@@ -1,7 +1,6 @@
 from django.db import models
-
 from account.models import InternalUser
-# Create your models here.
+
 class Ordering(models.Model):
     class Meta:
         verbose_name = 'Ordenamiento'
@@ -39,7 +38,13 @@ class Ordering(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Fecha de actualización')
     
-    manager = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_manager', blank=True, null=True, verbose_name='Gestor')
+    managers = models.ManyToManyField(
+        'account.InternalUser', 
+        through='OrderingManager',
+        related_name='managed_orders',
+        verbose_name='Gestores'
+    )
+    
     inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='Inspector')
     operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')
 
@@ -47,19 +52,17 @@ class Ordering(models.Model):
     longitude = models.FloatField(null=True, blank=True, verbose_name='Longitud')
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Dirección')
 
+    @property
+    def manager(self):
+        return self.managers.first()
+
     def __str__(self):
         return f"Ordenamiento #{self.uuid}"
     
     def save(self, *args, **kwargs):
         self.description = self.description.lower().strip()
 
-        if not self.manager:
-            try:
-                self.manager = InternalUser.objects.get(department__name='corralon_municipal', position__name='gestor')
-            except InternalUser.DoesNotExist:
-                # Manejar el caso donde no existe un gestor por defecto
-                pass
-
+        # Generar UUID si no existe
         if not self.uuid:
             if self.category == 'escombros':
                 self.uuid = 'ESC' + str(Ordering.objects.filter(category='escombros').count() + 1)
@@ -76,7 +79,36 @@ class Ordering(models.Model):
             else:
                 self.uuid = 'OTR' + str(Ordering.objects.filter(category='otro').count() + 1)
 
+        # Primero guardamos el objeto para que tenga un ID
         super(Ordering, self).save(*args, **kwargs)
+        
+        # Verificar si hay gestores asignados
+        if not self.manager_relations.exists():
+            # Buscar todos los gestores disponibles
+            from account.models import InternalUser
+            gestores = InternalUser.objects.filter(
+                position__name='gestor',
+                department__name='corralon_municipal'
+            )
+            
+            # Asignar cada gestor al ordenamiento
+            for gestor in gestores:
+                from urban_management.models import OrderingManager
+                OrderingManager.objects.get_or_create(
+                    ordering=self,
+                    manager=gestor
+                )
+
+class OrderingManager(models.Model):
+    ordering = models.ForeignKey(Ordering, on_delete=models.CASCADE, related_name='manager_relations')
+    manager = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_relations')
+    
+    assigned_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('ordering', 'manager')
+        verbose_name = 'Gestor de ordenamiento'
+        verbose_name_plural = 'Gestores de ordenamientos'
 
 class OrderingUpdate(models.Model):
     class Meta:

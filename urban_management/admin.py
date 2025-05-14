@@ -21,8 +21,8 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'manager', 'operator')
-    list_filter = ('category', 'status', 'priority', 'manager', 'operator')
+    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'operator')
+    list_filter = ('category', 'status', 'priority', 'operator')
     search_fields = ('uuid', 'description', 'manager__username', 'operator__username')
     date_hierarchy = 'updated_at'
     ordering = ('-priority', 'created_at')
@@ -37,6 +37,10 @@ class OrderingAdmin(admin.ModelAdmin):
         ('Ubicación', {'fields': ('latitude', 'longitude', 'address')}),
     )
 
+    def get_managers(self, obj):
+        return ", ".join([str(manager) for manager in obj.managers.all()])
+    get_managers.short_description = "Gestores"
+
     def get_form(self, request, obj=None, **kwargs):
         if obj and obj.manager.id == request.user.id:
             kwargs['form'] = OrderingManagerForm
@@ -48,7 +52,8 @@ class OrderingAdmin(admin.ModelAdmin):
         
         if obj is None:
             return True
-        return obj.manager.id == request.user.id or obj.operator.id == request.user.id
+            
+        return obj.managers.filter(id=request.user.id).exists() or (obj.operator and obj.operator.id == request.user.id)
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -79,11 +84,10 @@ class OrderingAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         
-        # Filtrar para mostrar solo los ordenamientos donde el usuario es manager u operador
         return qs.filter(
-            Q(manager=request.user) |
+            Q(managers=request.user) |
             Q(operator=request.user)
-        )
+        ).distinct()
 
     def save_model(self, request, obj, form, change):
         if not change and not obj.inspector:

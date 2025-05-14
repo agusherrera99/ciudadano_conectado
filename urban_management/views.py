@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from core.decorators import position_required
-from urban_management.models import InternalUser, Ordering
+from urban_management.models import InternalUser, Ordering, OrderingManager
 
 @position_required('inspector')
 def urban_management(request):
@@ -33,6 +33,7 @@ def create_order(request):
             return JsonResponse({'status': False, 'message': 'Usuario interno no encontrado'}, status=404)
         
         try:
+            # Crear el ordenamiento primero
             ordering = Ordering.objects.create(
                 category=request.POST['category'],
                 description=request.POST['description'],
@@ -41,9 +42,23 @@ def create_order(request):
                 address=request.POST.get('address', ''),
                 inspector=internal_user,
             )
-                
-            ordering.save()
-            return JsonResponse({'status': True,})
+            
+            # Buscar todos los gestores disponibles
+            gestores = InternalUser.objects.filter(
+                position__name='gestor',
+                department__name='corralon_municipal'
+            )
+            
+            # Asignar cada gestor al ordenamiento
+            for gestor in gestores:
+                OrderingManager.objects.create(
+                    ordering=ordering,
+                    manager=gestor
+                )
+            
+            return JsonResponse({'status': True})
+            
         except Exception as e:
             return JsonResponse({'status': False, 'message': str(e)})
+            
     return JsonResponse({'status': False, 'message': 'Método no permitido'})
