@@ -79,25 +79,8 @@ class Ordering(models.Model):
             else:
                 self.uuid = 'OTR' + str(Ordering.objects.filter(category='otro').count() + 1)
 
-        # Primero guardamos el objeto para que tenga un ID
+        # Guardar el objeto
         super(Ordering, self).save(*args, **kwargs)
-        
-        # Verificar si hay gestores asignados
-        if not self.manager_relations.exists():
-            # Buscar todos los gestores disponibles
-            from account.models import InternalUser
-            gestores = InternalUser.objects.filter(
-                position__name='gestor',
-                department__name='corralon_municipal'
-            )
-            
-            # Asignar cada gestor al ordenamiento
-            for gestor in gestores:
-                from urban_management.models import OrderingManager
-                OrderingManager.objects.get_or_create(
-                    ordering=self,
-                    manager=gestor
-                )
 
 class OrderingManager(models.Model):
     ordering = models.ForeignKey(Ordering, on_delete=models.CASCADE, related_name='manager_relations')
