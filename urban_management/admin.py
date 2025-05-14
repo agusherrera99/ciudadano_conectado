@@ -21,9 +21,10 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'operator')
-    list_filter = ('category', 'status', 'priority', 'operator')
-    search_fields = ('uuid', 'description', 'manager__username', 'operator__username')
+    # Agregar inspector a list_display
+    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
+    list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
+    search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
     date_hierarchy = 'updated_at'
     ordering = ('-priority', 'created_at')
 
@@ -33,7 +34,7 @@ class OrderingAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.ALWAYS
 
     fieldsets = (
-        (None, {'fields': ('category', 'description', 'status', 'priority', 'manager', 'operator')}),
+        (None, {'fields': ('category', 'description', 'status', 'priority', 'inspector', 'operator')}),
         ('Ubicación', {'fields': ('latitude', 'longitude', 'address')}),
     )
 
@@ -42,7 +43,8 @@ class OrderingAdmin(admin.ModelAdmin):
     get_managers.short_description = "Gestores"
 
     def get_form(self, request, obj=None, **kwargs):
-        if obj and obj.manager.id == request.user.id:
+        # Corregir esta parte para comprobar si el usuario está en los managers
+        if obj and obj.managers.filter(id=request.user.id).exists():
             kwargs['form'] = OrderingManagerForm
         return super().get_form(request, obj, **kwargs)
 
@@ -66,8 +68,8 @@ class OrderingAdmin(admin.ModelAdmin):
         if obj is None:
             return []
         
-        # Si el usuario es el manager puede cambiar priority y operator
-        if obj.manager.id == request.user.id:
+        # Si el usuario es uno de los managers puede cambiar priority y operator
+        if obj.managers.filter(id=request.user.id).exists():
             editable_fields = ['priority', 'operator']
             all_fields = [field.name for field in self.model._meta.fields 
                          if field.name not in ['id', 'uuid', 'created_at', 'updated_at']]
