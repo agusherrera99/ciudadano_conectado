@@ -21,7 +21,7 @@
                 <h1 class="ordering-title">Gestión de Ordenamientos Urbanos</h1>
                 
                 <div class="ordering-content">
-                    {% if is_inspector %}
+                    {% if is_relevador %}
                         <div id="new-order-form">
                             <h3>Crear Nuevo Ordenamiento</h3>
                             <p>Por favor, complete el siguiente formulario para solicitar un nuevo ordenamiento.</p>
@@ -67,7 +67,7 @@
                     {% else %}
                         <div class="no-permission-banner">
                             <i class="fas fa-info-circle"></i>
-                            <p>Solo los inspectores autorizados pueden crear nuevas órdenes de ordenamiento urbano.</p>
+                            <p>Solo los relevadores autorizados pueden crear nuevas órdenes de ordenamiento urbano.</p>
                         </div>
                     {% endif %}
                 </div>

@@ -21,10 +21,10 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-    # Agregar inspector a list_display
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
-    list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
-    search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
+    # Cambiar inspector a relevador en list_display
+    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'relevador', 'operator')
+    list_filter = ('category', 'status', 'priority', 'operator', 'relevador')
+    search_fields = ('uuid', 'description', 'relevador__username', 'operator__username')
     date_hierarchy = 'updated_at'
     ordering = ('-priority', 'created_at')
 
@@ -34,7 +34,7 @@ class OrderingAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.ALWAYS
 
     fieldsets = (
-        (None, {'fields': ('category', 'description', 'status', 'priority', 'inspector', 'operator')}),
+        (None, {'fields': ('category', 'description', 'status', 'priority', 'relevador', 'operator')}),
         ('Ubicación', {'fields': ('latitude', 'longitude', 'address')}),
     )
 
@@ -92,8 +92,8 @@ class OrderingAdmin(admin.ModelAdmin):
         ).distinct()
 
     def save_model(self, request, obj, form, change):
-        if not change and not obj.inspector:
-            obj.inspector = request.user
+        if not change and not obj.relevador:
+            obj.relevador = request.user
             
         super().save_model(request, obj, form, change)
         
@@ -118,9 +118,9 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
             if not request.user.is_superuser:
                 # Mostrar ordenamientos donde el usuario es manager u operador
                 kwargs['queryset'] = Ordering.objects.filter(
-                    Q(managers=request.user) | 
+                    Q(manager=request.user) | 
                     Q(operator=request.user)
-                ).distinct()
+                )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
@@ -134,8 +134,8 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         if obj is None:
             return []
         
-        # Verificar si hay operador antes de intentar acceder a su ID
-        if obj.ordering.operator and obj.ordering.operator.id == request.user.id:
+
+        if obj.ordering.operator.id == request.user.id:
             editable_fields = ['description', 'status']
             all_fields = [field.name for field in self.model._meta.fields 
                          if field.name not in ['id', 'updated_at']]
@@ -151,9 +151,9 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         
         # Filtrar actualizaciones de ordenamientos donde el usuario es manager u operador
         return qs.filter(
-            Q(ordering__managers=request.user) |
+            Q(ordering__manager=request.user) |
             Q(ordering__operator=request.user)
-        ).distinct()
+        )
     
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)

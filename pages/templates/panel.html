@@ -15,7 +15,7 @@
     <main class="dashboard">
         <section class="module-grid">
             {% if request.user.is_internal %}
-                {% if request.user.specific_instance.position.name == 'inspector' %}
+                {% if request.user.specific_instance.position.name == 'relevador' %}
                     <!-- Ordenamiento Urbano -->
                     <a href="{% url 'urban_management:urban_management' %}" class="module-card">
                         <h2 class="module-title">Ordenamiento Urbano</h2>

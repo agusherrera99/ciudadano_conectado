@@ -45,7 +45,7 @@ class Ordering(models.Model):
         verbose_name='Gestores'
     )
     
-    inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='Inspector')
+    relevador = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_relevador', blank=True, null=True, verbose_name='Relevador')
     operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')
 
     latitude = models.FloatField(null=True, blank=True, verbose_name='Latitud')
@@ -54,7 +54,7 @@ class Ordering(models.Model):
 
     @property
     def manager(self):
-        return self.managers.first() if self.managers.exists() else None
+        return self.managers.first()
 
     def __str__(self):
         return f"Ordenamiento #{self.uuid}"
