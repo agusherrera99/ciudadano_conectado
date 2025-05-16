@@ -54,7 +54,7 @@ class Ordering(models.Model):
 
     @property
     def manager(self):
-        return self.managers.first()
+        return self.managers.first() if self.managers.exists() else None
 
     def __str__(self):
         return f"Ordenamiento #{self.uuid}"
