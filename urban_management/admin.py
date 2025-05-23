@@ -22,7 +22,7 @@ class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
     # Agregar inspector a list_display
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
+    list_display = ('uuid', 'category', 'address', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
     list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
     search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
     date_hierarchy = 'updated_at'
