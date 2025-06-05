@@ -18,9 +18,11 @@ services:
     build: .
     container_name: ciudadano-web
     ports:
-      - "8000:8000"
+      - "0.0.0.0:8000:8000"
     depends_on:
       - ciudadano-postgres
+    volumes:
+      - static_volume:/app/staticfiles
     env_file:
       - .env
     restart: always
@@ -28,3 +30,5 @@ services:
 volumes:
   postgres_data:
     name: ciudadano-postgres-data
+  static_volume:
+    name: ciudadano-static-data

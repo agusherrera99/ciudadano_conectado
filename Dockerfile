@@ -37,6 +37,11 @@ COPY --chown=appuser:appuser . .
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+USER root
+RUN python3 manage.py collectstatic --noinput && \
+chmod -R 755 /app/staticfiles && \
+chown -R appuser:appuser /app/staticfiles
+
 USER appuser
 
 EXPOSE 8000
