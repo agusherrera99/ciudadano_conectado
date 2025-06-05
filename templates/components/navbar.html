@@ -8,19 +8,19 @@
             {% if request.user.is_authenticated %}
                 {% if request.user.is_internal %}
                     <a class="nav-logo" href="{% url 'pages:panel' %}">
-                        <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadanos Conectados" class="logo mobile-hide">
-                        <span class="site-name">Ciudadanos Conectados - Interno</span>
+                        <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadano Conectado" class="logo mobile-hide">
+                        <span class="site-name">Ciudadano Conectado - Interno</span>
                     </a>
                 {% else %}
                     <a class="nav-logo" href="{% url 'pages:panel' %}">
-                        <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadanos Conectados" class="logo mobile-hide">
-                        <span class="site-name">Ciudadanos Conectados</span>
+                        <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadano Conectado" class="logo mobile-hide">
+                        <span class="site-name">Ciudadano Conectado</span>
                     </a>
                 {% endif %}
             {% else %}
                 <a class="nav-logo" href="{% url 'pages:home' %}">
-                    <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadanos Conectados" class="logo mobile-hide">
-                    <span class="site-name">Ciudadanos Conectados</span>
+                    <img src="{% static 'images/favicon.svg' %}" alt="Logo de Ciudadano Conectado" class="logo mobile-hide">
+                    <span class="site-name">Ciudadano Conectado</span>
                 </a>
             {% endif %}
         </div>
