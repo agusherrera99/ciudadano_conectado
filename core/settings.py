@@ -65,8 +65,8 @@ MIDDLEWARE = [
 ]
 
 if ENVIRONMENT == 'production':
-    ALLOWED_HOSTS = ['ciudadanoconectado-production.up.railway.app']
-    CSRF_TRUSTED_ORIGINS = ['https://ciudadanoconectado-production.up.railway.app', 'http://ciudadanoconectado-production.up.railway.app']
+    ALLOWED_HOSTS = ['ciudadano.lasflores.net.ar']
+    CSRF_TRUSTED_ORIGINS = ['https://ciudadano.lasflores.net.ar', 'http://ciudadano.lasflores.net.ar']
     INTERNAL_IPS = ['127.0.0.1', 'localhost']
     
     USE_X_FORWARDED_HOST = True
