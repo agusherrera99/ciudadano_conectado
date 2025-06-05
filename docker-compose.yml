@@ -1,0 +1,30 @@
+services:
+  ciudadano-postgres:
+    image: postgres:17
+    container_name: ciudadano-postgres
+    ports:
+      - "5445:5432"
+    environment:
+      POSTGRES_DB: DATABASE_NAME
+      POSTGRES_USER: DATABASE_USERNAME
+      POSTGRES_PASSWORD: DATABASE_PASSWORD
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    restart: always
+
+  ciudadano-web:
+    build: .
+    container_name: ciudadano-web
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ciudadano-postgres
+    env_file:
+      - .env
+    restart: always
+
+volumes:
+  postgres_data:
+    name: ciudadano-postgres-data

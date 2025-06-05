@@ -173,10 +173,6 @@ cython_debug/
 # KeePass Configuration
 *.kdbx
 
-# Docker Config files
-docker-compose.yml
-Dockerfile
-
 # UWSGI Config
 config/
 
