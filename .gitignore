@@ -180,3 +180,5 @@ config/
 ssl/
 
 staticfiles/
+
+update_code.sh
