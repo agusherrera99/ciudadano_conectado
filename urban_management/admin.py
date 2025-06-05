@@ -21,10 +21,10 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-    # Cambiar inspector a relevador en list_display
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'relevador', 'operator')
-    list_filter = ('category', 'status', 'priority', 'operator', 'relevador')
-    search_fields = ('uuid', 'description', 'relevador__username', 'operator__username')
+    # Cambiar inspector a inspector en list_display
+    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
+    list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
+    search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
     # Agregar inspector a list_display
     list_display = ('uuid', 'category', 'address', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
     list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
@@ -38,7 +38,7 @@ class OrderingAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.ALWAYS
 
     fieldsets = (
-        (None, {'fields': ('category', 'description', 'status', 'priority', 'relevador', 'operator')}),
+        (None, {'fields': ('category', 'description', 'status', 'priority', 'inspector', 'operator')}),
         ('Ubicación', {'fields': ('latitude', 'longitude', 'address')}),
     )
 
@@ -96,8 +96,8 @@ class OrderingAdmin(admin.ModelAdmin):
         ).distinct()
 
     def save_model(self, request, obj, form, change):
-        if not change and not obj.relevador:
-            obj.relevador = request.user
+        if not change and not obj.inspector:
+            obj.inspector = request.user
             
         super().save_model(request, obj, form, change)
         

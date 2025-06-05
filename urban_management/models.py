@@ -45,7 +45,7 @@ class Ordering(models.Model):
         verbose_name='Gestores'
     )
     
-    relevador = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_relevador', blank=True, null=True, verbose_name='Relevador')
+    inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='inspector')
     operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')
 
     latitude = models.FloatField(null=True, blank=True, verbose_name='Latitud')

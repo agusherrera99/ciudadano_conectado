@@ -63,26 +63,26 @@ def create_order(request):
             
     return JsonResponse({'status': False, 'message': 'Método no permitido'})
 
-@position_required('relevador')
-def urban_management_relevador(request):
+@position_required('inspector')
+def urban_management_inspector(request):
     orderings = Ordering.objects.all().order_by('-priority', 'created_at')
-    is_relevador = request.user.specific_instance.position.name == 'relevador'
+    is_inspector = request.user.specific_instance.position.name == 'inspector'
     
     context = {
         'url_link': reverse('pages:panel'),
-        'is_relevador': is_relevador,
+        'is_inspector': is_inspector,
         'orderings': orderings,
     }
     return render(request, 'urban_management.html', context=context)
 
-@position_required('relevador')
-def create_order_relevador(request):
+@position_required('inspector')
+def create_order_inspector(request):
     is_internal = request.user.is_internal
     if not is_internal:
         return JsonResponse({'status': False, 'message': 'No tienes permisos para realizar esta acción'}, status=403)
     
-    is_relevador = request.user.specific_instance.position.name == 'relevador'
-    if not is_relevador:
+    is_inspector = request.user.specific_instance.position.name == 'inspector'
+    if not is_inspector:
         return JsonResponse({'status': False, 'message': 'No tienes permisos para realizar esta acción'}, status=403)
 
     if request.method == 'POST':
@@ -98,7 +98,7 @@ def create_order_relevador(request):
                 latitude=request.POST.get('latitude'),
                 longitude=request.POST.get('longitude'),
                 address=request.POST.get('address', ''),
-                relevador=internal_user,
+                inspector=internal_user,
             )
             
             # Buscar todos los gestores disponibles

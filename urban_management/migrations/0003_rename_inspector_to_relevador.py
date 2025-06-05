@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='ordering',
-            name='relevador',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='order_relevador', to='account.internaluser', verbose_name='Relevador'),
+            name='inspector',
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='order_inspector', to='account.internaluser', verbose_name='inspector'),
         ),
     ]
