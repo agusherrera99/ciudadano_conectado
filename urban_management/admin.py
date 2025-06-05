@@ -21,17 +21,14 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-<<<<<<< HEAD
     # Cambiar inspector a relevador en list_display
     list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'relevador', 'operator')
     list_filter = ('category', 'status', 'priority', 'operator', 'relevador')
     search_fields = ('uuid', 'description', 'relevador__username', 'operator__username')
-=======
     # Agregar inspector a list_display
     list_display = ('uuid', 'category', 'address', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
     list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
     search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
->>>>>>> 39e0f928916304a616f58b0389c5b379bb23fc05
     date_hierarchy = 'updated_at'
     ordering = ('-priority', 'created_at')
 
