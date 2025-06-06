@@ -119,7 +119,7 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
                 kwargs['queryset'] = Ordering.objects.filter(
                     Q(managers=request.user) | 
                     Q(operator=request.user)
-                )
+                ).distinct()
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
@@ -157,7 +157,9 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
 
-        if 'status' in form.changed_data:
+        if not change or (change and 'status' in form.changed_data):
             order = obj.ordering
-            order.status = obj.status
-            order.save()
+            if order:
+                # Actualizar el estado del ordenamiento según la última actualización
+                order.status = obj.status
+                order.save()
