@@ -150,7 +150,7 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         
         # Filtrar actualizaciones de ordenamientos donde el usuario es manager u operador
         return qs.filter(
-            Q(ordering__managers=request.user) |
+            Q(ordering__manager=request.user) |
             Q(ordering__operator=request.user)
         )
     
