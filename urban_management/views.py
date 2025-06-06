@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from core.decorators import position_required
-from urban_management.models import InternalUser, Ordering, OrderingManager
+from urban_management.models import Ordering, OrderingManager
+from account.models import InternalUser
 
 @position_required('inspector')
 def urban_management(request):

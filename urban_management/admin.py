@@ -117,7 +117,7 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
             if not request.user.is_superuser:
                 # Mostrar ordenamientos donde el usuario es manager u operador
                 kwargs['queryset'] = Ordering.objects.filter(
-                    Q(manager=request.user) | 
+                    Q(managers=request.user) | 
                     Q(operator=request.user)
                 )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
@@ -133,14 +133,14 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         if obj is None:
             return []
         
-
-        if obj.ordering.operator.id == request.user.id:
+        # Verificamos si el ordenamiento tiene operador y si coincide con el usuario actual
+        if obj.ordering and obj.ordering.operator and obj.ordering.operator.id == request.user.id:
             editable_fields = ['description', 'status']
             all_fields = [field.name for field in self.model._meta.fields 
                          if field.name not in ['id', 'updated_at']]
             return [f for f in all_fields if f not in editable_fields]
 
-        # Para otros usuarios, todo es readonly
+        # Para otros usuarios o si no hay operador, todo es readonly
         return [field.name for field in self.model._meta.fields]
     
     def get_queryset(self, request):
@@ -150,9 +150,9 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         
         # Filtrar actualizaciones de ordenamientos donde el usuario es manager u operador
         return qs.filter(
-            Q(ordering__manager=request.user) |
+            Q(ordering__managers=request.user) |
             Q(ordering__operator=request.user)
-        )
+        ).distinct()
     
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
