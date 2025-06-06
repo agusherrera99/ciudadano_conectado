@@ -1,5 +1,4 @@
 from django.db import models
-from account.models import InternalUser
 
 class Ordering(models.Model):
     class Meta:

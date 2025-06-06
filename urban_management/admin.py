@@ -21,11 +21,6 @@ class OrderingManagerForm(ModelForm):
 class OrderingAdmin(admin.ModelAdmin):
     change_form_template = 'admin/urban_management/ordering/change_form.html'
 
-    # Cambiar inspector a inspector en list_display
-    list_display = ('uuid', 'category', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
-    list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
-    search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
-    # Agregar inspector a list_display
     list_display = ('uuid', 'category', 'address', 'status', 'priority', 'created_at', 'get_managers', 'inspector', 'operator')
     list_filter = ('category', 'status', 'priority', 'operator', 'inspector')
     search_fields = ('uuid', 'description', 'inspector__username', 'operator__username')
@@ -155,7 +150,7 @@ class OrderingUpdateAdmin(admin.ModelAdmin):
         
         # Filtrar actualizaciones de ordenamientos donde el usuario es manager u operador
         return qs.filter(
-            Q(ordering__manager=request.user) |
+            Q(ordering__managers=request.user) |
             Q(ordering__operator=request.user)
         )
     
