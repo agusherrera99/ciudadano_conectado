@@ -33,7 +33,7 @@ class OrderingAdmin(admin.ModelAdmin):
     show_facets = admin.ShowFacets.ALWAYS
 
     fieldsets = (
-        (None, {'fields': ('category', 'description', 'status', 'priority', 'inspector', 'operator')}),
+        (None, {'fields': ('category', 'description', 'status', 'priority', 'inspector', 'operator', 'photo')}),
         ('Ubicación', {'fields': ('latitude', 'longitude', 'address')}),
     )
 
