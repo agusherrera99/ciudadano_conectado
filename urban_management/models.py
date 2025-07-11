@@ -47,6 +47,8 @@ class Ordering(models.Model):
     inspector = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_inspector', blank=True, null=True, verbose_name='inspector')
     operator = models.ForeignKey('account.InternalUser', on_delete=models.CASCADE, related_name='order_operator', blank=True, null=True, verbose_name='Operador')
 
+    photo = models.ImageField(upload_to="ordenamientos/", blank=True, null=True, verbose_name="Foto")
+
     latitude = models.FloatField(null=True, blank=True, verbose_name='Latitud')
     longitude = models.FloatField(null=True, blank=True, verbose_name='Longitud')
     address = models.CharField(max_length=255, blank=True, null=True, verbose_name='Dirección')
