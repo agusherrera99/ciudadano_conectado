@@ -26,7 +26,7 @@
                             <h3>Crear Nuevo Ordenamiento</h3>
                             <p>Por favor, complete el siguiente formulario para solicitar un nuevo ordenamiento.</p>
 
-                            <form id="order-form" method="POST">
+                            <form id="order-form" method="POST" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="form-group">
                                     <label for="category">Tipo de Ordenamiento</label>
@@ -56,6 +56,11 @@
                                         <input id="longitude" name="longitude" type="hidden">
                                         <input id="address" name="address" placeholder="Dirección..." type="text" readonly>
                                     </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="photo">Foto (opcional)</label>
+                                    <input type="file" id="photo" name="photo" accept="image/*">
                                 </div>
 
                                 <div class="form-actions">
